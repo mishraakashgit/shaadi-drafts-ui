@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Artwork } from "@/components/artwork";
 import { ButtonLink } from "@/components/button";
 import { EnquiryForm } from "@/components/enquiry-form";
@@ -6,7 +7,7 @@ import { HamperCard } from "@/components/hamper-card";
 import { Header } from "@/components/header";
 import { WhatsAppIcon } from "@/components/icons";
 import { SectionHead } from "@/components/section-head";
-import { DIWALI_DATE, diwaliFaqs, hampers, personalisation } from "@/content/diwali";
+import { DIWALI_DATE, diwaliFaqs, gifts, hampers, personalisation } from "@/content/diwali";
 import { site } from "@/content/site";
 import { daysUntil } from "@/lib/dates";
 import { whatsappUrl } from "@/lib/whatsapp";
@@ -31,7 +32,7 @@ export default function DiwaliPage() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "Diwali gift hampers",
-    itemListElement: hampers.map((h, i) => ({
+    itemListElement: [...hampers, ...gifts].map((h, i) => ({
       "@type": "ListItem",
       position: i + 1,
       item: {
@@ -50,6 +51,7 @@ export default function DiwaliPage() {
       <main id="main">
         <Hero days={days} />
         <Collection />
+        <Gifts />
         <Personalise />
         <Corporate />
         <Faqs />
@@ -163,6 +165,69 @@ function Collection() {
         <ul className="mt-14 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
           {hampers.map((h, i) => (
             <HamperCard key={h.slug} hamper={h} priority={i < 3} />
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+function Gifts() {
+  return (
+    <section id="gifts" className="border-line border-t py-24 md:py-32">
+      <div className="wrap">
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <SectionHead
+            eyebrow="Little gifts & favours"
+            title="Small,"
+            script="but never an afterthought."
+          />
+          <p className="text-ink-soft max-w-xs leading-relaxed">
+            Order them on their own, in bulk for guests and teams, or add them to any hamper.
+          </p>
+        </div>
+        <ul className="mt-14 grid gap-12 md:grid-cols-2 md:gap-8">
+          {gifts.map((g) => (
+            <li key={g.slug} className="group grid grid-cols-[2fr_3fr] items-center gap-6 sm:gap-8">
+              <div className="bg-paper-deep relative aspect-[3/4] overflow-hidden rounded-t-full">
+                <Image
+                  src={g.image}
+                  alt={g.alt}
+                  fill
+                  sizes="(min-width: 768px) 20vw, 40vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+              </div>
+              <div>
+                <ul className="flex flex-wrap gap-1.5">
+                  {g.tags.map((t) => (
+                    <li
+                      key={t}
+                      className="border-ink/20 rounded-full border px-3 py-1 text-[0.7rem] tracking-wide"
+                    >
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+                <h3 className="mt-4 text-2xl">{g.name}</h3>
+                <p className="text-ink-soft mt-2 leading-relaxed">{g.blurb}</p>
+                <ul className="text-ink-soft mt-4 hidden space-y-1 text-sm sm:block">
+                  {g.contents.map((c) => (
+                    <li key={c} className="before:text-gold flex gap-2 before:content-['✦']">
+                      {c}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={whatsappUrl(`Hi Shaadi Drafts! I'm interested in "${g.name}".`)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-display text-ink decoration-gold hover:text-olive mt-5 inline-flex w-fit text-[0.72rem] font-medium tracking-[0.2em] uppercase underline decoration-1 underline-offset-[6px] transition-colors"
+                >
+                  Enquire
+                </a>
+              </div>
+            </li>
           ))}
         </ul>
       </div>

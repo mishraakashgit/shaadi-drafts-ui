@@ -23,7 +23,7 @@ export type HamperVariant = {
   contents: string[];
 };
 
-const emeraldBase = [
+const keepsakeBase = [
   "Pair of gold tealight diya stands",
   "Natural incense cones",
   "Happy Deepawali arch card & tags",
@@ -66,12 +66,12 @@ export const hampers: Hamper[] = [
     hoverImage: "/diwali/pichwai-contents.jpg",
   },
   {
-    slug: "emerald-deepawali-box",
-    name: "Emerald Deepawali Box",
+    slug: "deepawali-keepsake-box",
+    name: "Deepawali Keepsake Box",
     blurb:
-      "A deep-green keepsake box with an arch-shaped Deepawali card. Pick the filling that suits them.",
-    contents: [...emeraldBase, "Two mandala tin candles", "Calcutta paan mukhwas"],
-    tags: ["Choose your filling"],
+      "A cloth-bound box in emerald or navy, with an arch-shaped Deepawali card. Pick the filling that suits them.",
+    contents: [...keepsakeBase, "Two mandala tin candles", "Calcutta paan mukhwas"],
+    tags: ["Emerald or navy"],
     image: "/diwali/emerald-candles.jpg",
     alt: "Emerald gift box with an orange Happy Deepawali arch card, gold diya stands, mandala tin candles, incense cones and paan mukhwas",
     variants: [
@@ -79,25 +79,37 @@ export const hampers: Hamper[] = [
         label: "Candles & mukhwas",
         image: "/diwali/emerald-candles.jpg",
         alt: "Emerald gift box with gold diya stands, mandala tin candles, incense cones and paan mukhwas",
-        contents: [...emeraldBase, "Two mandala tin candles", "Calcutta paan mukhwas"],
+        contents: [...keepsakeBase, "Two mandala tin candles", "Calcutta paan mukhwas"],
       },
       {
         label: "Nuts",
         image: "/diwali/emerald-nuts.jpg",
         alt: "Emerald gift box with gold diya stands, incense cones and jars of mixed nuts and chocolate-coated almonds",
-        contents: [...emeraldBase, "Mixed nuts jar", "Chocolate-coated almonds jar"],
+        contents: [...keepsakeBase, "Mixed nuts jar", "Chocolate-coated almonds jar"],
       },
       {
         label: "Brittle",
         image: "/diwali/emerald-brittle.jpg",
         alt: "Emerald gift box with gold diya stands, incense cones, mandala tin candles and almond brittle packs",
-        contents: [...emeraldBase, "Two mandala tin candles", "Almond brittle bites"],
+        contents: [...keepsakeBase, "Two mandala tin candles", "Almond brittle bites"],
       },
       {
         label: "Potli",
         image: "/diwali/emerald-potli.jpg",
         alt: "Emerald gift box with gold diya stands, incense cones, a pink jute potli and Lakshmi charan stickers",
-        contents: [...emeraldBase, "Pink & jute potli", "Lakshmi charan stickers"],
+        contents: [...keepsakeBase, "Pink & jute potli", "Lakshmi charan stickers"],
+      },
+      {
+        label: "Navy · Nuts",
+        image: "/diwali/navy-nuts.jpg",
+        alt: "Navy gift box with an orange Happy Deepawali arch card, gold diya stands, lavender incense cones and jars of nuts and chocolate-coated almonds",
+        contents: [
+          "Pair of gold tealight diya stands",
+          "Lavender incense cones",
+          "Happy Deepawali arch card & tags",
+          "Mixed nuts jar",
+          "Chocolate-coated almonds jar",
+        ],
       },
     ],
   },
@@ -118,6 +130,23 @@ export const hampers: Hamper[] = [
     alt: "Ivory gift box with a rani pink Happy Deepawali arch card, almonds jar, almond brittle, a floral favour box and tuberose incense cones",
   },
   {
+    slug: "organza-crate",
+    name: "The Organza Crate",
+    blurb:
+      "A wooden crate veiled in gold organza and pinned with a mirror-work flower. Unwrapping is half the gift.",
+    contents: [
+      "Rani pink Happy Deepawali arch card",
+      "Mirror-work hexagonal keepsake box",
+      "Two mandala tin candles",
+      "Incense in a jute potli",
+      "Rose & gold floral accents",
+    ],
+    tags: ["Hand-wrapped"],
+    image: "/diwali/organza-crate.jpg",
+    alt: "Wooden crate wrapped in gold organza with a mirror-work flower brooch, a pink Happy Deepawali card and mandala candles",
+    hoverImage: "/diwali/organza-crate-detail.jpg",
+  },
+  {
     slug: "blush-shubh-labh-bag",
     name: "Blush Shubh Labh Bag",
     blurb:
@@ -132,6 +161,10 @@ export const hampers: Hamper[] = [
     image: "/diwali/blush-shubh-labh-bag.jpg",
     alt: "Clear gold-framed bag with pink Shubh Labh hangings beside gold diya stands, a red beaded potli and a jar of anar dana",
   },
+];
+
+// Smaller pieces: favours, shagun and add-ons, ordered singly or in bulk.
+export const gifts: Hamper[] = [
   {
     slug: "lakshmi-charan-potli",
     name: "Lakshmi Charan Potli",
@@ -144,6 +177,20 @@ export const hampers: Hamper[] = [
     tags: ["Bulk", "Favours"],
     image: "/diwali/lakshmi-charan-potlis.jpg",
     alt: "Rows of pink satin potlis with lotus and pearl tassels, gold Lakshmi charan sticker cards and tea-lights",
+  },
+  {
+    slug: "gota-shagun-envelopes",
+    name: "Gota Shagun Envelopes",
+    blurb:
+      "Hand-stitched fabric envelopes with gota leaf detailing, for shagun that looks as good as it feels.",
+    contents: [
+      "Fabric envelope with gota-patti trim",
+      "Rani pink, red, yellow, beige & sage green",
+      "Mix colours across a set",
+    ],
+    tags: ["Shagun", "Bulk"],
+    image: "/diwali/gota-shagun-envelopes.jpg",
+    alt: "Fabric shagun envelopes in pink, red, yellow, beige and green with gold gota leaf stitching",
   },
 ];
 
