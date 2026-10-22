@@ -36,6 +36,8 @@ legacy/index.html       The previous single-file site, kept for reference until 
 - **Diwali hampers:** edit `src/content/diwali.ts`. Photos live in `public/diwali/` (portrait, 3:4);
   set each hamper's `image`, and optionally a `hoverImage` that fades in on hover.
 - **Contact details:** `src/content/site.ts`.
+- **Logo:** the badge is drawn in code (`src/components/logo.tsx`). Ready-made files for print and
+  social are in `public/brand/` (`shaadi-drafts-logo.svg`, and a 1200px transparent PNG).
 
 These files will move to a CMS (Sanity) in Phase 2.
 

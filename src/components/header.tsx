@@ -11,8 +11,8 @@ export function Header({ tone = "ink" }: { tone?: "ink" | "light" }) {
         light ? "absolute inset-x-0 top-0 z-30" : "bg-paper/85 sticky top-0 z-30 backdrop-blur"
       }
     >
-      <div className="wrap flex h-18 items-center justify-between">
-        <Logo tone={tone} />
+      <div className="wrap flex h-20 items-center justify-between sm:h-24">
+        <Logo />
         <nav aria-label="Main" className="hidden md:block">
           <ul className="flex items-center gap-9">
             {nav.map((item) => (

@@ -12,27 +12,50 @@ export default function OpengraphImage() {
         width: "100%",
         height: "100%",
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        padding: 96,
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "0 96px",
         background: "#f7f3e7",
         color: "#3f4a27",
       }}
     >
+      <div style={{ display: "flex", flexDirection: "column", maxWidth: 640 }}>
+        <div style={{ fontSize: 76, lineHeight: 1.1 }}>Gifts, drafted with meaning.</div>
+        <div style={{ fontSize: 30, marginTop: 28, color: "#79815e", lineHeight: 1.4 }}>
+          Wedding gifting, festive hampers & custom keepsakes, delivered across India.
+        </div>
+        <div
+          style={{ display: "flex", marginTop: 44, width: 140, height: 4, background: "#d9b96b" }}
+        />
+      </div>
+
+      {/* The Shaadi Drafts badge */}
       <div
-        style={{ fontSize: 28, letterSpacing: 10, textTransform: "uppercase", color: "#79815e" }}
+        style={{
+          width: 300,
+          height: 300,
+          flexShrink: 0,
+          borderRadius: 999,
+          border: "5px solid #8a9668",
+          background: "#fcfaf1",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        {site.name}
+        <div style={{ fontSize: 50, fontWeight: 700, letterSpacing: 8, color: "#5e6b37" }}>
+          SHAADI
+        </div>
+        <div style={{ fontSize: 22, letterSpacing: 12, color: "#8a9668", marginTop: 14 }}>
+          DRAFTS
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 22 }}>
+          <div style={{ width: 30, height: 3, background: "#8a9668" }} />
+          <div style={{ width: 9, height: 9, borderRadius: 9, background: "#5e6b37" }} />
+          <div style={{ width: 30, height: 3, background: "#8a9668" }} />
+        </div>
       </div>
-      <div style={{ fontSize: 88, marginTop: 28, lineHeight: 1.05 }}>
-        Gifts, drafted with meaning.
-      </div>
-      <div style={{ fontSize: 32, marginTop: 28, color: "#79815e", maxWidth: 900 }}>
-        Wedding gifting, festive hampers & custom keepsakes, delivered across India.
-      </div>
-      <div
-        style={{ display: "flex", marginTop: 56, width: 160, height: 4, background: "#d9b96b" }}
-      />
     </div>,
     size,
   );
