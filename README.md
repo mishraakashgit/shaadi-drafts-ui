@@ -33,8 +33,8 @@ legacy/index.html       The previous single-file site, kept for reference until 
 
 - **Founder:** edit `src/content/founder.ts`. Add a portrait to `public/` and render it in the founder
   section of `src/app/page.tsx`.
-- **Diwali hampers:** edit `src/content/diwali.ts`. Put product photos in `public/diwali/` and set each
-  hamper's `image` (e.g. `/diwali/diya-box.jpg`); cards switch from illustrations to photos automatically.
+- **Diwali hampers:** edit `src/content/diwali.ts`. Photos live in `public/diwali/` (portrait, 3:4);
+  set each hamper's `image`, and optionally a `hoverImage` that fades in on hover.
 - **Contact details:** `src/content/site.ts`.
 
 These files will move to a CMS (Sanity) in Phase 2.

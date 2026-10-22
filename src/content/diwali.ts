@@ -1,5 +1,3 @@
-import type { ArtworkName } from "@/components/artwork";
-
 // Diwali 2026 (Lakshmi Puja) falls on Sunday, 8 November.
 export const DIWALI_DATE = "2026-11-08";
 
@@ -9,77 +7,76 @@ export type Hamper = {
   blurb: string;
   contents: string[];
   tags: string[];
-  art: ArtworkName;
-  tone: "gold" | "rose" | "sage" | "olive";
-  /** Path under /public once real product photography is available. */
-  image?: string;
+  /** Product photo under /public, portrait 3:4. */
+  image: string;
+  alt: string;
+  /** Optional second photo revealed on hover, e.g. the contents laid out. */
+  hoverImage?: string;
 };
 
-// Placeholder range: replace names, contents and photos with the real Diwali 2026 catalogue.
+// Names are working titles; contents are read from the product photos. Confirm before launch.
 export const hampers: Hamper[] = [
   {
-    slug: "diya-dry-fruit-box",
-    name: "The Diya Box",
-    blurb: "Hand-painted diyas and premium dry fruits in a keepsake box.",
+    slug: "pichwai-tray",
+    name: "The Pichwai Tray",
+    blurb:
+      "Our signature hamper on a wooden tray, finished with satin ribbon, pearls and gold florals.",
     contents: [
-      "Pair of hand-painted diyas",
-      "Assorted dry fruits",
-      "Scented tea-lights",
-      "Personal note card",
+      "Pichwai lotus Shubh Labh hangings",
+      "Pair of gold tealight diya stands",
+      "Mandala tin candle",
+      "Pearl-beaded potli",
+      "Aam papad & Calcutta paan mukhwas",
     ],
-    tags: ["Bestseller", "Personalisable"],
-    art: "diya",
-    tone: "gold",
+    tags: ["Signature"],
+    image: "/diwali/pichwai-tray.jpg",
+    alt: "Wooden tray hamper with green satin ribbon, gold diya stands, a mandala candle, a pearl potli, aam papad and paan mukhwas",
+    hoverImage: "/diwali/pichwai-contents.jpg",
   },
   {
-    slug: "mithai-edit",
-    name: "The Mithai Edit",
-    blurb: "Artisanal sweets, beautifully boxed for the people you visit.",
-    contents: ["Curated artisanal mithai", "Brass serving bowl", "Monogrammed sleeve"],
-    tags: ["Family favourite"],
-    art: "box",
-    tone: "rose",
-  },
-  {
-    slug: "lantern-set",
-    name: "Akash Kandil Set",
-    blurb: "A paper lantern and festive décor set to light up the doorway.",
-    contents: ["Handmade paper lantern", "Toran", "Rangoli stencils & colours"],
-    tags: ["Home décor"],
-    art: "lantern",
-    tone: "olive",
-  },
-  {
-    slug: "rangoli-keepsake",
-    name: "Rangoli Keepsake",
-    blurb: "A slow, mindful box for the ones who love the rituals.",
+    slug: "pichwai-gift-box",
+    name: "The Pichwai Gift Box",
+    blurb:
+      "The same hamper in a clear, gold-framed carry box, with the Shubh Labh hangings on display.",
     contents: [
-      "Rangoli colour set",
-      "Puja thali essentials",
-      "Incense & attar",
-      "Illustrated card",
+      "Pichwai lotus Shubh Labh hangings",
+      "Pair of gold tealight diya stands",
+      "Mandala tin candle",
+      "Pearl-beaded potli",
+      "Aam papad & Calcutta paan mukhwas",
     ],
-    tags: ["Personalisable"],
-    art: "rangoli",
-    tone: "sage",
+    tags: ["Gift-ready"],
+    image: "/diwali/pichwai-gift-box.jpg",
+    alt: "Clear gold-framed gift box with yellow pichwai lotus Shubh Labh hangings and festive treats inside",
+    hoverImage: "/diwali/pichwai-contents.jpg",
   },
   {
-    slug: "corporate-gratitude",
-    name: "The Gratitude Hamper",
-    blurb: "For clients and teams: your logo, our craft, their smile.",
-    contents: ["Branded box & sleeve", "Gourmet treats", "Diya pair", "Custom message card"],
-    tags: ["Corporate", "Bulk"],
-    art: "gift",
-    tone: "gold",
+    slug: "blush-shubh-labh-bag",
+    name: "Blush Shubh Labh Bag",
+    blurb:
+      "Soft pink and gold: a clear carry bag with jewelled hangings, diya stands and a beaded potli.",
+    contents: [
+      "Blush Shubh Labh hangings with pearl tassels",
+      "Pair of gold tealight diya stands",
+      "Hand-beaded potli",
+      "Anar dana mukhwas",
+    ],
+    tags: ["New"],
+    image: "/diwali/blush-shubh-labh-bag.jpg",
+    alt: "Clear gold-framed bag with pink Shubh Labh hangings beside gold diya stands, a red beaded potli and a jar of anar dana",
   },
   {
-    slug: "little-lights",
-    name: "Little Lights",
-    blurb: "A playful box for children: colour, craft and (safe) sparkle.",
-    contents: ["Diya painting kit", "Festive storybook", "Treats", "Name sticker sheet"],
-    tags: ["For kids", "Personalisable"],
-    art: "spark",
-    tone: "rose",
+    slug: "lakshmi-charan-potli",
+    name: "Lakshmi Charan Potli",
+    blurb: "A little potli for every guest, made for teams, Diwali parties and family gatherings.",
+    contents: [
+      "Satin potli with lotus & pearl tassel",
+      "Lakshmi charan & swastik stickers",
+      "Pair of tea-lights",
+    ],
+    tags: ["Bulk", "Favours"],
+    image: "/diwali/lakshmi-charan-potlis.jpg",
+    alt: "Rows of pink satin potlis with lotus and pearl tassels, gold Lakshmi charan sticker cards and tea-lights",
   },
 ];
 

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Artwork } from "@/components/artwork";
 import { ButtonLink } from "@/components/button";
@@ -156,24 +157,25 @@ function DiwaliFeature({ days }: { days: number }) {
             away.
           </h2>
           <p className="text-paper/70 mt-5 max-w-md text-lg leading-relaxed">
-            Hampers for family, friends and teams: hand-painted diyas, artisanal mithai and
-            keepsakes, personalised with names, monograms or your brand.
+            Pichwai-inspired hampers, Shubh Labh hangings and potlis for family, friends and teams,
+            personalised with names, monograms or your brand.
           </p>
           <ButtonLink href="/festive/diwali" variant="gold" className="mt-9">
             Explore the collection <ArrowIcon className="size-4" />
           </ButtonLink>
         </div>
-        <div className="flex items-end justify-center gap-2 sm:gap-4" aria-hidden="true">
-          {[0.7, 0.85, 1, 0.85, 0.7].map((s, i) => (
-            <Artwork
-              key={i}
-              name="diya"
-              animated
-              className="text-gold-soft w-14 min-w-0 sm:w-28"
-              style={{ transform: `scale(${s})`, ["--flicker-delay" as string]: `${i * 0.37}s` }}
+        <Link href="/festive/diwali" className="group relative mx-auto w-full max-w-xs md:max-w-sm">
+          <div className="relative aspect-[3/4] overflow-hidden rounded-t-full">
+            <Image
+              src="/diwali/pichwai-gift-box.jpg"
+              alt="The Pichwai Gift Box: a clear gold-framed box with lotus Shubh Labh hangings"
+              fill
+              sizes="(min-width: 768px) 24rem, 20rem"
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
             />
-          ))}
-        </div>
+          </div>
+          <div className="border-gold/40 pointer-events-none absolute -inset-3 rounded-t-full border" />
+        </Link>
       </div>
     </section>
   );

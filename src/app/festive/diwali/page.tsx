@@ -6,7 +6,7 @@ import { EnquiryForm } from "@/components/enquiry-form";
 import { Header } from "@/components/header";
 import { WhatsAppIcon } from "@/components/icons";
 import { SectionHead } from "@/components/section-head";
-import { DIWALI_DATE, diwaliFaqs, hampers, personalisation, type Hamper } from "@/content/diwali";
+import { DIWALI_DATE, diwaliFaqs, hampers, personalisation } from "@/content/diwali";
 import { site } from "@/content/site";
 import { daysUntil } from "@/lib/dates";
 import { whatsappUrl } from "@/lib/whatsapp";
@@ -16,16 +16,12 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Diwali Gift Hampers 2026",
   description:
-    "Personalised Diwali hampers for family, friends and teams: hand-painted diyas, artisanal mithai and keepsakes, delivered across India.",
+    "Pichwai-inspired Diwali hampers, Shubh Labh hangings and potlis for family, friends and teams, personalised and delivered across India.",
   alternates: { canonical: "/festive/diwali" },
-  openGraph: { url: "/festive/diwali" },
-};
-
-const toneBg: Record<Hamper["tone"], string> = {
-  gold: "bg-gold-soft/45",
-  rose: "bg-rose/12",
-  sage: "bg-sage-light/55",
-  olive: "bg-olive/12",
+  openGraph: {
+    url: "/festive/diwali",
+    images: [{ url: "/diwali/pichwai-gift-box.jpg", alt: "The Pichwai Gift Box" }],
+  },
 };
 
 export default function DiwaliPage() {
@@ -42,6 +38,7 @@ export default function DiwaliPage() {
         "@type": "Product",
         name: h.name,
         description: h.blurb,
+        image: `${site.url}${h.image}`,
         brand: { "@type": "Brand", name: site.name },
       },
     })),
@@ -163,31 +160,33 @@ function Collection() {
           </p>
         </div>
 
-        <ul className="mt-14 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-          {hampers.map((h) => (
+        <ul className="mt-14 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+          {hampers.map((h, i) => (
             <li key={h.slug} className="group flex flex-col">
-              <div
-                className={`relative flex aspect-[4/3] items-center justify-center overflow-hidden rounded-sm ${toneBg[h.tone]}`}
-              >
-                {h.image ? (
+              {/* Arch-topped frame, echoing the Shaadi Drafts monogram arch */}
+              <div className="bg-paper-deep relative aspect-[3/4] overflow-hidden rounded-t-full">
+                <Image
+                  src={h.image}
+                  alt={h.alt}
+                  fill
+                  priority={i < 2}
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+                {h.hoverImage && (
                   <Image
-                    src={h.image}
-                    alt={h.name}
+                    src={h.hoverImage}
+                    alt=""
                     fill
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                ) : (
-                  <Artwork
-                    name={h.art}
-                    className="text-ink w-2/5 transition-transform duration-700 group-hover:scale-105"
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
                   />
                 )}
-                <ul className="absolute top-4 left-4 flex flex-wrap gap-1.5">
+                <ul className="absolute bottom-4 left-4 flex flex-wrap gap-1.5">
                   {h.tags.map((t) => (
                     <li
                       key={t}
-                      className="bg-card/85 text-ink rounded-full px-3 py-1 text-[0.7rem] tracking-wide backdrop-blur"
+                      className="bg-card/90 text-ink rounded-full px-3 py-1 text-[0.7rem] tracking-wide backdrop-blur"
                     >
                       {t}
                     </li>
