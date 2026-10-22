@@ -21,31 +21,31 @@ Next.js application for a **full-service gifting company whose lead category sta
 
 **"Gifting for every occasion — weddings first."**
 
-| Pillar | What it covers |
-|---|---|
+| Pillar                   | What it covers                                                                                    |
+| ------------------------ | ------------------------------------------------------------------------------------------------- |
 | Weddings (hero category) | Invitations & suites, hampers, bridesmaid boxes, return favours, welcome kits, signage, monograms |
-| Festive | Rakhi, Diwali (live now — seasonal landing page), Holi, Eid, Christmas, New Year |
-| Corporate | Employee & client gifting, onboarding kits, festive bulk orders, branded packaging |
-| Personal & custom | Birthdays, anniversaries, baby, housewarming, one-off custom pieces |
+| Festive                  | Rakhi, Diwali (live now — seasonal landing page), Holi, Eid, Christmas, New Year                  |
+| Corporate                | Employee & client gifting, onboarding kits, festive bulk orders, branded packaging                |
+| Personal & custom        | Birthdays, anniversaries, baby, housewarming, one-off custom pieces                               |
 
 Open question: keep the **Shaadi Drafts** name as-is, or use it as the wedding line under a broader
 parent name? The plan works either way; it affects domain, logo and copy.
 
 ## 3. Tech stack (recommended)
 
-| Concern | Choice | Why |
-|---|---|---|
-| Framework | Next.js 15 (App Router) + TypeScript | SSG/ISR for speed + SEO, server actions for forms |
-| Styling | Tailwind CSS + a small design-token layer | Consistent brand system, fast iteration |
-| UI primitives | Radix UI / shadcn/ui | Accessible dialogs, menus, carousels |
-| Content (CMS) | Sanity (hosted, free tier) | Team adds products, portfolio, festive collections, testimonials and founder bio without a deploy |
-| Images | `next/image` + Sanity image CDN | Automatic resizing, WebP/AVIF, lazy loading |
-| Forms | Server actions + Zod validation, Resend email, stored in CMS/DB; WhatsApp deep-link kept | Enquiries are never lost |
-| Anti-spam | Cloudflare Turnstile + honeypot | |
-| Analytics | GA4 (real ID) + Meta Pixel, consented | Track enquiry/WhatsApp conversions |
-| Hosting | Vercel (or Amplify Hosting connected to Git, which supports Next.js SSR) | Preview deploy per PR, no manual S3 uploads |
-| Quality | ESLint, Prettier, Vitest, Playwright smoke tests, Lighthouse CI | GitHub Actions on every PR |
-| Monitoring | Sentry + Vercel Analytics / Speed Insights | |
+| Concern       | Choice                                                                                   | Why                                                                                               |
+| ------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Framework     | Next.js 15 (App Router) + TypeScript                                                     | SSG/ISR for speed + SEO, server actions for forms                                                 |
+| Styling       | Tailwind CSS + a small design-token layer                                                | Consistent brand system, fast iteration                                                           |
+| UI primitives | Radix UI / shadcn/ui                                                                     | Accessible dialogs, menus, carousels                                                              |
+| Content (CMS) | Sanity (hosted, free tier)                                                               | Team adds products, portfolio, festive collections, testimonials and founder bio without a deploy |
+| Images        | `next/image` + Sanity image CDN                                                          | Automatic resizing, WebP/AVIF, lazy loading                                                       |
+| Forms         | Server actions + Zod validation, Resend email, stored in CMS/DB; WhatsApp deep-link kept | Enquiries are never lost                                                                          |
+| Anti-spam     | Cloudflare Turnstile + honeypot                                                          |                                                                                                   |
+| Analytics     | GA4 (real ID) + Meta Pixel, consented                                                    | Track enquiry/WhatsApp conversions                                                                |
+| Hosting       | Vercel (or Amplify Hosting connected to Git, which supports Next.js SSR)                 | Preview deploy per PR, no manual S3 uploads                                                       |
+| Quality       | ESLint, Prettier, Vitest, Playwright smoke tests, Lighthouse CI                          | GitHub Actions on every PR                                                                        |
+| Monitoring    | Sentry + Vercel Analytics / Speed Insights                                               |                                                                                                   |
 
 Commerce: **Phase 1 is catalogue + enquiry** (WhatsApp / form → quote), which fits custom and bulk
 gifting. **Phase 3 adds checkout** (Razorpay, or Shopify headless) for fixed-price festive hampers.
@@ -71,6 +71,7 @@ gifting. **Phase 3 adds checkout** (Razorpay, or Shopify headless) for fixed-pri
 ```
 
 ### Home page sections
+
 1. Hero — wedding-led imagery, headline, two CTAs (Explore gifts / Enquire on WhatsApp)
 2. Shop by occasion — Weddings · Diwali · Rakhi · Corporate · Custom
 3. Seasonal banner — Diwali collection (CMS-driven, swaps automatically per season)
@@ -84,6 +85,7 @@ gifting. **Phase 3 adds checkout** (Razorpay, or Shopify headless) for fixed-pri
 11. Enquiry CTA + footer (socials, contact, policies)
 
 ### Founder & CEO section
+
 CMS document `founder`: name, title, portrait, short bio (home), long story (about page), quote,
 socials. Built with a placeholder until her details arrive.
 
@@ -107,13 +109,13 @@ socials. Built with a placeholder until her details arrive.
 
 ## 7. Phased roadmap
 
-| Phase | Scope | Est. |
-|---|---|---|
-| 0. Setup | Next.js scaffold, Tailwind tokens, CI, lint/test, Vercel preview, domain plan | 1–2 days |
-| 1. Launch (MVP) | Home, Weddings, Festive + **Diwali page**, Rakhi, Custom, Portfolio, About + Founder, Contact with stored enquiries, SEO basics, analytics, migrate current images & copy | ~1.5–2 weeks |
-| 2. CMS & content | Sanity schemas (product, collection, portfolio, testimonial, founder, season banner), editor training, new photos, new brochure | ~1 week |
-| 3. Growth | Corporate page + bulk quote flow, checkout for fixed-price hampers, newsletter, reviews, blog/gift guides | ongoing |
-| Cutover | Point domain to new host, 301 redirects, decommission S3 bucket + Amplify app | ½ day |
+| Phase            | Scope                                                                                                                                                                     | Est.         |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| 0. Setup         | Next.js scaffold, Tailwind tokens, CI, lint/test, Vercel preview, domain plan                                                                                             | 1–2 days     |
+| 1. Launch (MVP)  | Home, Weddings, Festive + **Diwali page**, Rakhi, Custom, Portfolio, About + Founder, Contact with stored enquiries, SEO basics, analytics, migrate current images & copy | ~1.5–2 weeks |
+| 2. CMS & content | Sanity schemas (product, collection, portfolio, testimonial, founder, season banner), editor training, new photos, new brochure                                           | ~1 week      |
+| 3. Growth        | Corporate page + bulk quote flow, checkout for fixed-price hampers, newsletter, reviews, blog/gift guides                                                                 | ongoing      |
+| Cutover          | Point domain to new host, 301 redirects, decommission S3 bucket + Amplify app                                                                                             | ½ day        |
 
 Diwali timing: if Diwali 2026 orders matter, ship a standalone `/festive/diwali` page first
 (within Phase 1, week 1) so it can start collecting enquiries immediately.
