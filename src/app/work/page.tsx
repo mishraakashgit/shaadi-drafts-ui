@@ -9,7 +9,7 @@ import { whatsappUrl } from "@/lib/whatsapp";
 export const metadata: Metadata = {
   title: "Our Work",
   description:
-    "Bridesmaid proposals, groomsman boxes, Rakhi sets, birthday gifts and Diwali hampers we've designed and made by hand.",
+    "Wedding invitations, monograms, bridesmaid proposals, Rakhi sets, birthday gifts and Diwali hampers we've designed and made by hand.",
   alternates: { canonical: "/work" },
   openGraph: {
     url: "/work",
@@ -34,8 +34,8 @@ export default function WorkPage() {
               </span>
             </h1>
             <p className="text-ink-soft mt-6 max-w-lg text-lg leading-relaxed">
-              A few of the gifts we&apos;ve made for brides, brothers, best friends and fathers.
-              Each one was built around a person, and yours will be too.
+              A few of the gifts and designs we&apos;ve made for brides, brothers, best friends,
+              fathers and brands. Each one was built around a person, and yours will be too.
             </p>
           </div>
           <div className="mt-12">

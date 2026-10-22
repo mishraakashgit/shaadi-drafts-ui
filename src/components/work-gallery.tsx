@@ -39,20 +39,34 @@ export function GalleryView({ filter }: { filter: Filter }) {
       <ul className="mt-14 columns-1 gap-6 sm:columns-2 lg:columns-3" aria-live="polite">
         {pieces.map((w, i) => (
           <li key={w.slug} className="group mb-14 break-inside-avoid">
-            <div
-              className={`bg-paper-deep relative overflow-hidden rounded-t-full ${
-                i % 3 === 1 ? "aspect-[4/5]" : "aspect-[3/4]"
-              }`}
-            >
-              <Image
-                src={w.image}
-                alt={w.alt}
-                fill
-                priority={i < 3}
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-              />
-            </div>
+            {w.size ? (
+              <div className="border-line bg-card overflow-hidden rounded-sm border p-3 shadow-[0_18px_40px_-28px_rgb(31_36_26/0.45)]">
+                <Image
+                  src={w.image}
+                  alt={w.alt}
+                  width={w.size.width}
+                  height={w.size.height}
+                  priority={i < 3}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="h-auto w-full transition-transform duration-700 group-hover:scale-[1.02]"
+                />
+              </div>
+            ) : (
+              <div
+                className={`bg-paper-deep relative overflow-hidden rounded-t-full ${
+                  i % 3 === 1 ? "aspect-[4/5]" : "aspect-[3/4]"
+                }`}
+              >
+                <Image
+                  src={w.image}
+                  alt={w.alt}
+                  fill
+                  priority={i < 3}
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                />
+              </div>
+            )}
             <p className="eyebrow mt-5">{w.occasion}</p>
             <h2 className="mt-2 text-2xl">{w.title}</h2>
             <p className="text-ink-soft mt-2 leading-relaxed">{w.story}</p>

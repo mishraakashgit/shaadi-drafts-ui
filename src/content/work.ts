@@ -3,6 +3,7 @@ export const workCategories = [
   { value: "wedding", label: "Weddings" },
   { value: "festive", label: "Festive" },
   { value: "personal", label: "Birthdays & personal" },
+  { value: "design", label: "Stationery & design" },
 ] as const;
 
 export type WorkCategory = Exclude<(typeof workCategories)[number]["value"], "all">;
@@ -16,6 +17,8 @@ export type WorkPiece = {
   inside: string[];
   image: string;
   alt: string;
+  /** Intrinsic size for flat artwork: shown uncropped instead of in an arch frame. */
+  size?: { width: number; height: number };
 };
 
 // Past commissions. Titles and descriptions are drafts based on the photos; confirm before launch.
@@ -54,6 +57,66 @@ export const work: WorkPiece[] = [
     ],
     image: "/work/bhai-box.jpg",
     alt: "Charcoal gift box with a personalised Bhai photo card, a wax-sealed letter, quote cards, a bow tie, coffee and chocolate",
+  },
+  {
+    slug: "arnav-nayan-invite",
+    title: "Arnav & Nayan",
+    occasion: "Wedding invitation",
+    category: "design",
+    story:
+      "A royal invite with Pichwai borders, lotuses and a pair of elephants guarding the couple's monogram, drafted in four colourways.",
+    inside: ["Invitation design", "Monogram", "Four colourways"],
+    image: "/work/arnav-nayan-invite.jpg",
+    alt: "Four colourways of a wedding invitation for Arnav and Nayan with Pichwai floral borders, lotuses and two golden elephants",
+    size: { width: 1508, height: 1914 },
+  },
+  {
+    slug: "monogram-elephant-arch",
+    title: "The Shehnai Monogram",
+    occasion: "Couple monogram",
+    category: "design",
+    story:
+      "Devanagari and Latin letterforms woven together, with a shehnai, a peacock feather and a nazar charm, under a jharokha arch.",
+    inside: ["Bilingual monogram", "Watercolour elephant & lotus artwork"],
+    image: "/work/monogram-elephant-arch.jpg",
+    alt: "Wedding monogram combining Devanagari and Latin letters in blue and pink inside a gold jharokha arch, with a decorated elephant and lotuses",
+    size: { width: 1627, height: 2000 },
+  },
+  {
+    slug: "save-the-date-shraddha-shubham",
+    title: "Shraddha & Shubham",
+    occasion: "Save the date",
+    category: "design",
+    story:
+      "Layered arch and scalloped cards in powder blue and lavender, held with a rose-gold clip.",
+    inside: ["Die-cut layered cards", "Monogram", "Botanical illustration"],
+    image: "/work/save-the-date-shraddha-shubham.webp",
+    alt: "Layered arch-shaped save the date cards for Shraddha and Shubham with scalloped edges, lavender sprigs and rose-gold clips",
+    size: { width: 768, height: 1253 },
+  },
+  {
+    slug: "she-said-yes",
+    title: "She Said Yes",
+    occasion: "Engagement announcement",
+    category: "design",
+    story:
+      "A cheeky, collage-style announcement written in the voice of the couple's best friends.",
+    inside: ["Digital announcement", "Custom copywriting"],
+    image: "/work/she-said-yes.png",
+    alt: "Collage-style engagement announcement with a ring hand illustration, a March calendar and the words Congratulations, she said yes",
+    size: { width: 795, height: 559 },
+  },
+  {
+    slug: "chitale-bandhu-rakhi",
+    title: "Chitale Bandhu",
+    occasion: "Raksha Bandhan campaign",
+    category: "design",
+    story:
+      "A hand-illustrated Raksha Bandhan creative for a heritage mithai brand: a bond as sweet as this.",
+    inside: ["Festive campaign artwork", "In-store standee"],
+    image: "/work/chitale-bandhu-rakhi.jpg",
+    alt: "Raksha Bandhan standee outside a sweet shop, illustrated with a sister tying a rakhi on her brother",
+    size: { width: 1536, height: 1024 },
   },
   {
     slug: "rakhi-best-brother",
