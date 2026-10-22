@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+/* Brand tokens carried over from the original Shaadi Drafts site */
+@theme {
+  --color-paper: #f7f3e7;
+  --color-paper-deep: #efe9d6;
+  --color-card: #fcfaf1;
+  --color-ink: #3f4a27;
+  --color-ink-soft: #79815e;
+  --color-olive: #5e6b37;
+  --color-olive-deep: #49542b;
+  --color-sage: #8a9668;
+  --color-sage-light: #cdd3ac;
+  --color-rose: #9c5b6a;
+  --color-gold: #d9b96b;
+  --color-gold-soft: #ead7a4;
+  --color-night: #1f241a;
+  --color-line: rgb(63 74 39 / 0.16);
+
+  --font-display: var(--font-jost), "Century Gothic", "Futura", system-ui, sans-serif;
+  --font-body: var(--font-karla), system-ui, sans-serif;
+  --font-script: var(--font-great-vibes), "Brush Script MT", cursive;
+
+  --animate-flicker: flicker 2.4s ease-in-out infinite;
+  --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes flicker {
+    0%,
+    100% {
+      transform: scale(1) rotate(-2deg);
+      opacity: 1;
+    }
+    35% {
+      transform: scale(1.08, 0.94) rotate(2deg);
+      opacity: 0.88;
+    }
+    70% {
+      transform: scale(0.95, 1.06) rotate(-1deg);
+      opacity: 0.96;
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-sage-light);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-olive);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .wrap {
+      padding-inline: 2rem;
+    }
+  }
+
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+  }
+
+  .script {
+    font-family: var(--font-script);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .hairline {
+    height: 1px;
+    background: var(--color-line);
+  }
+}

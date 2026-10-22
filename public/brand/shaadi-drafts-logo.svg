@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Shaadi Drafts">
+  <circle cx="100" cy="100" r="96" fill="#fcfaf1" stroke="#8a9668" stroke-width="2.5"/>
+  <g font-family="Jost, 'Century Gothic', Futura, 'Avenir Next', sans-serif" text-anchor="middle">
+    <text x="102.5" y="102" font-size="31" font-weight="600" letter-spacing="5" fill="#5e6b37">SHAADI</text>
+    <text x="104" y="131" font-size="15" font-weight="600" letter-spacing="8" fill="#8a9668">DRAFTS</text>
+  </g>
+  <path d="M76 148H93M107 148H124" stroke="#8a9668" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="100" cy="148" r="2.4" fill="#5e6b37"/>
+</svg>
