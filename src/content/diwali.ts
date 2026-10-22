@@ -12,7 +12,22 @@ export type Hamper = {
   alt: string;
   /** Optional second photo revealed on hover, e.g. the contents laid out. */
   hoverImage?: string;
+  /** Alternative fillings of the same box; the card lets visitors switch between them. */
+  variants?: HamperVariant[];
 };
+
+export type HamperVariant = {
+  label: string;
+  image: string;
+  alt: string;
+  contents: string[];
+};
+
+const emeraldBase = [
+  "Pair of gold tealight diya stands",
+  "Natural incense cones",
+  "Happy Deepawali arch card & tags",
+];
 
 // Names are working titles; contents are read from the product photos. Confirm before launch.
 export const hampers: Hamper[] = [
@@ -49,6 +64,58 @@ export const hampers: Hamper[] = [
     image: "/diwali/pichwai-gift-box.jpg",
     alt: "Clear gold-framed gift box with yellow pichwai lotus Shubh Labh hangings and festive treats inside",
     hoverImage: "/diwali/pichwai-contents.jpg",
+  },
+  {
+    slug: "emerald-deepawali-box",
+    name: "Emerald Deepawali Box",
+    blurb:
+      "A deep-green keepsake box with an arch-shaped Deepawali card. Pick the filling that suits them.",
+    contents: [...emeraldBase, "Two mandala tin candles", "Calcutta paan mukhwas"],
+    tags: ["Choose your filling"],
+    image: "/diwali/emerald-candles.jpg",
+    alt: "Emerald gift box with an orange Happy Deepawali arch card, gold diya stands, mandala tin candles, incense cones and paan mukhwas",
+    variants: [
+      {
+        label: "Candles & mukhwas",
+        image: "/diwali/emerald-candles.jpg",
+        alt: "Emerald gift box with gold diya stands, mandala tin candles, incense cones and paan mukhwas",
+        contents: [...emeraldBase, "Two mandala tin candles", "Calcutta paan mukhwas"],
+      },
+      {
+        label: "Nuts",
+        image: "/diwali/emerald-nuts.jpg",
+        alt: "Emerald gift box with gold diya stands, incense cones and jars of mixed nuts and chocolate-coated almonds",
+        contents: [...emeraldBase, "Mixed nuts jar", "Chocolate-coated almonds jar"],
+      },
+      {
+        label: "Brittle",
+        image: "/diwali/emerald-brittle.jpg",
+        alt: "Emerald gift box with gold diya stands, incense cones, mandala tin candles and almond brittle packs",
+        contents: [...emeraldBase, "Two mandala tin candles", "Almond brittle bites"],
+      },
+      {
+        label: "Potli",
+        image: "/diwali/emerald-potli.jpg",
+        alt: "Emerald gift box with gold diya stands, incense cones, a pink jute potli and Lakshmi charan stickers",
+        contents: [...emeraldBase, "Pink & jute potli", "Lakshmi charan stickers"],
+      },
+    ],
+  },
+  {
+    slug: "ivory-rani-pink-box",
+    name: "Ivory & Rani Pink Box",
+    blurb: "Ivory box, rani pink arch card, and a sweet mix of almonds, brittle and soft tuberose.",
+    contents: [
+      "Rani pink Happy Deepawali arch card & tags",
+      "Almonds jar",
+      "Almond brittle bites",
+      "Floral favour box",
+      "Two mandala tin candles",
+      "Tuberose incense cones",
+    ],
+    tags: ["New"],
+    image: "/diwali/ivory-rani-pink.jpg",
+    alt: "Ivory gift box with a rani pink Happy Deepawali arch card, almonds jar, almond brittle, a floral favour box and tuberose incense cones",
   },
   {
     slug: "blush-shubh-labh-bag",

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Artwork } from "@/components/artwork";
 import { ButtonLink } from "@/components/button";
 import { EnquiryForm } from "@/components/enquiry-form";
+import { HamperCard } from "@/components/hamper-card";
 import { Header } from "@/components/header";
 import { WhatsAppIcon } from "@/components/icons";
 import { SectionHead } from "@/components/section-head";
@@ -160,57 +160,9 @@ function Collection() {
           </p>
         </div>
 
-        <ul className="mt-14 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-14 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
           {hampers.map((h, i) => (
-            <li key={h.slug} className="group flex flex-col">
-              {/* Arch-topped frame, echoing the Shaadi Drafts monogram arch */}
-              <div className="bg-paper-deep relative aspect-[3/4] overflow-hidden rounded-t-full">
-                <Image
-                  src={h.image}
-                  alt={h.alt}
-                  fill
-                  priority={i < 2}
-                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                />
-                {h.hoverImage && (
-                  <Image
-                    src={h.hoverImage}
-                    alt=""
-                    fill
-                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-                  />
-                )}
-                <ul className="absolute bottom-4 left-4 flex flex-wrap gap-1.5">
-                  {h.tags.map((t) => (
-                    <li
-                      key={t}
-                      className="bg-card/90 text-ink rounded-full px-3 py-1 text-[0.7rem] tracking-wide backdrop-blur"
-                    >
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <h3 className="mt-6 text-2xl">{h.name}</h3>
-              <p className="text-ink-soft mt-2 leading-relaxed">{h.blurb}</p>
-              <ul className="text-ink-soft mt-4 space-y-1 text-sm">
-                {h.contents.map((c) => (
-                  <li key={c} className="before:text-gold flex gap-2 before:content-['✦']">
-                    {c}
-                  </li>
-                ))}
-              </ul>
-              <a
-                href={whatsappUrl(`Hi Shaadi Drafts! I'm interested in "${h.name}" for Diwali.`)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-display text-ink decoration-gold hover:text-olive mt-6 inline-flex w-fit items-center gap-2 text-[0.72rem] font-medium tracking-[0.2em] uppercase underline decoration-1 underline-offset-[6px] transition-colors"
-              >
-                Enquire about this
-              </a>
-            </li>
+            <HamperCard key={h.slug} hamper={h} priority={i < 3} />
           ))}
         </ul>
       </div>
