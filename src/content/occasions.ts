@@ -8,6 +8,7 @@ export type Occasion = {
   items: string[];
   art: ArtworkName;
   href?: string;
+  cta?: string;
 };
 
 export const occasions: Occasion[] = [
@@ -25,6 +26,8 @@ export const occasions: Occasion[] = [
       "Monograms, wax seals & packaging",
     ],
     art: "rings",
+    href: "/work?c=wedding",
+    cta: "See our wedding work",
   },
   {
     slug: "festive",
@@ -34,6 +37,7 @@ export const occasions: Occasion[] = [
     items: ["Diwali hampers", "Rakhi gift boxes", "Holi, Eid & Christmas edits"],
     art: "diya",
     href: "/festive/diwali",
+    cta: "See the Diwali collection",
   },
   {
     slug: "corporate",
@@ -50,6 +54,8 @@ export const occasions: Occasion[] = [
     summary: "Birthdays, anniversaries, baby arrivals, or a gift that doesn't have a name yet.",
     items: ["Personalised keepsakes", "Illustrated portraits & maps", "One-off packaging"],
     art: "pen",
+    href: "/work?c=personal",
+    cta: "See custom gifts we've made",
   },
 ];
 

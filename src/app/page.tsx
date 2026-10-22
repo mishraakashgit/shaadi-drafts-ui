@@ -11,6 +11,7 @@ import { DIWALI_DATE } from "@/content/diwali";
 import { founder } from "@/content/founder";
 import { occasions, process } from "@/content/occasions";
 import { site } from "@/content/site";
+import { work } from "@/content/work";
 import { daysUntil } from "@/lib/dates";
 import { whatsappUrl } from "@/lib/whatsapp";
 
@@ -28,6 +29,7 @@ export default function Home() {
         <Hero />
         <Occasions />
         {days > 0 && <DiwaliFeature days={days} />}
+        <RecentWork />
         <Process />
         <Founder />
         <Enquire />
@@ -102,6 +104,15 @@ function Occasions() {
                   </li>
                 ))}
               </ul>
+              {lead.href && (
+                <Link
+                  href={lead.href}
+                  className="group text-ink mt-8 inline-flex w-fit items-center gap-2 text-sm font-medium"
+                >
+                  {lead.cta}
+                  <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              )}
               <Artwork
                 name={lead.art}
                 className="text-ink/70 pointer-events-none absolute -top-4 -right-6 hidden w-56 md:block"
@@ -117,7 +128,7 @@ function Occasions() {
                 <p className="text-ink-soft mt-2 leading-relaxed">{o.summary}</p>
                 {o.href && (
                   <span className="text-ink mt-4 inline-flex items-center gap-2 text-sm font-medium">
-                    See the collection
+                    {o.cta}
                     <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
                   </span>
                 )}
@@ -176,6 +187,47 @@ function DiwaliFeature({ days }: { days: number }) {
           </div>
           <div className="border-gold/40 pointer-events-none absolute -inset-3 rounded-t-full border" />
         </Link>
+      </div>
+    </section>
+  );
+}
+
+function RecentWork() {
+  const picks = ["bridesmaid-proposal-box", "rakhi-best-brother", "papa-birthday-box", "bhai-box"]
+    .map((slug) => work.find((w) => w.slug === slug))
+    .filter((w) => w !== undefined);
+  return (
+    <section className="py-24 md:py-32">
+      <div className="wrap">
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <SectionHead eyebrow="Recent work" title="Made for someone," script="every time." />
+          <Link
+            href="/work"
+            className="group text-ink inline-flex items-center gap-2 text-sm font-medium"
+          >
+            See all our work
+            <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
+        <ul className="mt-14 grid grid-cols-2 gap-x-5 gap-y-10 lg:grid-cols-4">
+          {picks.map((w) => (
+            <li key={w.slug}>
+              <Link href={`/work?c=${w.category}`} className="group block">
+                <div className="bg-paper-deep relative aspect-[3/4] overflow-hidden rounded-t-full">
+                  <Image
+                    src={w.image}
+                    alt={w.alt}
+                    fill
+                    sizes="(min-width: 1024px) 25vw, 50vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  />
+                </div>
+                <p className="eyebrow mt-4">{w.occasion}</p>
+                <p className="font-display mt-1 text-lg">{w.title}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
