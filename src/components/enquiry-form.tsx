@@ -1,7 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { submitEnquiry, type EnquiryState } from "@/app/actions";
+import { track } from "@/lib/analytics";
 import { occasionOptions, type OccasionValue } from "@/lib/enquiry";
 import { buttonClass } from "./button";
 import { ArrowIcon, CheckIcon, WhatsAppIcon } from "./icons";
@@ -13,6 +14,11 @@ const field =
 
 export function EnquiryForm({ defaultOccasion = "wedding" }: { defaultOccasion?: OccasionValue }) {
   const [state, action, pending] = useActionState(submitEnquiry, initial);
+
+  // GA4's recommended lead event, so enquiries can be marked as a key event
+  useEffect(() => {
+    if (state.status === "success") track("generate_lead", { form: "enquiry" });
+  }, [state.status]);
 
   if (state.status === "success") {
     return (

@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Jost, Manrope } from "next/font/google";
-import Script from "next/script";
+import { Analytics } from "@/components/analytics";
 import { Footer } from "@/components/footer";
 import { RevealObserver } from "@/components/reveal-observer";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
@@ -32,8 +32,6 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = { themeColor: "#f6f1e7" };
-
-const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
 const organization = {
   "@context": "https://schema.org",
@@ -74,17 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
         />
-        {gaId && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga" strategy="afterInteractive">
-              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${gaId}');`}
-            </Script>
-          </>
-        )}
+        <Analytics />
       </body>
     </html>
   );
