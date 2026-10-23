@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { work, workCategories, type WorkCategory } from "@/content/work";
 import { whatsappUrl } from "@/lib/whatsapp";
+import { textLink } from "./button";
+import { ArrowIcon } from "./icons";
 
 type Filter = WorkCategory | "all";
 
@@ -18,29 +20,33 @@ export function WorkGallery() {
 
 export function GalleryView({ filter }: { filter: Filter }) {
   const pieces = filter === "all" ? work : work.filter((w) => w.category === filter);
+  const count = (v: Filter) =>
+    v === "all" ? work.length : work.filter((w) => w.category === v).length;
 
   return (
     <>
-      <nav aria-label="Filter by occasion" className="flex flex-wrap gap-2">
-        {workCategories.map((c) => (
-          <Link
-            key={c.value}
-            href={c.value === "all" ? "/work" : `/work?c=${c.value}`}
-            replace
-            scroll={false}
-            aria-current={filter === c.value ? "true" : undefined}
-            className="border-ink/25 text-ink hover:border-ink aria-[current=true]:bg-ink aria-[current=true]:text-paper aria-[current=true]:border-ink rounded-full border px-4 py-2 text-sm transition-colors"
-          >
-            {c.label}
-          </Link>
-        ))}
+      <nav aria-label="Filter by occasion" className="-mx-5 overflow-x-auto px-5 pb-2">
+        <div className="bg-paper-deep inline-flex gap-1 rounded-full p-1.5">
+          {workCategories.map((c) => (
+            <Link
+              key={c.value}
+              href={c.value === "all" ? "/work" : `/work?c=${c.value}`}
+              replace
+              scroll={false}
+              aria-current={filter === c.value ? "true" : undefined}
+              className="text-ink/70 hover:text-ink aria-[current=true]:bg-card aria-[current=true]:text-ink rounded-full px-4 py-2 text-[0.85rem] font-medium whitespace-nowrap transition-all aria-[current=true]:shadow-sm"
+            >
+              {c.label} <span className="text-ink-soft/70 ml-1 text-xs">{count(c.value)}</span>
+            </Link>
+          ))}
+        </div>
       </nav>
 
-      <ul className="mt-14 columns-1 gap-6 sm:columns-2 lg:columns-3" aria-live="polite">
+      <ul className="mt-14 columns-1 gap-7 sm:columns-2 lg:columns-3" aria-live="polite">
         {pieces.map((w, i) => (
-          <li key={w.slug} className="group mb-14 break-inside-avoid">
+          <li key={w.slug} className="group mb-16 break-inside-avoid">
             {w.size ? (
-              <div className="border-line bg-card overflow-hidden rounded-sm border p-3 shadow-[0_18px_40px_-28px_rgb(31_36_26/0.45)]">
+              <div className="bg-card border-line overflow-hidden rounded-3xl border p-3">
                 <Image
                   src={w.image}
                   alt={w.alt}
@@ -48,12 +54,12 @@ export function GalleryView({ filter }: { filter: Filter }) {
                   height={w.size.height}
                   priority={i < 3}
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="h-auto w-full transition-transform duration-700 group-hover:scale-[1.02]"
+                  className="h-auto w-full rounded-2xl transition-transform duration-[1.1s] group-hover:scale-[1.02]"
                 />
               </div>
             ) : (
               <div
-                className={`bg-paper-deep relative overflow-hidden rounded-t-full ${
+                className={`bg-paper-deep relative overflow-hidden rounded-3xl ${
                   i % 3 === 1 ? "aspect-[4/5]" : "aspect-[3/4]"
                 }`}
               >
@@ -63,28 +69,33 @@ export function GalleryView({ filter }: { filter: Filter }) {
                   fill
                   priority={i < 3}
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  className="object-cover transition-transform duration-[1.1s] group-hover:scale-[1.03]"
                 />
               </div>
             )}
-            <p className="eyebrow mt-5">{w.occasion}</p>
-            <h2 className="mt-2 text-2xl">{w.title}</h2>
+            <p className="eyebrow mt-6">{w.occasion}</p>
+            <h2 className="mt-2 text-[2rem] leading-tight">{w.title}</h2>
             <p className="text-ink-soft mt-2 leading-relaxed">{w.story}</p>
-            <p className="text-ink-soft mt-3 text-sm">
-              <span className="text-gold" aria-hidden="true">
-                ✦{" "}
-              </span>
-              {w.inside.join(" · ")}
-            </p>
+            <ul className="mt-4 flex flex-wrap gap-1.5">
+              {w.inside.map((item) => (
+                <li
+                  key={item}
+                  className="bg-paper-deep text-ink/80 rounded-full px-3 py-1 text-[0.75rem]"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
             <a
               href={whatsappUrl(
-                `Hi Shaadi Drafts! I loved "${w.title}". Could you make something like it for me?`,
+                `Hi Shaadi Drafts! I saw "${w.title}" (${w.occasion}) on your site and would love something like it.`,
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-display text-ink decoration-gold hover:text-olive mt-4 inline-flex text-[0.72rem] font-medium tracking-[0.2em] uppercase underline decoration-1 underline-offset-[6px] transition-colors"
+              className={`${textLink} mt-5`}
             >
               Make me one like this
+              <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
             </a>
           </li>
         ))}

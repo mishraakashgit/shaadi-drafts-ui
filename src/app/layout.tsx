@@ -1,17 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Great_Vibes, Jost, Karla } from "next/font/google";
-import Script from "next/script";
+import { Cormorant_Garamond, Jost, Manrope } from "next/font/google";
+import { Analytics } from "@/components/analytics";
 import { Footer } from "@/components/footer";
+import { RevealObserver } from "@/components/reveal-observer";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
 import { site } from "@/content/site";
 import "./globals.css";
 
-const jost = Jost({ subsets: ["latin"], variable: "--font-jost", display: "swap" });
-const karla = Karla({ subsets: ["latin"], variable: "--font-karla", display: "swap" });
-const greatVibes = Great_Vibes({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: "400",
-  variable: "--font-great-vibes",
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
+// Jost is the logo's typeface
+const jost = Jost({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  variable: "--font-jost",
   display: "swap",
 });
 
@@ -23,9 +31,7 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 };
 
-export const viewport: Viewport = { themeColor: "#f7f3e7" };
-
-const gaId = process.env.NEXT_PUBLIC_GA_ID;
+export const viewport: Viewport = { themeColor: "#f6f1e7" };
 
 const organization = {
   "@context": "https://schema.org",
@@ -40,7 +46,17 @@ const organization = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN" className={`${jost.variable} ${karla.variable} ${greatVibes.variable}`}>
+    <html
+      lang="en-IN"
+      className={`${cormorant.variable} ${manrope.variable} ${jost.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        {/* Enables scroll-reveal styles only when JavaScript is running */}
+        <script
+          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
+        />
+      </head>
       <body>
         <a
           href="#main"
@@ -51,21 +67,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <Footer />
         <WhatsAppFloat />
+        <RevealObserver />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
         />
-        {gaId && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga" strategy="afterInteractive">
-              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${gaId}');`}
-            </Script>
-          </>
-        )}
+        <Analytics />
       </body>
     </html>
   );

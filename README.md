@@ -47,6 +47,18 @@ The form validates on the server, rate-limits per IP and, when `RESEND_API_KEY`,
 `ENQUIRY_FROM_EMAIL` are set, emails the enquiry. Every successful submission also offers the visitor a
 pre-filled WhatsApp message, so nothing is lost if email isn't configured yet.
 
+## Analytics
+
+Google Analytics 4 (`G-PF6XLJN7V0`) loads on production builds only; set `NEXT_PUBLIC_GA_ID` to use another
+property. Besides page views, the site sends:
+
+| Event                                     | When                                      |
+| ----------------------------------------- | ----------------------------------------- |
+| `generate_lead`                           | An enquiry form is submitted successfully |
+| `contact` (`method: whatsapp` or `email`) | A WhatsApp or email link is clicked       |
+
+In GA4, mark `generate_lead` (and optionally `contact`) as key events under Admin → Events.
+
 ## Deployment
 
 Connect the repository to Vercel (or AWS Amplify Hosting, which supports Next.js) and set the variables

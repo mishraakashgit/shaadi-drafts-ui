@@ -15,7 +15,7 @@ export function LogoMark({ className = "" }: { className?: string }) {
         stroke="var(--color-sage)"
         strokeWidth="2.5"
       />
-      <g style={{ fontFamily: "var(--font-display)" }} textAnchor="middle">
+      <g style={{ fontFamily: "var(--font-brand)" }} textAnchor="middle">
         {/* x is nudged by half the letter-spacing so the spaced text stays optically centred */}
         <text
           x="102.5"

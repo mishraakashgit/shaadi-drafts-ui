@@ -155,6 +155,28 @@ export const work: WorkPiece[] = [
     alt: "Black box with PAPA in wooden letters beside a framed photo, a leather wallet, a fragrance, grooming products and a wax-sealed letter",
   },
   {
+    slug: "card-game-couples",
+    title: "The Couple’s Card Game",
+    occasion: "Custom card deck",
+    category: "personal",
+    story:
+      "A full card-game deck starring the two of them: their photos on the cards, and in-jokes on every action card. ‘Skip → straight to hugs.’",
+    inside: ["Photo cards", "Personalised action cards", "Printed box"],
+    image: "/work/card-game-couples.jpg",
+    alt: "Personalised Couple's Edition card game with the couple's photos on the cards and custom messages like Skip, straight to hugs",
+  },
+  {
+    slug: "card-game-best-friends",
+    title: "The Best Friends Card Game",
+    occasion: "Custom card deck",
+    category: "personal",
+    story:
+      "The same idea for a best friend: childhood photos, then and now, on a deck made for game night.",
+    inside: ["Photo cards", "Custom rules & messages", "Printed box"],
+    image: "/work/card-game-best-friends.jpg",
+    alt: "Red Best Friends Edition card game box printed with photos of two friends as children and today",
+  },
+  {
     slug: "polaroid-memory-bag",
     title: "Polaroid Memory Bag",
     occasion: "For a best friend",

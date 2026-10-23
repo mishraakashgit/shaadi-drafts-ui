@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ButtonLink } from "@/components/button";
 import { Header } from "@/components/header";
-import { WhatsAppIcon } from "@/components/icons";
+import { ArrowIcon, WhatsAppIcon } from "@/components/icons";
 import { GalleryView, WorkGallery } from "@/components/work-gallery";
 import { whatsappUrl } from "@/lib/whatsapp";
 
@@ -25,39 +25,42 @@ export default function WorkPage() {
       <Header />
       <main id="main">
         <section className="wrap pt-16 pb-24 md:pt-24 md:pb-32">
-          <div className="max-w-2xl">
-            <p className="eyebrow">Our work</p>
-            <h1 className="mt-5 text-5xl leading-[1.05] md:text-6xl">
-              Every box tells
-              <span className="script text-olive block text-[1.15em] leading-[1.15]">
-                someone&apos;s story.
-              </span>
-            </h1>
-            <p className="text-ink-soft mt-6 max-w-lg text-lg leading-relaxed">
-              A few of the gifts and designs we&apos;ve made for brides, brothers, best friends,
-              fathers and brands. Each one was built around a person, and yours will be too.
+          <div data-reveal className="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-end">
+            <div>
+              <p className="eyebrow">Our work</p>
+              <h1 className="display mt-6 text-[3.4rem] sm:text-7xl">
+                Every box tells <em className="text-olive">someone&apos;s story.</em>
+              </h1>
+            </div>
+            <p className="text-ink-soft max-w-md text-lg leading-relaxed lg:justify-self-end">
+              Gifts and designs we&apos;ve made for brides, brothers, best friends, fathers and
+              brands. Each one built around a person.
             </p>
           </div>
-          <div className="mt-12">
+          <div className="mt-14">
             <Suspense fallback={<GalleryView filter="all" />}>
               <WorkGallery />
             </Suspense>
           </div>
         </section>
 
-        <section className="bg-paper-deep">
-          <div className="wrap flex flex-col items-start justify-between gap-8 py-16 md:flex-row md:items-center md:py-20">
-            <div>
-              <p className="script text-olive text-3xl">your turn</p>
-              <h2 className="mt-1 max-w-xl text-3xl leading-tight md:text-4xl">
-                Tell us who it&apos;s for. We&apos;ll draft the rest.
-              </h2>
-            </div>
+        <section className="wrap pb-24 md:pb-32">
+          <div
+            data-reveal
+            className="bg-olive-deep text-paper flex flex-col items-start justify-between gap-8 rounded-[2rem] p-10 md:flex-row md:items-center md:p-14"
+          >
+            <h2 className="max-w-xl text-4xl leading-[1.05] md:text-5xl">
+              Tell us who it&apos;s for.{" "}
+              <em className="text-gold-soft">We&apos;ll draft the rest.</em>
+            </h2>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href="/#enquire">Send an enquiry</ButtonLink>
+              <ButtonLink href="/#enquire" variant="light" className="group">
+                Start a gift{" "}
+                <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+              </ButtonLink>
               <ButtonLink
                 href={whatsappUrl("Hi Shaadi Drafts! I'd like a custom gift made.")}
-                variant="outline"
+                variant="ghostLight"
               >
                 <WhatsAppIcon className="size-4" /> WhatsApp
               </ButtonLink>

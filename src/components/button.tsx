@@ -3,15 +3,17 @@ import type { ComponentProps } from "react";
 
 const styles = {
   solid: "bg-ink text-paper hover:bg-olive-deep",
-  outline: "border border-ink/30 text-ink hover:border-ink hover:bg-ink hover:text-paper",
+  outline: "border border-ink/20 text-ink hover:border-ink/60 bg-card/40",
   gold: "bg-gold text-night hover:bg-gold-soft",
-  ghostLight: "border border-paper/30 text-paper hover:border-gold hover:text-gold",
+  light: "bg-paper text-ink hover:bg-white",
+  ghostLight: "border border-paper/25 text-paper hover:border-paper/70",
 } as const;
 
 export const buttonBase =
-  "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 font-display text-[0.72rem] font-medium uppercase tracking-[0.2em] transition-colors duration-300 disabled:opacity-60";
+  "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[0.9rem] font-semibold tracking-[-0.005em] transition-all duration-300 disabled:opacity-60";
 
-type Props = ComponentProps<typeof Link> & { variant?: keyof typeof styles };
+type Variant = keyof typeof styles;
+type Props = ComponentProps<typeof Link> & { variant?: Variant };
 
 export function ButtonLink({ variant = "solid", className = "", ...props }: Props) {
   const external = typeof props.href === "string" && props.href.startsWith("http");
@@ -24,6 +26,10 @@ export function ButtonLink({ variant = "solid", className = "", ...props }: Prop
   );
 }
 
-export function buttonClass(variant: keyof typeof styles = "solid") {
+export function buttonClass(variant: Variant = "solid") {
   return `${buttonBase} ${styles[variant]}`;
 }
+
+/** Understated text link with an animated underline. */
+export const textLink =
+  "group inline-flex w-fit items-center gap-2 text-[0.9rem] font-semibold text-ink underline decoration-ink/25 decoration-1 underline-offset-[6px] transition-colors hover:decoration-ink";

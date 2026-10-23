@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { nav } from "@/content/site";
+import { nav, site } from "@/content/site";
+import { buttonClass } from "./button";
 
 export function MobileNav({ tone }: { tone: "ink" | "light" }) {
   const [open, setOpen] = useState(false);
@@ -37,22 +38,33 @@ export function MobileNav({ tone }: { tone: "ink" | "light" }) {
       <div
         id="mobile-menu"
         hidden={!open}
-        className="bg-paper fixed inset-0 z-40 flex flex-col justify-center px-8"
+        className="bg-paper fixed inset-0 z-40 flex flex-col px-6 pt-28 pb-10"
       >
-        <ul className="space-y-6">
-          {nav.map((item, i) => (
-            <li key={item.href} className="animate-rise" style={{ animationDelay: `${i * 60}ms` }}>
+        <ul className="space-y-1">
+          {nav.map((item) => (
+            <li key={item.href}>
               <Link
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="font-display text-ink text-3xl"
+                className="border-line block border-b py-4 font-serif text-4xl"
               >
                 {item.label}
               </Link>
             </li>
           ))}
         </ul>
-        <p className="script text-sage mt-12 text-3xl">gifts, drafted with meaning</p>
+        <div className="mt-auto space-y-3">
+          <Link
+            href="/#enquire"
+            onClick={() => setOpen(false)}
+            className={`${buttonClass("solid")} w-full`}
+          >
+            Start a gift
+          </Link>
+          <a href={`https://wa.me/${site.whatsapp}`} className={`${buttonClass("outline")} w-full`}>
+            WhatsApp {site.phoneDisplay}
+          </a>
+        </div>
       </div>
     </div>
   );

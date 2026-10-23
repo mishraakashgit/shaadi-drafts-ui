@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Artwork } from "@/components/artwork";
-import { ButtonLink } from "@/components/button";
-import { EnquiryForm } from "@/components/enquiry-form";
+import { ButtonLink, textLink } from "@/components/button";
+import { EnquireSection } from "@/components/enquire-section";
 import { HamperCard } from "@/components/hamper-card";
 import { Header } from "@/components/header";
-import { WhatsAppIcon } from "@/components/icons";
+import { ArrowIcon, WhatsAppIcon } from "@/components/icons";
 import { SectionHead } from "@/components/section-head";
 import { DIWALI_DATE, diwaliFaqs, gifts, hampers, personalisation } from "@/content/diwali";
 import { site } from "@/content/site";
@@ -55,22 +54,13 @@ export default function DiwaliPage() {
         <Personalise />
         <Corporate />
         <Faqs />
-        <section id="enquire" className="py-24 md:py-32">
-          <div className="wrap grid gap-14 md:grid-cols-[0.8fr_1.2fr]">
-            <div>
-              <SectionHead
-                eyebrow="Order & enquire"
-                title="Let's plan"
-                script="your Diwali gifting."
-              />
-              <p className="text-ink-soft mt-6 max-w-sm leading-relaxed">
-                Tell us how many gifts, for whom and your budget. We&apos;ll suggest hampers,
-                personalisation and delivery options.
-              </p>
-            </div>
-            <EnquiryForm defaultOccasion="diwali" />
-          </div>
-        </section>
+        <EnquireSection
+          eyebrow="Order & enquire"
+          title="Let's plan"
+          accent="your Diwali gifting."
+          intro="Tell us how many gifts, for whom and your budget. We'll suggest hampers, personalisation and delivery options."
+          defaultOccasion="diwali"
+        />
       </main>
       <script
         type="application/ld+json"
@@ -82,70 +72,82 @@ export default function DiwaliPage() {
 
 function Hero({ days }: { days: number }) {
   return (
-    <section className="bg-night text-paper relative overflow-hidden pt-36 pb-16 md:pt-44">
-      {/* A quiet field of stars */}
+    <section className="bg-night text-paper relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28">
       <div
         aria-hidden="true"
-        className="absolute inset-0 opacity-60"
-        style={{
-          backgroundImage:
-            "radial-gradient(1px 1px at 12% 22%, #ead7a4, transparent), radial-gradient(1px 1px at 78% 14%, #ead7a4, transparent), radial-gradient(1.5px 1.5px at 62% 38%, #d9b96b, transparent), radial-gradient(1px 1px at 32% 8%, #ead7a4, transparent), radial-gradient(1px 1px at 90% 44%, #ead7a4, transparent), radial-gradient(1.5px 1.5px at 22% 48%, #d9b96b, transparent), radial-gradient(1px 1px at 48% 18%, #ead7a4, transparent)",
-        }}
+        className="pointer-events-none absolute top-1/3 right-0 h-[40rem] w-[40rem] translate-x-1/4 rounded-full opacity-30 blur-3xl"
+        style={{ background: "radial-gradient(closest-side, #c6a15b, transparent)" }}
       />
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-1/2"
-        style={{
-          background:
-            "radial-gradient(60% 80% at 50% 100%, rgb(217 185 107 / 0.18), transparent 70%)",
-        }}
-      />
-
-      <div className="wrap relative text-center">
-        {days > 0 && (
-          <p className="border-gold/40 text-gold-soft inline-block rounded-full border px-4 py-1.5 text-xs tracking-[0.2em] uppercase">
-            {days} {days === 1 ? "day" : "days"} to Diwali · 8 November
+      <div className="wrap relative grid items-center gap-16 lg:grid-cols-[1.05fr_1fr]">
+        <div data-reveal>
+          {days > 0 && (
+            <p className="border-paper/15 bg-paper/5 inline-flex items-center gap-2.5 rounded-full border px-4 py-1.5 text-[0.8rem] backdrop-blur">
+              <span className="bg-gold size-1.5 animate-pulse rounded-full" />
+              {days} {days === 1 ? "day" : "days"} to Diwali · Sunday, 8 November
+            </p>
+          )}
+          <h1 className="display mt-8 text-[3.6rem] sm:text-7xl xl:text-[6rem]">
+            Light up
+            <br />
+            <em className="text-gold">their Diwali.</em>
+          </h1>
+          <p className="text-paper/65 mt-7 max-w-md text-lg leading-relaxed">
+            Hampers for family, friends and teams: made by hand, personalised to the last tag and
+            delivered across India.
           </p>
-        )}
-        <h1 className="animate-rise mx-auto mt-8 max-w-3xl text-5xl leading-[1.02] sm:text-6xl lg:text-7xl">
-          Light up
-          <span className="script text-gold block text-[1.2em] leading-[1.1]">their Diwali.</span>
-        </h1>
-        <p className="text-paper/70 mx-auto mt-6 max-w-lg text-lg leading-relaxed">
-          Hampers for family, friends and teams, made by hand, personalised to the last tag and
-          delivered across India.
-        </p>
-        <div className="mt-10 flex flex-wrap justify-center gap-3">
-          <ButtonLink href="#collection" variant="gold">
-            View hampers
-          </ButtonLink>
-          <ButtonLink
-            href={whatsappUrl("Hi Shaadi Drafts! I'd like to enquire about Diwali hampers.")}
-            variant="ghostLight"
-          >
-            <WhatsAppIcon className="size-4" /> WhatsApp us
-          </ButtonLink>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <ButtonLink href="#collection" variant="gold" className="group">
+              Shop the collection
+              <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+            </ButtonLink>
+            <ButtonLink
+              href={whatsappUrl("Hi Shaadi Drafts! I'd like to enquire about Diwali hampers.")}
+              variant="ghostLight"
+            >
+              <WhatsAppIcon className="size-4" /> Order on WhatsApp
+            </ButtonLink>
+          </div>
         </div>
 
         <div
-          className="mx-auto mt-20 flex max-w-3xl items-end justify-center gap-1 sm:gap-3"
-          aria-hidden="true"
+          data-reveal
+          style={{ ["--reveal-delay" as string]: "150ms" }}
+          className="relative mx-auto w-full max-w-md lg:max-w-none"
         >
-          {[0.55, 0.7, 0.85, 1, 0.85, 0.7, 0.55].map((s, i) => (
-            <Artwork
-              key={i}
-              name="diya"
-              animated
-              className={`text-gold-soft w-16 sm:w-24 ${i === 0 || i === 6 ? "hidden sm:block" : ""}`}
-              style={{
-                transform: `scale(${s})`,
-                transformOrigin: "bottom",
-                ["--flicker-delay" as string]: `${i * 0.29}s`,
-              }}
+          <div className="relative mx-auto aspect-[4/5] w-[78%] overflow-hidden rounded-t-full">
+            <Image
+              src="/diwali/pichwai-gift-box.jpg"
+              alt="The Pichwai Gift Box with lotus Shubh Labh hangings"
+              fill
+              priority
+              sizes="(min-width: 1024px) 34vw, 75vw"
+              className="object-cover"
             />
-          ))}
+          </div>
+          <div className="border-gold/40 pointer-events-none absolute inset-y-[-12px] left-[calc(11%-12px)] w-[calc(78%+24px)] rounded-t-full border" />
+          <div className="ring-night absolute bottom-10 left-0 w-[34%] overflow-hidden rounded-2xl shadow-2xl ring-4">
+            <div className="relative aspect-square">
+              <Image
+                src="/diwali/emerald-candles.jpg"
+                alt=""
+                fill
+                sizes="15vw"
+                className="object-cover"
+              />
+            </div>
+          </div>
+          <div className="ring-night absolute top-16 right-0 w-[30%] overflow-hidden rounded-2xl shadow-2xl ring-4">
+            <div className="relative aspect-[3/4]">
+              <Image
+                src="/diwali/blush-shubh-labh-bag.jpg"
+                alt=""
+                fill
+                sizes="15vw"
+                className="object-cover"
+              />
+            </div>
+          </div>
         </div>
-        <div className="via-gold/50 mx-auto h-px max-w-3xl bg-linear-to-r from-transparent to-transparent" />
       </div>
     </section>
   );
@@ -153,16 +155,15 @@ function Hero({ days }: { days: number }) {
 
 function Collection() {
   return (
-    <section id="collection" className="py-24 md:py-32">
+    <section id="collection" className="py-24 md:py-36">
       <div className="wrap">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHead eyebrow="The collection" title="Hampers," script="made to be remembered." />
-          <p className="text-ink-soft max-w-xs leading-relaxed">
-            Every hamper can be customised, from contents to budget. Prices on request.
+        <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
+          <SectionHead eyebrow="The collection" title="Hampers," accent="made to be remembered." />
+          <p data-reveal className="text-ink-soft max-w-xs leading-relaxed">
+            Every hamper can be customised, from contents to budget. Prices shared on request.
           </p>
         </div>
-
-        <ul className="mt-14 grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-16 grid gap-x-7 gap-y-20 sm:grid-cols-2 lg:grid-cols-3">
           {hampers.map((h, i) => (
             <HamperCard key={h.slug} hamper={h} priority={i < 3} />
           ))}
@@ -174,57 +175,56 @@ function Collection() {
 
 function Gifts() {
   return (
-    <section id="gifts" className="border-line border-t py-24 md:py-32">
+    <section id="gifts" className="bg-paper-deep py-24 md:py-32">
       <div className="wrap">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <SectionHead
             eyebrow="Little gifts & favours"
-            title="Small,"
-            script="but never an afterthought."
+            title="Small, but never"
+            accent="an afterthought."
           />
-          <p className="text-ink-soft max-w-xs leading-relaxed">
+          <p data-reveal className="text-ink-soft max-w-xs leading-relaxed">
             Order them on their own, in bulk for guests and teams, or add them to any hamper.
           </p>
         </div>
-        <ul className="mt-14 grid gap-12 md:grid-cols-2 md:gap-8">
-          {gifts.map((g) => (
-            <li key={g.slug} className="group grid grid-cols-[2fr_3fr] items-center gap-6 sm:gap-8">
-              <div className="bg-paper-deep relative aspect-[3/4] overflow-hidden rounded-t-full">
+        <ul className="mt-16 grid gap-6 md:grid-cols-2">
+          {gifts.map((g, i) => (
+            <li
+              key={g.slug}
+              data-reveal
+              style={{ ["--reveal-delay" as string]: `${i * 100}ms` }}
+              className="group bg-card border-line grid grid-cols-[2fr_3fr] items-stretch overflow-hidden rounded-3xl border"
+            >
+              <div className="relative min-h-64 overflow-hidden">
                 <Image
                   src={g.image}
                   alt={g.alt}
                   fill
                   sizes="(min-width: 768px) 20vw, 40vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  className="object-cover transition-transform duration-[1.1s] group-hover:scale-[1.04]"
                 />
               </div>
-              <div>
+              <div className="flex flex-col p-6 sm:p-8">
                 <ul className="flex flex-wrap gap-1.5">
                   {g.tags.map((t) => (
                     <li
                       key={t}
-                      className="border-ink/20 rounded-full border px-3 py-1 text-[0.7rem] tracking-wide"
+                      className="bg-paper-deep rounded-full px-3 py-1 text-[0.72rem] font-semibold"
                     >
                       {t}
                     </li>
                   ))}
                 </ul>
-                <h3 className="mt-4 text-2xl">{g.name}</h3>
+                <h3 className="mt-4 text-3xl">{g.name}</h3>
                 <p className="text-ink-soft mt-2 leading-relaxed">{g.blurb}</p>
-                <ul className="text-ink-soft mt-4 hidden space-y-1 text-sm sm:block">
-                  {g.contents.map((c) => (
-                    <li key={c} className="before:text-gold flex gap-2 before:content-['✦']">
-                      {c}
-                    </li>
-                  ))}
-                </ul>
                 <a
                   href={whatsappUrl(`Hi Shaadi Drafts! I'm interested in "${g.name}".`)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-display text-ink decoration-gold hover:text-olive mt-5 inline-flex w-fit text-[0.72rem] font-medium tracking-[0.2em] uppercase underline decoration-1 underline-offset-[6px] transition-colors"
+                  className={`${textLink} mt-auto pt-6`}
                 >
-                  Enquire
+                  Enquire{" "}
+                  <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
                 </a>
               </div>
             </li>
@@ -237,21 +237,38 @@ function Gifts() {
 
 function Personalise() {
   return (
-    <section className="bg-paper-deep py-24 md:py-32">
-      <div className="wrap grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-center">
-        <div className="relative">
-          <SectionHead eyebrow="Make it theirs" title="Personalised," script="to the last tag." />
-          <Artwork name="rangoli" className="text-sage mt-10 hidden w-48 md:block" />
+    <section className="py-24 md:py-36">
+      <div className="wrap grid items-center gap-16 lg:grid-cols-2">
+        <div data-reveal className="relative aspect-[4/5] overflow-hidden rounded-3xl">
+          <Image
+            src="/diwali/organza-crate-detail.jpg"
+            alt="Detail of a gold organza wrap with a mirror-work flower and a pink Deepawali card"
+            fill
+            sizes="(min-width: 1024px) 45vw, 100vw"
+            className="object-cover"
+          />
         </div>
-        <dl className="grid gap-x-10 gap-y-10 sm:grid-cols-2">
-          {personalisation.map((p, i) => (
-            <div key={p.title} className="border-ink/20 border-t pt-5">
-              <span className="font-display text-gold text-sm tracking-[0.2em]">0{i + 1}</span>
-              <dt className="font-display mt-2 text-xl">{p.title}</dt>
-              <dd className="text-ink-soft mt-1.5 leading-relaxed">{p.body}</dd>
-            </div>
-          ))}
-        </dl>
+        <div>
+          <SectionHead
+            eyebrow="Make it theirs"
+            title="Personalised,"
+            accent="to the last tag."
+            intro="Names, monograms, logos and handwritten notes: the details that make a hamper feel chosen, not bought."
+          />
+          <dl className="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2">
+            {personalisation.map((p, i) => (
+              <div
+                key={p.title}
+                data-reveal
+                style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}
+                className="border-ink/15 border-t pt-5"
+              >
+                <dt className="font-serif text-2xl">{p.title}</dt>
+                <dd className="text-ink-soft mt-1.5 leading-relaxed">{p.body}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
     </section>
   );
@@ -259,21 +276,32 @@ function Personalise() {
 
 function Corporate() {
   return (
-    <section className="bg-olive-deep text-paper">
-      <div className="wrap flex flex-col items-start justify-between gap-8 py-16 md:flex-row md:items-center md:py-20">
-        <div className="flex items-center gap-6">
-          <Artwork name="gift" className="text-gold-soft hidden w-24 shrink-0 sm:block" />
-          <div>
-            <p className="script text-gold text-3xl">corporate gifting</p>
-            <h2 className="mt-1 max-w-xl text-3xl leading-tight md:text-4xl">
-              Thanking a team or a client list? We&apos;ll brand it, pack it and ship it.
-            </h2>
-          </div>
-        </div>
+    <section className="wrap">
+      <div
+        data-reveal
+        className="text-paper relative isolate overflow-hidden rounded-[2rem] px-8 py-16 sm:px-14 md:py-24"
+      >
+        <Image
+          src="/diwali/lakshmi-charan-potlis.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="-z-10 object-cover"
+        />
+        <div className="from-night/90 via-night/75 to-night/30 absolute inset-0 -z-10 bg-gradient-to-r" />
+        <p className="eyebrow text-gold-soft">Corporate &amp; bulk</p>
+        <h2 className="mt-5 max-w-2xl text-5xl leading-[1.02] md:text-6xl">
+          Thanking a team or a client list?{" "}
+          <em className="text-gold-soft">We&apos;ll brand it, pack it, ship it.</em>
+        </h2>
+        <p className="text-paper/75 mt-5 max-w-lg leading-relaxed">
+          Your logo on the box, a message in every card, and delivery to one office or a hundred
+          addresses.
+        </p>
         <ButtonLink
           href={whatsappUrl("Hi Shaadi Drafts! I'd like a quote for corporate Diwali gifting.")}
-          variant="gold"
-          className="shrink-0"
+          variant="light"
+          className="mt-9"
         >
           Get a bulk quote
         </ButtonLink>
@@ -284,22 +312,22 @@ function Corporate() {
 
 function Faqs() {
   return (
-    <section className="border-line border-b py-24 md:py-32">
-      <div className="wrap grid gap-12 md:grid-cols-[0.8fr_1.2fr]">
-        <SectionHead eyebrow="Good to know" title="Questions," script="answered." />
-        <div className="border-ink/20 border-t">
+    <section className="py-24 md:py-36">
+      <div className="wrap grid gap-14 lg:grid-cols-[0.8fr_1.2fr]">
+        <SectionHead eyebrow="Good to know" title="Questions," accent="answered." />
+        <div data-reveal className="border-ink/15 border-t">
           {diwaliFaqs.map((f) => (
-            <details key={f.q} className="group border-ink/20 border-b">
-              <summary className="font-display flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-lg [&::-webkit-details-marker]:hidden">
+            <details key={f.q} className="group border-ink/15 border-b">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-7 font-serif text-2xl [&::-webkit-details-marker]:hidden">
                 {f.q}
                 <span
                   aria-hidden="true"
-                  className="text-gold text-2xl leading-none transition-transform duration-300 group-open:rotate-45"
+                  className="border-ink/20 flex size-9 shrink-0 items-center justify-center rounded-full border font-sans text-lg transition-transform duration-300 group-open:rotate-45"
                 >
                   +
                 </span>
               </summary>
-              <p className="text-ink-soft -mt-2 pb-6 leading-relaxed">{f.a}</p>
+              <p className="text-ink-soft -mt-2 max-w-xl pb-7 leading-relaxed">{f.a}</p>
             </details>
           ))}
         </div>
