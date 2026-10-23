@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink, textLink } from "@/components/button";
+import { DaysToDiwali, DaysUnit } from "@/components/days-to-diwali";
 import { DiwaliBar } from "@/components/diwali-bar";
 import { EnquireSection } from "@/components/enquire-section";
 import { Header } from "@/components/header";
@@ -14,9 +15,6 @@ import { promises } from "@/content/site";
 import { testimonials } from "@/content/testimonials";
 import { work } from "@/content/work";
 import { daysUntil } from "@/lib/dates";
-
-// Re-render hourly so the Diwali countdown stays current.
-export const revalidate = 3600;
 
 export default function Home() {
   const days = daysUntil(DIWALI_DATE);
@@ -285,8 +283,10 @@ function DiwaliFeature({ days }: { days: number }) {
           <div data-reveal>
             <p className="eyebrow text-gold-soft">Diwali 2026 · 8 November</p>
             <h2 className="mt-5 text-5xl leading-[1] md:text-7xl">
-              <span className="text-gold">{days}</span> {days === 1 ? "day" : "days"} to{" "}
-              <em>Diwali.</em>
+              <span className="text-gold">
+                <DaysToDiwali initial={days} unit={false} />
+              </span>{" "}
+              <DaysUnit initial={days} /> to <em>Diwali.</em>
             </h2>
             <p className="text-paper/65 mt-5 max-w-md text-lg leading-relaxed">
               Pichwai-inspired hampers, Shubh Labh hangings and potlis for family, friends and

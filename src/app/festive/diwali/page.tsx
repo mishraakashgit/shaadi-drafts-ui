@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { ButtonLink, textLink } from "@/components/button";
+import { DaysToDiwali } from "@/components/days-to-diwali";
 import { EnquireSection } from "@/components/enquire-section";
 import { HamperCard } from "@/components/hamper-card";
 import { Header } from "@/components/header";
@@ -10,8 +11,6 @@ import { DIWALI_DATE, diwaliFaqs, gifts, hampers, personalisation } from "@/cont
 import { site } from "@/content/site";
 import { daysUntil } from "@/lib/dates";
 import { whatsappUrl } from "@/lib/whatsapp";
-
-export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Diwali Gift Hampers 2026",
@@ -83,7 +82,7 @@ function Hero({ days }: { days: number }) {
           {days > 0 && (
             <p className="border-paper/15 bg-paper/5 inline-flex items-center gap-2.5 rounded-full border px-4 py-1.5 text-[0.8rem] backdrop-blur">
               <span className="bg-gold size-1.5 animate-pulse rounded-full" />
-              {days} {days === 1 ? "day" : "days"} to Diwali · Sunday, 8 November
+              <DaysToDiwali initial={days} /> to Diwali · Sunday, 8 November
             </p>
           )}
           <h1 className="display mt-8 text-[3.6rem] sm:text-7xl xl:text-[6rem]">
