@@ -14,9 +14,15 @@ export const site = {
 } as const;
 
 export const nav = [
-  { label: "Occasions", href: "/#occasions" },
+  { label: "Weddings", href: "/#occasions" },
   { label: "Diwali", href: "/festive/diwali" },
   { label: "Our work", href: "/work" },
-  { label: "Our founder", href: "/#founder" },
-  { label: "Enquire", href: "/#enquire" },
+  { label: "About", href: "/#founder" },
+] as const;
+
+/** Promises carried over from the original site. */
+export const promises = [
+  "Fully customised, revisions included",
+  "Printed & handmade, shipped across India",
+  "WhatsApp replies, usually the same day",
 ] as const;

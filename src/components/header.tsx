@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { nav } from "@/content/site";
+import { buttonClass } from "./button";
 import { Logo } from "./logo";
 import { MobileNav } from "./mobile-nav";
 
@@ -8,19 +9,21 @@ export function Header({ tone = "ink" }: { tone?: "ink" | "light" }) {
   return (
     <header
       className={
-        light ? "absolute inset-x-0 top-0 z-30" : "bg-paper/85 sticky top-0 z-30 backdrop-blur"
+        light
+          ? "absolute inset-x-0 top-0 z-30"
+          : "bg-paper/80 border-line sticky top-0 z-30 border-b backdrop-blur-xl backdrop-saturate-150"
       }
     >
-      <div className="wrap flex h-20 items-center justify-between sm:h-24">
-        <Logo />
+      <div className="wrap flex h-20 items-center justify-between gap-6">
+        <Logo className="size-14" />
         <nav aria-label="Main" className="hidden md:block">
-          <ul className="flex items-center gap-9">
+          <ul className="flex items-center gap-1">
             {nav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`font-display text-[0.72rem] font-medium tracking-[0.2em] uppercase transition-colors ${
-                    light ? "text-paper/80 hover:text-gold" : "text-ink-soft hover:text-ink"
+                  className={`rounded-full px-4 py-2 text-[0.88rem] font-medium transition-colors ${
+                    light ? "text-paper/80 hover:text-paper" : "text-ink/70 hover:text-ink"
                   }`}
                 >
                   {item.label}
@@ -29,9 +32,16 @@ export function Header({ tone = "ink" }: { tone?: "ink" | "light" }) {
             ))}
           </ul>
         </nav>
-        <MobileNav tone={tone} />
+        <div className="flex items-center gap-2">
+          <Link
+            href="/#enquire"
+            className={`${buttonClass(light ? "light" : "solid")} hidden !px-5 !py-2.5 sm:inline-flex`}
+          >
+            Start a gift
+          </Link>
+          <MobileNav tone={tone} />
+        </div>
       </div>
-      {!light && <div className="hairline" />}
     </header>
   );
 }

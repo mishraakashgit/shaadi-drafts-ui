@@ -1,19 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Artwork } from "@/components/artwork";
-import { ButtonLink } from "@/components/button";
+import { ButtonLink, textLink } from "@/components/button";
 import { DiwaliBar } from "@/components/diwali-bar";
-import { EnquiryForm } from "@/components/enquiry-form";
+import { EnquireSection } from "@/components/enquire-section";
 import { Header } from "@/components/header";
-import { ArrowIcon, WhatsAppIcon } from "@/components/icons";
+import { ArrowIcon, CheckIcon } from "@/components/icons";
+import { LogoMark } from "@/components/logo";
 import { SectionHead } from "@/components/section-head";
-import { DIWALI_DATE } from "@/content/diwali";
+import { DIWALI_DATE, hampers } from "@/content/diwali";
 import { founder } from "@/content/founder";
-import { occasions, process } from "@/content/occasions";
-import { site } from "@/content/site";
+import { occasions, process, services } from "@/content/occasions";
+import { promises } from "@/content/site";
+import { testimonials } from "@/content/testimonials";
 import { work } from "@/content/work";
 import { daysUntil } from "@/lib/dates";
-import { whatsappUrl } from "@/lib/whatsapp";
 
 // Re-render hourly so the Diwali countdown stays current.
 export const revalidate = 3600;
@@ -27,12 +27,15 @@ export default function Home() {
       <Header />
       <main id="main">
         <Hero />
+        <Marquee />
         <Occasions />
+        <Studio />
         {days > 0 && <DiwaliFeature days={days} />}
         <RecentWork />
         <Process />
         <Founder />
-        <Enquire />
+        {testimonials.length > 0 && <Testimonials />}
+        <EnquireSection />
       </main>
     </>
   );
@@ -40,114 +43,223 @@ export default function Home() {
 
 function Hero() {
   return (
-    <section className="wrap grid items-center gap-14 pt-14 pb-20 md:grid-cols-[1.15fr_1fr] md:pt-24 md:pb-28">
-      <div className="animate-rise">
-        <p className="eyebrow">A gifting studio · weddings first</p>
-        <h1 className="mt-6 text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-7xl">
+    <section className="wrap grid items-center gap-14 pt-12 pb-20 md:pt-16 lg:grid-cols-[1fr_1.05fr] lg:gap-10 lg:pt-20 lg:pb-28">
+      <div data-reveal>
+        <p className="eyebrow flex items-center gap-3">
+          <span className="bg-gold inline-block h-px w-8" /> A gifting &amp; design studio
+        </p>
+        <h1 className="display mt-7 text-[3.4rem] sm:text-7xl xl:text-[5.6rem]">
           Gifts, drafted
-          <span className="script text-olive block text-[1.15em] leading-[1.1]">with meaning.</span>
+          <br />
+          with <em className="text-olive">meaning.</em>
         </h1>
-        <p className="text-ink-soft mt-7 max-w-md text-lg leading-relaxed">
-          Wedding gifting, festive hampers and custom keepsakes, designed in-house, made by hand and
-          delivered across India.
+        <p className="text-ink-soft mt-7 max-w-[30rem] text-lg leading-relaxed">
+          Wedding gifting, invitations, festive hampers and custom keepsakes. Designed in-house,
+          made by hand and delivered across India.
         </p>
         <div className="mt-10 flex flex-wrap gap-3">
-          <ButtonLink href="#occasions">Explore gifting</ButtonLink>
-          <ButtonLink
-            href={whatsappUrl("Hi Shaadi Drafts! I'd like to enquire about a gift.")}
-            variant="outline"
-          >
-            <WhatsAppIcon className="size-4" /> Chat with us
+          <ButtonLink href="/#enquire" className="group">
+            Start a gift{" "}
+            <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+          </ButtonLink>
+          <ButtonLink href="/work" variant="outline">
+            See our work
           </ButtonLink>
         </div>
+        <ul className="text-ink-soft mt-12 grid gap-2.5 text-[0.88rem] sm:grid-cols-1">
+          {promises.map((p) => (
+            <li key={p} className="flex items-center gap-2.5">
+              <CheckIcon className="text-olive size-4 shrink-0" /> {p}
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div className="relative mx-auto w-full max-w-sm md:max-w-md" aria-hidden="true">
-        <div className="bg-sage-light/60 aspect-[4/5] rounded-t-full" />
-        <div className="border-ink/20 absolute inset-4 rounded-t-full border" />
-        <Artwork name="gift" className="text-ink absolute inset-x-0 top-[30%] mx-auto w-1/2" />
-        <Artwork
-          name="rings"
-          className="text-olive absolute -top-2 -left-6 w-24 rotate-[-10deg] md:-left-10"
-        />
-        <Artwork
-          name="diya"
-          animated
-          className="text-olive absolute -right-4 bottom-10 w-24 md:-right-10"
-        />
-        <p className="script text-olive absolute inset-x-0 bottom-8 text-center text-3xl">
-          for the ones you love
-        </p>
+      {/* Editorial mosaic of real work */}
+      <div
+        data-reveal
+        style={{ ["--reveal-delay" as string]: "150ms" }}
+        className="relative grid grid-cols-[1.35fr_1fr] gap-4"
+      >
+        <div className="relative aspect-[3/4] overflow-hidden rounded-t-full">
+          <Image
+            src="/work/bridesmaid-proposal-box.jpg"
+            alt="Will you be my bridesmaid proposal box in a sage keepsake chest"
+            fill
+            priority
+            sizes="(min-width: 1024px) 30vw, 55vw"
+            className="object-cover"
+          />
+        </div>
+        <div className="flex flex-col gap-4 pt-14">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+            <Image
+              src="/diwali/pichwai-gift-box.jpg"
+              alt="Pichwai Diwali gift box with lotus Shubh Labh hangings"
+              fill
+              priority
+              sizes="(min-width: 1024px) 22vw, 40vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="relative aspect-square overflow-hidden rounded-2xl">
+            <Image
+              src="/diwali/ivory-rani-pink.jpg"
+              alt="Ivory gift box with a rani pink Deepawali card"
+              fill
+              sizes="(min-width: 1024px) 22vw, 40vw"
+              className="object-cover object-top"
+            />
+          </div>
+        </div>
+        <div className="bg-card/90 border-line absolute bottom-6 -left-3 max-w-[15rem] rounded-2xl border p-4 shadow-[0_20px_50px_-25px_rgb(22_26_17/0.45)] backdrop-blur sm:-left-8">
+          <p className="eyebrow !text-[0.62rem]">Bridesmaid proposal</p>
+          <p className="mt-1 font-serif text-xl leading-tight">
+            &ldquo;Will you be my bridesmaid?&rdquo;
+          </p>
+        </div>
       </div>
     </section>
+  );
+}
+
+function Marquee() {
+  const row = [...services, ...services];
+  return (
+    <div className="bg-olive-deep text-paper/85 overflow-hidden py-5" aria-label="What we make">
+      <ul className="animate-marquee flex w-max items-center gap-10 whitespace-nowrap">
+        {row.map((s, i) => (
+          <li
+            key={i}
+            className="flex items-center gap-10 font-serif text-2xl italic"
+            aria-hidden={i >= services.length}
+          >
+            {s}
+            <span className="text-gold text-sm not-italic">✦</span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
 function Occasions() {
   const [lead, ...rest] = occasions;
   return (
-    <section id="occasions" className="border-line border-t py-24 md:py-32">
+    <section id="occasions" className="py-24 md:py-36">
       <div className="wrap">
-        <SectionHead eyebrow="What we make" title="One studio," script="every occasion." />
-        <div className="mt-14 grid gap-5 md:grid-cols-3 md:grid-rows-3">
-          {lead && (
-            <article className="bg-sage-light/45 relative flex flex-col justify-between overflow-hidden rounded-sm p-8 md:col-span-2 md:row-span-3 md:p-12">
-              <div className="max-w-md">
-                <p className="script text-olive text-3xl">{lead.script}</p>
-                <h3 className="mt-1 text-4xl md:text-5xl">{lead.title}</h3>
-                <p className="text-ink-soft mt-5 text-lg leading-relaxed">{lead.summary}</p>
+        <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
+          <SectionHead
+            eyebrow="What we make"
+            title="One studio,"
+            accent="every occasion."
+            intro="Weddings are where we started and what we love most. Every piece is drafted for the people receiving it."
+          />
+        </div>
+
+        <div className="mt-16 grid gap-5 md:grid-cols-4 md:grid-rows-2">
+          {lead && <OccasionCard o={lead} large />}
+          {rest.map((o, i) => (
+            <OccasionCard key={o.slug} o={o} wide={i === rest.length - 1} delay={(i + 1) * 90} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function OccasionCard({
+  o,
+  large = false,
+  wide = false,
+  delay = 0,
+}: {
+  o: (typeof occasions)[number];
+  large?: boolean;
+  wide?: boolean;
+  delay?: number;
+}) {
+  return (
+    <Link
+      href={o.href}
+      data-reveal
+      style={{ ["--reveal-delay" as string]: `${delay}ms` }}
+      className={`group text-paper relative isolate flex min-h-[22rem] flex-col justify-end overflow-hidden rounded-3xl p-7 md:p-9 ${
+        large
+          ? "min-h-[32rem] md:col-span-2 md:row-span-2 md:min-h-[44rem]"
+          : wide
+            ? "md:col-span-2"
+            : ""
+      }`}
+    >
+      <Image
+        src={o.image}
+        alt={o.alt}
+        fill
+        sizes={large ? "(min-width: 768px) 60vw, 100vw" : "(min-width: 768px) 30vw, 100vw"}
+        className="-z-10 object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
+      />
+      <div
+        className={`absolute inset-0 -z-10 bg-gradient-to-t ${large ? "from-night/95 via-night/65 to-night/35" : "from-night/90 via-night/40 via-45% to-transparent"}`}
+      />
+      <h3 className={large ? "text-5xl md:text-6xl" : "text-4xl"}>{o.title}</h3>
+      <p className={`text-paper/80 mt-3 max-w-md leading-relaxed ${large ? "text-lg" : ""}`}>
+        {o.summary}
+      </p>
+      {large && (
+        <ul className="mt-6 hidden flex-wrap gap-2 sm:flex">
+          {o.items.map((item) => (
+            <li
+              key={item}
+              className="border-paper/25 rounded-full border px-3.5 py-1.5 text-[0.8rem] backdrop-blur-sm"
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      )}
+      <span className="mt-6 inline-flex items-center gap-2 text-[0.88rem] font-semibold">
+        {o.cta}
+        <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
+      </span>
+    </Link>
+  );
+}
+
+function Studio() {
+  return (
+    <section className="bg-paper-deep py-24 md:py-36">
+      <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.3fr] lg:items-center">
+        <div data-reveal className="relative mx-auto w-full max-w-md">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
+            <Image
+              src="/diwali/organza-crate-detail.jpg"
+              alt="Close-up of a gold organza wrapped crate pinned with a mirror-work flower"
+              fill
+              sizes="(min-width: 1024px) 30vw, 90vw"
+              className="object-cover"
+            />
+          </div>
+          <LogoMark className="absolute -right-5 -bottom-8 size-28 drop-shadow-xl md:-right-10" />
+        </div>
+        <div data-reveal style={{ ["--reveal-delay" as string]: "120ms" }}>
+          <p className="eyebrow">The studio</p>
+          <p className="mt-6 font-serif text-[2rem] leading-[1.2] md:text-[2.7rem]">
+            We treat every gift like a wedding invitation: <em className="text-olive">drafted</em>,
+            refined and finished by hand, until it could only have come from you.
+          </p>
+          <dl className="border-ink/15 mt-12 grid gap-8 border-t pt-8 sm:grid-cols-3">
+            {[
+              ["Designed in-house", "Every card, tag, monogram and box is drawn by our team."],
+              ["One or a thousand", "A single proposal box or bulk favours, with the same care."],
+              ["Pan-India delivery", "Packed to travel, shipped wherever your people are."],
+            ].map(([t, d]) => (
+              <div key={t}>
+                <dt className="font-serif text-2xl">{t}</dt>
+                <dd className="text-ink-soft mt-2 text-[0.92rem] leading-relaxed">{d}</dd>
               </div>
-              <ul className="mt-10 grid gap-x-8 gap-y-2.5 sm:grid-cols-2">
-                {lead.items.map((item) => (
-                  <li key={item} className="border-ink/15 border-b pb-2.5">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              {lead.href && (
-                <Link
-                  href={lead.href}
-                  className="group text-ink mt-8 inline-flex w-fit items-center gap-2 text-sm font-medium"
-                >
-                  {lead.cta}
-                  <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-              )}
-              <Artwork
-                name={lead.art}
-                className="text-ink/70 pointer-events-none absolute -top-4 -right-6 hidden w-56 md:block"
-              />
-            </article>
-          )}
-          {rest.map((o) => {
-            const body = (
-              <>
-                <Artwork name={o.art} className="text-ink size-14" />
-                <p className="script text-olive mt-5 text-2xl">{o.script}</p>
-                <h3 className="text-2xl">{o.title}</h3>
-                <p className="text-ink-soft mt-2 leading-relaxed">{o.summary}</p>
-                {o.href && (
-                  <span className="text-ink mt-4 inline-flex items-center gap-2 text-sm font-medium">
-                    {o.cta}
-                    <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
-                  </span>
-                )}
-              </>
-            );
-            return o.href ? (
-              <Link
-                key={o.slug}
-                href={o.href}
-                className="group bg-card border-line hover:border-ink/40 rounded-sm border p-8 transition-colors"
-              >
-                {body}
-              </Link>
-            ) : (
-              <article key={o.slug} className="bg-card border-line rounded-sm border p-8">
-                {body}
-              </article>
-            );
-          })}
+            ))}
+          </dl>
         </div>
       </div>
     </section>
@@ -155,75 +267,87 @@ function Occasions() {
 }
 
 function DiwaliFeature({ days }: { days: number }) {
+  const picks = ["deepawali-keepsake-box", "organza-crate", "blush-shubh-labh-bag"]
+    .map((slug) => hampers.find((h) => h.slug === slug))
+    .filter((h) => h !== undefined);
   return (
     <section className="bg-night text-paper relative overflow-hidden py-24 md:py-32">
-      <div className="wrap relative grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-        <div>
-          <p className="eyebrow text-gold">Festive · Diwali 2026</p>
-          <h2 className="mt-4 text-4xl leading-tight md:text-5xl">
-            Diwali is{" "}
-            <span className="text-gold">
-              {days} {days === 1 ? "day" : "days"}
-            </span>{" "}
-            away.
-          </h2>
-          <p className="text-paper/70 mt-5 max-w-md text-lg leading-relaxed">
-            Pichwai-inspired hampers, Shubh Labh hangings and potlis for family, friends and teams,
-            personalised with names, monograms or your brand.
-          </p>
-          <ButtonLink href="/festive/diwali" variant="gold" className="mt-9">
-            Explore the collection <ArrowIcon className="size-4" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-40 left-1/2 h-[36rem] w-[60rem] -translate-x-1/2 rounded-full opacity-25 blur-3xl"
+        style={{ background: "radial-gradient(closest-side, #c6a15b, transparent)" }}
+      />
+      <div className="wrap relative">
+        <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
+          <div data-reveal>
+            <p className="eyebrow text-gold-soft">Diwali 2026 · 8 November</p>
+            <h2 className="mt-5 text-5xl leading-[1] md:text-7xl">
+              <span className="text-gold">{days}</span> {days === 1 ? "day" : "days"} to{" "}
+              <em>Diwali.</em>
+            </h2>
+            <p className="text-paper/65 mt-5 max-w-md text-lg leading-relaxed">
+              Pichwai-inspired hampers, Shubh Labh hangings and potlis for family, friends and
+              teams.
+            </p>
+          </div>
+          <ButtonLink href="/festive/diwali" variant="gold" className="group shrink-0">
+            Shop the collection{" "}
+            <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
           </ButtonLink>
         </div>
-        <Link href="/festive/diwali" className="group relative mx-auto w-full max-w-xs md:max-w-sm">
-          <div className="relative aspect-[3/4] overflow-hidden rounded-t-full">
-            <Image
-              src="/diwali/pichwai-gift-box.jpg"
-              alt="The Pichwai Gift Box: a clear gold-framed box with lotus Shubh Labh hangings"
-              fill
-              sizes="(min-width: 768px) 24rem, 20rem"
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-            />
-          </div>
-          <div className="border-gold/40 pointer-events-none absolute -inset-3 rounded-t-full border" />
-        </Link>
+        <ul className="mt-14 grid gap-5 sm:grid-cols-3">
+          {picks.map((h, i) => (
+            <li key={h.slug} data-reveal style={{ ["--reveal-delay" as string]: `${i * 100}ms` }}>
+              <Link href="/festive/diwali#collection" className="group block">
+                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+                  <Image
+                    src={h.image}
+                    alt={h.alt}
+                    fill
+                    sizes="(min-width: 640px) 30vw, 100vw"
+                    className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]"
+                  />
+                </div>
+                <p className="mt-4 font-serif text-2xl">{h.name}</p>
+                <p className="text-paper/55 mt-1 text-sm">{h.tags.join(" · ")}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
 }
 
 function RecentWork() {
-  const picks = ["bridesmaid-proposal-box", "rakhi-best-brother", "papa-birthday-box", "bhai-box"]
+  const picks = ["bhai-box", "arnav-nayan-invite", "rakhi-best-brother", "polaroid-memory-bag"]
     .map((slug) => work.find((w) => w.slug === slug))
     .filter((w) => w !== undefined);
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-24 md:py-36">
       <div className="wrap">
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHead eyebrow="Recent work" title="Made for someone," script="every time." />
-          <Link
-            href="/work"
-            className="group text-ink inline-flex items-center gap-2 text-sm font-medium"
-          >
-            See all our work
+        <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
+          <SectionHead eyebrow="Recent work" title="Made for someone," accent="every time." />
+          <Link href="/work" className={textLink}>
+            View all work{" "}
             <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
-        <ul className="mt-14 grid grid-cols-2 gap-x-5 gap-y-10 lg:grid-cols-4">
-          {picks.map((w) => (
-            <li key={w.slug}>
+        <ul className="mt-16 grid grid-cols-2 gap-x-5 gap-y-12 lg:grid-cols-4">
+          {picks.map((w, i) => (
+            <li key={w.slug} data-reveal style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}>
               <Link href={`/work?c=${w.category}`} className="group block">
-                <div className="bg-paper-deep relative aspect-[3/4] overflow-hidden rounded-t-full">
+                <div className="bg-paper-deep relative aspect-[4/5] overflow-hidden rounded-2xl">
                   <Image
                     src={w.image}
                     alt={w.alt}
                     fill
-                    sizes="(min-width: 1024px) 25vw, 50vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    sizes="(min-width: 1024px) 24vw, 50vw"
+                    className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]"
                   />
                 </div>
-                <p className="eyebrow mt-4">{w.occasion}</p>
-                <p className="font-display mt-1 text-lg">{w.title}</p>
+                <p className="eyebrow mt-5">{w.occasion}</p>
+                <p className="mt-1.5 font-serif text-2xl leading-tight">{w.title}</p>
               </Link>
             </li>
           ))}
@@ -235,14 +359,25 @@ function RecentWork() {
 
 function Process() {
   return (
-    <section className="py-24 md:py-32">
-      <div className="wrap">
-        <SectionHead eyebrow="How it works" title="From a conversation" script="to a keepsake." />
-        <ol className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+    <section className="border-line border-t py-24 md:py-32">
+      <div className="wrap grid gap-16 lg:grid-cols-[0.8fr_1.2fr]">
+        <SectionHead
+          eyebrow="How it works"
+          title="From a conversation"
+          accent="to a keepsake."
+          intro="Book 3–6 weeks ahead for weddings. Festive and bulk orders, as early as you can."
+        />
+        <ol className="grid gap-x-10 gap-y-12 sm:grid-cols-2">
           {process.map((step, i) => (
-            <li key={step.title} className="border-ink/20 border-t pt-6">
-              <span className="font-display text-gold text-sm tracking-[0.2em]">0{i + 1}</span>
-              <h3 className="mt-3 text-2xl">{step.title}</h3>
+            <li
+              key={step.title}
+              data-reveal
+              style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}
+            >
+              <span className="text-gold font-serif text-6xl leading-none italic">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="border-ink/15 mt-4 border-t pt-4 text-3xl">{step.title}</h3>
               <p className="text-ink-soft mt-2 leading-relaxed">{step.body}</p>
             </li>
           ))}
@@ -254,31 +389,43 @@ function Process() {
 
 function Founder() {
   return (
-    <section id="founder" className="bg-paper-deep py-24 md:py-32">
-      <div className="wrap grid items-center gap-14 md:grid-cols-[0.9fr_1.1fr]">
-        <div className="relative mx-auto w-full max-w-xs md:max-w-sm">
-          <div className="bg-sage-light/70 flex aspect-[4/5] items-center justify-center rounded-t-full">
-            {/* Swap for <Image> once the portrait arrives. */}
-            <span className="script text-olive text-8xl" aria-hidden="true">
-              {founder.initials}
-            </span>
-          </div>
+    <section id="founder" className="bg-paper-deep py-24 md:py-36">
+      <div className="wrap grid items-center gap-14 md:grid-cols-[0.85fr_1.15fr] lg:gap-24">
+        <div data-reveal className="relative mx-auto w-full max-w-sm">
+          {founder.portrait ? (
+            <div className="relative aspect-[4/5] overflow-hidden rounded-t-full">
+              <Image
+                src={founder.portrait}
+                alt={founder.name}
+                fill
+                sizes="(min-width: 768px) 30vw, 80vw"
+                className="object-cover"
+              />
+            </div>
+          ) : (
+            <div className="from-sage-light to-paper flex aspect-[4/5] flex-col items-center justify-center rounded-t-full bg-gradient-to-b">
+              <LogoMark className="size-28 opacity-90" />
+              <p className="eyebrow mt-6">Portrait coming soon</p>
+            </div>
+          )}
           <div
-            className="border-ink/20 pointer-events-none absolute -inset-3 rounded-t-full border"
+            className="border-gold/50 pointer-events-none absolute -inset-3 rounded-t-full border"
             aria-hidden="true"
           />
         </div>
-        <div>
-          <p className="eyebrow">Meet our founder</p>
-          <h2 className="mt-4 text-4xl md:text-5xl">{founder.name}</h2>
-          <p className="text-ink-soft font-display mt-2 text-sm tracking-[0.2em] uppercase">
-            {founder.title}
-          </p>
-          <blockquote className="mt-8 text-2xl leading-snug md:text-3xl">
-            <span className="script text-gold mr-1 text-5xl leading-none">“</span>
-            {founder.quote}
+        <div data-reveal style={{ ["--reveal-delay" as string]: "120ms" }}>
+          <p className="eyebrow">Meet the founder</p>
+          <blockquote className="mt-6 font-serif text-[2.2rem] leading-[1.15] md:text-5xl">
+            &ldquo;{founder.quote}&rdquo;
           </blockquote>
-          <div className="text-ink-soft mt-6 space-y-4 leading-relaxed">
+          <div className="mt-8 flex items-center gap-4">
+            <span className="bg-gold h-px w-10" />
+            <p>
+              <span className="font-semibold">{founder.name}</span>
+              <span className="text-ink-soft">, {founder.title}</span>
+            </p>
+          </div>
+          <div className="text-ink-soft mt-8 max-w-xl space-y-4 leading-relaxed">
             {founder.bio.map((p) => (
               <p key={p}>{p}</p>
             ))}
@@ -289,35 +436,25 @@ function Founder() {
   );
 }
 
-function Enquire() {
+function Testimonials() {
   return (
-    <section id="enquire" className="py-24 md:py-32">
-      <div className="wrap grid gap-14 md:grid-cols-[0.8fr_1.2fr]">
-        <div>
-          <SectionHead eyebrow="Enquire" title="Tell us who" script="you're gifting." />
-          <p className="text-ink-soft mt-6 max-w-sm leading-relaxed">
-            Share a few details and we&apos;ll come back with ideas, options and a quote. Prefer to
-            chat?
-          </p>
-          <ul className="mt-6 space-y-3">
-            <li>
-              <a
-                href={whatsappUrl("Hi Shaadi Drafts!")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-olive inline-flex items-center gap-3 transition-colors"
-              >
-                <WhatsAppIcon className="size-5" /> {site.phoneDisplay}
-              </a>
+    <section className="py-24 md:py-32">
+      <div className="wrap">
+        <SectionHead
+          eyebrow="Kind words"
+          title="From the people"
+          accent="we've gifted."
+          align="center"
+        />
+        <ul className="mt-16 grid gap-6 md:grid-cols-3">
+          {testimonials.map((t) => (
+            <li key={t.name} data-reveal className="bg-card border-line rounded-3xl border p-8">
+              <p className="font-serif text-2xl leading-snug">&ldquo;{t.quote}&rdquo;</p>
+              <p className="mt-6 text-sm font-semibold">{t.name}</p>
+              <p className="text-ink-soft text-sm">{t.context}</p>
             </li>
-            <li>
-              <a href={`mailto:${site.email}`} className="hover:text-olive transition-colors">
-                {site.email}
-              </a>
-            </li>
-          </ul>
-        </div>
-        <EnquiryForm />
+          ))}
+        </ul>
       </div>
     </section>
   );

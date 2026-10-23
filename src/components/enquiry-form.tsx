@@ -4,27 +4,30 @@ import { useActionState } from "react";
 import { submitEnquiry, type EnquiryState } from "@/app/actions";
 import { occasionOptions, type OccasionValue } from "@/lib/enquiry";
 import { buttonClass } from "./button";
-import { WhatsAppIcon } from "./icons";
+import { ArrowIcon, CheckIcon, WhatsAppIcon } from "./icons";
 
 const initial: EnquiryState = { status: "idle" };
 
 const field =
-  "w-full border-b border-ink/25 bg-transparent py-3 text-ink placeholder:text-ink-soft/60 outline-none transition-colors focus:border-ink aria-[invalid=true]:border-rose";
+  "mt-2 w-full rounded-xl border border-ink/12 bg-paper/60 px-4 py-3.5 text-[0.95rem] text-ink placeholder:text-ink-soft/55 outline-none transition focus:border-olive/60 focus:bg-card focus:ring-4 focus:ring-olive/10 aria-[invalid=true]:border-rose/70";
 
 export function EnquiryForm({ defaultOccasion = "wedding" }: { defaultOccasion?: OccasionValue }) {
   const [state, action, pending] = useActionState(submitEnquiry, initial);
 
   if (state.status === "success") {
     return (
-      <div role="status" className="border-line bg-card rounded-sm border p-8 md:p-10">
-        <p className="script text-olive text-4xl">thank you</p>
-        <p className="mt-3 text-lg">{state.message}</p>
+      <div role="status" className="flex min-h-[28rem] flex-col items-start justify-center">
+        <span className="bg-olive text-paper flex size-12 items-center justify-center rounded-full">
+          <CheckIcon className="size-6" />
+        </span>
+        <h3 className="mt-6 text-4xl">Thank you.</h3>
+        <p className="text-ink-soft mt-3 max-w-md text-lg leading-relaxed">{state.message}</p>
         {state.whatsapp && (
           <a
             href={state.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            className={`${buttonClass("solid")} mt-6`}
+            className={`${buttonClass("solid")} mt-8`}
           >
             <WhatsAppIcon className="size-4" /> Continue on WhatsApp
           </a>
@@ -37,7 +40,7 @@ export function EnquiryForm({ defaultOccasion = "wedding" }: { defaultOccasion?:
   const v = state.values ?? {};
 
   return (
-    <form action={action} noValidate className="grid gap-x-8 gap-y-7 sm:grid-cols-2">
+    <form action={action} noValidate className="grid gap-x-5 gap-y-5 sm:grid-cols-2">
       <Field label="Your name" error={err.name} id="name">
         <input
           id="name"
@@ -45,6 +48,7 @@ export function EnquiryForm({ defaultOccasion = "wedding" }: { defaultOccasion?:
           defaultValue={v.name}
           autoComplete="name"
           required
+          placeholder="Shraddha Sharma"
           className={field}
           aria-invalid={!!err.name}
           aria-describedby={err.name ? "name-error" : undefined}
@@ -59,39 +63,48 @@ export function EnquiryForm({ defaultOccasion = "wedding" }: { defaultOccasion?:
           inputMode="tel"
           autoComplete="tel"
           required
-          placeholder="+91"
+          placeholder="+91 98765 43210"
           className={field}
           aria-invalid={!!err.phone}
           aria-describedby={err.phone ? "phone-error" : undefined}
         />
       </Field>
-      <Field label="Email (optional)" error={err.email} id="email">
+      <Field label="Email" hint="optional" error={err.email} id="email">
         <input
           id="email"
           name="email"
           defaultValue={v.email}
           type="email"
           autoComplete="email"
+          placeholder="you@example.com"
           className={field}
           aria-invalid={!!err.email}
           aria-describedby={err.email ? "email-error" : undefined}
         />
       </Field>
       <Field label="Occasion" error={err.occasion} id="occasion">
-        <select
-          id="occasion"
-          name="occasion"
-          defaultValue={v.occasion ?? defaultOccasion}
-          className={`${field} appearance-none`}
-        >
-          {occasionOptions.map((o) => (
-            <option key={o.value} value={o.value}>
-              {o.label}
-            </option>
-          ))}
-        </select>
+        <div className="relative">
+          <select
+            id="occasion"
+            name="occasion"
+            defaultValue={v.occasion ?? defaultOccasion}
+            className={`${field} appearance-none pr-10`}
+          >
+            {occasionOptions.map((o) => (
+              <option key={o.value} value={o.value}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+          <span
+            aria-hidden="true"
+            className="text-ink-soft pointer-events-none absolute top-1/2 right-4 mt-1 -translate-y-1/2 text-xs"
+          >
+            ▾
+          </span>
+        </div>
       </Field>
-      <Field label="How many gifts / guests?" id="quantity" className="sm:col-span-2">
+      <Field label="How many gifts or guests?" id="quantity" className="sm:col-span-2">
         <input
           id="quantity"
           name="quantity"
@@ -105,8 +118,8 @@ export function EnquiryForm({ defaultOccasion = "wedding" }: { defaultOccasion?:
           id="message"
           name="message"
           defaultValue={v.message}
-          rows={3}
-          placeholder="Dates, city, budget, the feeling you're after…"
+          rows={4}
+          placeholder="Dates, city, budget, and who it's for…"
           className={`${field} resize-y`}
           aria-invalid={!!err.message}
         />
@@ -119,11 +132,14 @@ export function EnquiryForm({ defaultOccasion = "wedding" }: { defaultOccasion?:
         </label>
       </div>
 
-      <div className="flex flex-col items-start gap-4 sm:col-span-2 sm:flex-row sm:items-center">
-        <button type="submit" disabled={pending} className={buttonClass("solid")}>
+      <div className="flex flex-col items-start gap-4 pt-2 sm:col-span-2 sm:flex-row sm:items-center">
+        <button type="submit" disabled={pending} className={`${buttonClass("solid")} group`}>
           {pending ? "Sending…" : "Send enquiry"}
+          {!pending && (
+            <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+          )}
         </button>
-        {state.status === "error" && (
+        {state.status === "error" ? (
           <p role="alert" className="text-rose text-sm">
             {state.message}{" "}
             {state.whatsapp && (
@@ -137,6 +153,10 @@ export function EnquiryForm({ defaultOccasion = "wedding" }: { defaultOccasion?:
               </a>
             )}
           </p>
+        ) : (
+          <p className="text-ink-soft text-sm">
+            We&apos;ll reply with ideas and a quote, usually the same day.
+          </p>
         )}
       </div>
     </form>
@@ -145,12 +165,14 @@ export function EnquiryForm({ defaultOccasion = "wedding" }: { defaultOccasion?:
 
 function Field({
   label,
+  hint,
   id,
   error,
   className = "",
   children,
 }: {
   label: string;
+  hint?: string;
   id: string;
   error?: string;
   className?: string;
@@ -158,8 +180,8 @@ function Field({
 }) {
   return (
     <div className={className}>
-      <label htmlFor={id} className="eyebrow block">
-        {label}
+      <label htmlFor={id} className="text-ink text-[0.85rem] font-semibold">
+        {label} {hint && <span className="text-ink-soft font-normal">({hint})</span>}
       </label>
       {children}
       {error && (

@@ -1,28 +1,36 @@
 @import "tailwindcss";
 
-/* Brand tokens carried over from the original Shaadi Drafts site */
 @theme {
-  --color-paper: #f7f3e7;
-  --color-paper-deep: #efe9d6;
-  --color-card: #fcfaf1;
-  --color-ink: #3f4a27;
-  --color-ink-soft: #79815e;
-  --color-olive: #5e6b37;
-  --color-olive-deep: #49542b;
+  /* Warm ivory, olive and antique gold: carried from the original brand, deepened for contrast */
+  --color-paper: #f6f1e7;
+  --color-paper-deep: #ece4d2;
+  --color-card: #fbf8f1;
+  --color-ink: #262c1d;
+  --color-ink-soft: #6a6f5a;
+  --color-olive: #4f5b2e;
+  --color-olive-deep: #3b4422;
   --color-sage: #8a9668;
-  --color-sage-light: #cdd3ac;
+  --color-sage-light: #d5d9bc;
   --color-rose: #9c5b6a;
-  --color-gold: #d9b96b;
-  --color-gold-soft: #ead7a4;
-  --color-night: #1f241a;
-  --color-line: rgb(63 74 39 / 0.16);
+  --color-gold: #c6a15b;
+  --color-gold-soft: #e7d6a8;
+  --color-night: #161a11;
+  --color-line: rgb(38 44 29 / 0.12);
 
-  --font-display: var(--font-jost), "Century Gothic", "Futura", system-ui, sans-serif;
-  --font-body: var(--font-karla), system-ui, sans-serif;
-  --font-script: var(--font-great-vibes), "Brush Script MT", cursive;
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-brand: var(--font-jost), "Century Gothic", Futura, sans-serif;
 
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+
+  --animate-marquee: marquee 40s linear infinite;
   --animate-flicker: flicker 2.4s ease-in-out infinite;
-  --animate-rise: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
 
   @keyframes flicker {
     0%,
@@ -39,17 +47,6 @@
       opacity: 0.96;
     }
   }
-
-  @keyframes rise {
-    from {
-      opacity: 0;
-      transform: translateY(14px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
 }
 
 @layer base {
@@ -61,17 +58,31 @@
   body {
     background: var(--color-paper);
     color: var(--color-ink);
-    font-family: var(--font-body);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+  }
+
+  /* A barely-there paper grain */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   h1,
   h2,
   h3 {
-    font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: -0.01em;
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    line-height: 1.05;
     text-wrap: balance;
   }
 
@@ -79,14 +90,18 @@
     text-wrap: pretty;
   }
 
+  em {
+    font-style: italic;
+  }
+
   ::selection {
-    background: var(--color-sage-light);
+    background: var(--color-gold-soft);
   }
 
   :focus-visible {
     outline: 2px solid var(--color-olive);
     outline-offset: 3px;
-    border-radius: 2px;
+    border-radius: 4px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -106,34 +121,45 @@
 @layer components {
   .wrap {
     width: 100%;
-    max-width: 76rem;
+    max-width: 82rem;
     margin-inline: auto;
     padding-inline: 1.25rem;
   }
 
   @media (min-width: 768px) {
     .wrap {
-      padding-inline: 2rem;
+      padding-inline: 2.5rem;
     }
   }
 
   .eyebrow {
-    font-family: var(--font-display);
-    font-size: 0.72rem;
-    font-weight: 500;
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 600;
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--color-ink-soft);
   }
 
-  .script {
-    font-family: var(--font-script);
-    font-weight: 400;
-    letter-spacing: 0;
+  .display {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 0.98;
   }
 
-  .hairline {
-    height: 1px;
-    background: var(--color-line);
+  /* Scroll reveal: only hidden once JS has confirmed it can reveal it again */
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(22px);
+    transition:
+      opacity 0.9s var(--ease-out-soft),
+      transform 0.9s var(--ease-out-soft);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .js [data-reveal][data-visible] {
+    opacity: 1;
+    transform: none;
   }
 }
