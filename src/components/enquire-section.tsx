@@ -2,7 +2,7 @@ import { site } from "@/content/site";
 import type { OccasionValue } from "@/lib/enquiry";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { EnquiryForm } from "./enquiry-form";
-import { ArrowIcon, InstagramIcon, MailIcon, WhatsAppIcon } from "./icons";
+import { ArrowIcon, DownloadIcon, InstagramIcon, MailIcon, WhatsAppIcon } from "./icons";
 
 export function EnquireSection({
   eyebrow = "Start a gift",
@@ -42,6 +42,12 @@ export function EnquireSection({
                 icon={<MailIcon className="size-5" />}
                 label="Email"
                 value={site.email}
+              />
+              <ContactTile
+                href="/brochure/shaadi-drafts-brochure.pdf"
+                icon={<DownloadIcon className="size-5" />}
+                label="Brochure · PDF, 12 pages"
+                value="Download our brochure"
               />
               <ContactTile
                 href={site.social.instagram}

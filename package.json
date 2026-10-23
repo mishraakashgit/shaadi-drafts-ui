@@ -14,7 +14,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "brochure": "node scripts/build-brochure.mjs"
   },
   "dependencies": {
     "next": "^16.4.2",

@@ -51,6 +51,15 @@ export function Footer() {
                 Custom gifts
               </Link>
             </li>
+            <li>
+              <a
+                href="/brochure/shaadi-drafts-brochure.pdf"
+                download
+                className="hover:text-paper transition-colors"
+              >
+                Download brochure (PDF)
+              </a>
+            </li>
           </FooterCol>
           <FooterCol title="Contact">
             <li>
