@@ -26,6 +26,9 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Amplify sets AWS_COMMIT_ID per build. Tagging assets with it lets a browser holding a page from an
+  // older deploy reload cleanly instead of requesting JavaScript files that no longer exist.
+  deploymentId: process.env.AWS_COMMIT_ID?.slice(0, 12),
   images: { formats: ["image/avif", "image/webp"] },
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }];

@@ -1,7 +1,12 @@
+"use client";
+
 import Link from "next/link";
+import { useDaysToDiwali } from "./days-to-diwali";
 import { ArrowIcon } from "./icons";
 
-export function DiwaliBar({ days }: { days: number }) {
+export function DiwaliBar({ days: initial }: { days: number }) {
+  const days = useDaysToDiwali(initial);
+  if (days <= 0) return null;
   return (
     <Link
       href="/festive/diwali"

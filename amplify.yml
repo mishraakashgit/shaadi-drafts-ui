@@ -15,7 +15,4 @@ frontend:
     baseDirectory: .next
     files:
       - "**/*"
-  cache:
-    paths:
-      - .next/cache/**/*
-      - node_modules/**/*
+  # Build caching is off so every deploy starts clean; re-enable once deploys are stable.
