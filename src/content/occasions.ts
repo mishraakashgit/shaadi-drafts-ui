@@ -14,12 +14,13 @@ export const occasions: Occasion[] = [
     slug: "weddings",
     title: "Weddings",
     summary:
-      "From the roka to the vidaai: invitations, hampers, favours and proposals, designed as one matching story.",
+      "Every phase of the celebration, from save-the-dates to post-wedding thank-yous, designed as one matching story.",
     items: [
-      "Invitation suites",
+      "Save the dates & invitations",
+      "Signage",
       "Bridesmaid & groomsman boxes",
-      "Welcome hampers",
-      "Return favours",
+      "Hampers & return favours",
+      "Post-wedding stationery",
     ],
     image: "/work/save-the-date-shraddha-shubham.webp",
     alt: "Layered arch save the date cards with lavender sprigs",
@@ -49,8 +50,8 @@ export const occasions: Occasion[] = [
   {
     slug: "custom",
     title: "Custom",
-    summary: "Birthdays, anniversaries, or a gift that doesn't have a name yet.",
-    items: ["Personalised boxes", "Photo keepsakes"],
+    summary: "Birthdays, anniversaries, custom card games, or a gift that doesn't have a name yet.",
+    items: ["Personalised boxes", "Custom card games", "Photo keepsakes"],
     image: "/work/papa-birthday-box.jpg",
     alt: "Personalised birthday box for a father with a framed photo and wallet",
     href: "/work?c=personal",
@@ -72,12 +73,14 @@ export const process = [
 ];
 
 export const services = [
-  "Wedding gifting",
+  "Save the dates",
   "Invitations & monograms",
+  "Wedding signage",
   "Bridesmaid boxes",
+  "Hampers & favours",
+  "Post-wedding stationery",
   "Diwali hampers",
   "Rakhi gifts",
-  "Return favours",
+  "Custom card games",
   "Corporate gifting",
-  "Custom keepsakes",
 ];

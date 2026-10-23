@@ -250,7 +250,10 @@ function Studio() {
           </p>
           <dl className="border-ink/15 mt-12 grid gap-8 border-t pt-8 sm:grid-cols-3">
             {[
-              ["Designed in-house", "Every card, tag, monogram and box is drawn by our team."],
+              [
+                "Designed by an architect",
+                "Every card, tag, monogram and box is drawn in-house, with an eye for detail.",
+              ],
               ["One or a thousand", "A single proposal box or bulk favours, with the same care."],
               ["Pan-India delivery", "Packed to travel, shipped wherever your people are."],
             ].map(([t, d]) => (
@@ -320,7 +323,7 @@ function DiwaliFeature({ days }: { days: number }) {
 }
 
 function RecentWork() {
-  const picks = ["bhai-box", "arnav-nayan-invite", "rakhi-best-brother", "polaroid-memory-bag"]
+  const picks = ["bhai-box", "arnav-nayan-invite", "card-game-couples", "rakhi-best-brother"]
     .map((slug) => work.find((w) => w.slug === slug))
     .filter((w) => w !== undefined);
   return (
@@ -390,45 +393,44 @@ function Process() {
 function Founder() {
   return (
     <section id="founder" className="bg-paper-deep py-24 md:py-36">
-      <div className="wrap grid items-center gap-14 md:grid-cols-[0.85fr_1.15fr] lg:gap-24">
-        <div data-reveal className="relative mx-auto w-full max-w-sm">
-          {founder.portrait ? (
-            <div className="relative aspect-[4/5] overflow-hidden rounded-t-full">
-              <Image
-                src={founder.portrait}
-                alt={founder.name}
-                fill
-                sizes="(min-width: 768px) 30vw, 80vw"
-                className="object-cover"
-              />
-            </div>
-          ) : (
-            <div className="from-sage-light to-paper flex aspect-[4/5] flex-col items-center justify-center rounded-t-full bg-gradient-to-b">
-              <LogoMark className="size-28 opacity-90" />
-              <p className="eyebrow mt-6">Portrait coming soon</p>
-            </div>
-          )}
+      <div className="wrap grid items-start gap-16 md:grid-cols-[0.8fr_1.2fr] lg:gap-24">
+        <div data-reveal className="relative mx-auto w-full max-w-sm md:sticky md:top-32">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-t-full">
+            <Image
+              src={founder.portrait}
+              alt={`${founder.name}, ${founder.title} of Shaadi Drafts`}
+              fill
+              sizes="(min-width: 768px) 30vw, 80vw"
+              className="object-cover object-[50%_35%]"
+            />
+          </div>
           <div
             className="border-gold/50 pointer-events-none absolute -inset-3 rounded-t-full border"
             aria-hidden="true"
           />
+          <div className="bg-card border-line absolute -bottom-6 left-1/2 w-max -translate-x-1/2 rounded-2xl border px-5 py-3 text-center shadow-[0_20px_40px_-24px_rgb(22_26_17/0.4)]">
+            <p className="font-serif text-xl leading-tight">{founder.name}</p>
+            <p className="text-ink-soft text-[0.78rem]">{founder.title} · Architect</p>
+          </div>
         </div>
-        <div data-reveal style={{ ["--reveal-delay" as string]: "120ms" }}>
+
+        <div data-reveal style={{ ["--reveal-delay" as string]: "120ms" }} className="pt-4 md:pt-0">
           <p className="eyebrow">Meet the founder</p>
-          <blockquote className="mt-6 font-serif text-[2.2rem] leading-[1.15] md:text-5xl">
-            &ldquo;{founder.quote}&rdquo;
-          </blockquote>
+          <div className="mt-7 space-y-4 font-serif text-[1.9rem] leading-[1.18] md:text-[2.5rem]">
+            {founder.intro.map((line) => (
+              <p key={line.accent}>
+                {line.before} <em className="text-olive">{line.accent}</em>
+              </p>
+            ))}
+          </div>
+          <div className="text-ink-soft border-ink/15 mt-10 max-w-xl space-y-5 border-t pt-8 text-[1.02rem] leading-relaxed">
+            {founder.bio.map((p) => (
+              <p key={p.slice(0, 24)}>{p}</p>
+            ))}
+          </div>
           <div className="mt-8 flex items-center gap-4">
             <span className="bg-gold h-px w-10" />
-            <p>
-              <span className="font-semibold">{founder.name}</span>
-              <span className="text-ink-soft">, {founder.title}</span>
-            </p>
-          </div>
-          <div className="text-ink-soft mt-8 max-w-xl space-y-4 leading-relaxed">
-            {founder.bio.map((p) => (
-              <p key={p}>{p}</p>
-            ))}
+            <p className="font-serif text-2xl italic">{founder.name.split(" ")[0]}</p>
           </div>
         </div>
       </div>
