@@ -47,6 +47,18 @@ The form validates on the server, rate-limits per IP and, when `RESEND_API_KEY`,
 `ENQUIRY_FROM_EMAIL` are set, emails the enquiry. Every successful submission also offers the visitor a
 pre-filled WhatsApp message, so nothing is lost if email isn't configured yet.
 
+## Brochure
+
+The 12-page brochure is designed in `brochure/brochure.html` and printed to PDF with Chromium:
+
+```bash
+npm run brochure            # public/brochure/shaadi-drafts-brochure.pdf (screen, ~6 MB, linked from the site)
+npm run brochure -- --print # brochure/out/shaadi-drafts-brochure-print.pdf (216 × 303 mm: A4 + 3 mm bleed)
+```
+
+It uses the photos in `public/` and the same fonts and colours as the site. Set `CHROMIUM_PATH` if
+Playwright's Chromium isn't installed.
+
 ## Analytics
 
 Google Analytics 4 (`G-PF6XLJN7V0`) loads on production builds only; set `NEXT_PUBLIC_GA_ID` to use another

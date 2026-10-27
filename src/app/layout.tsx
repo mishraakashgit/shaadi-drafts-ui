@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Jost, Manrope } from "next/font/google";
 import { Analytics } from "@/components/analytics";
 import { Footer } from "@/components/footer";
 import { RevealObserver } from "@/components/reveal-observer";
+import { SmoothScroll } from "@/components/smooth-scroll";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
 import { site } from "@/content/site";
 import "./globals.css";
@@ -68,6 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <WhatsAppFloat />
         <RevealObserver />
+        <SmoothScroll />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}

@@ -8,6 +8,7 @@ import { Header } from "@/components/header";
 import { ArrowIcon, CheckIcon } from "@/components/icons";
 import { LogoMark } from "@/components/logo";
 import { SectionHead } from "@/components/section-head";
+import { fogPalettes, VantaFog } from "@/components/vanta-fog";
 import { DIWALI_DATE, hampers } from "@/content/diwali";
 import { founder } from "@/content/founder";
 import { occasions, process, services } from "@/content/occasions";
@@ -41,80 +42,85 @@ export default function Home() {
 
 function Hero() {
   return (
-    <section className="wrap grid items-center gap-14 pt-12 pb-20 md:pt-16 lg:grid-cols-[1fr_1.05fr] lg:gap-10 lg:pt-20 lg:pb-28">
-      <div data-reveal>
-        <p className="eyebrow flex items-center gap-3">
-          <span className="bg-gold inline-block h-px w-8" /> A gifting &amp; design studio
-        </p>
-        <h1 className="display mt-7 text-[3.4rem] sm:text-7xl xl:text-[5.6rem]">
-          Gifts, drafted
-          <br />
-          with <em className="text-olive">meaning.</em>
-        </h1>
-        <p className="text-ink-soft mt-7 max-w-[30rem] text-lg leading-relaxed">
-          Wedding gifting, invitations, festive hampers and custom keepsakes. Designed in-house,
-          made by hand and delivered across India.
-        </p>
-        <div className="mt-10 flex flex-wrap gap-3">
-          <ButtonLink href="/#enquire" className="group">
-            Start a gift{" "}
-            <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-          </ButtonLink>
-          <ButtonLink href="/work" variant="outline">
-            See our work
-          </ButtonLink>
+    <section className="relative isolate overflow-hidden">
+      <div className="wrap grid items-center gap-14 pt-12 pb-20 md:pt-16 lg:grid-cols-[1fr_1.05fr] lg:gap-10 lg:pt-20 lg:pb-28">
+        <div data-reveal>
+          <p className="eyebrow flex items-center gap-3">
+            <span className="bg-gold inline-block h-px w-8" /> A gifting &amp; design studio
+          </p>
+          <h1 className="display mt-7 text-[3.4rem] sm:text-7xl xl:text-[5.6rem]">
+            Gifts, drafted
+            <br />
+            with <em className="text-olive">meaning.</em>
+          </h1>
+          <p className="text-ink-soft mt-7 max-w-[30rem] text-lg leading-relaxed">
+            Wedding gifting, invitations, festive hampers and custom keepsakes. Designed in-house,
+            made by hand and delivered across India.
+          </p>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <ButtonLink href="/#enquire" className="group">
+              Start a gift{" "}
+              <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+            </ButtonLink>
+            <ButtonLink href="/work" variant="outline">
+              See our work
+            </ButtonLink>
+          </div>
+          <ul className="text-ink-soft mt-12 grid gap-2.5 text-[0.88rem] sm:grid-cols-1">
+            {promises.map((p) => (
+              <li key={p} className="flex items-center gap-2.5">
+                <CheckIcon className="text-olive size-4 shrink-0" /> {p}
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="text-ink-soft mt-12 grid gap-2.5 text-[0.88rem] sm:grid-cols-1">
-          {promises.map((p) => (
-            <li key={p} className="flex items-center gap-2.5">
-              <CheckIcon className="text-olive size-4 shrink-0" /> {p}
-            </li>
-          ))}
-        </ul>
-      </div>
 
-      {/* Editorial mosaic of real work */}
-      <div
-        data-reveal
-        style={{ ["--reveal-delay" as string]: "150ms" }}
-        className="relative grid grid-cols-[1.35fr_1fr] gap-4"
-      >
-        <div className="relative aspect-[3/4] overflow-hidden rounded-t-full">
-          <Image
-            src="/work/bridesmaid-proposal-box.jpg"
-            alt="Will you be my bridesmaid proposal box in a sage keepsake chest"
-            fill
-            priority
-            sizes="(min-width: 1024px) 30vw, 55vw"
-            className="object-cover"
-          />
-        </div>
-        <div className="flex flex-col gap-4 pt-14">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+        {/* Editorial mosaic of real work */}
+        <div
+          data-reveal
+          style={{ ["--reveal-delay" as string]: "150ms" }}
+          className="relative grid grid-cols-[1.35fr_1fr] gap-4"
+        >
+          <div className="relative aspect-[3/4] overflow-hidden rounded-t-full">
             <Image
-              src="/diwali/pichwai-gift-box.jpg"
-              alt="Pichwai Diwali gift box with lotus Shubh Labh hangings"
+              src="/work/bridesmaid-proposal-box.jpg"
+              alt="Will you be my bridesmaid proposal box in a sage keepsake chest"
               fill
               priority
-              sizes="(min-width: 1024px) 22vw, 40vw"
+              sizes="(min-width: 1024px) 30vw, 55vw"
               className="object-cover"
             />
           </div>
-          <div className="relative aspect-square overflow-hidden rounded-2xl">
-            <Image
-              src="/diwali/ivory-rani-pink.jpg"
-              alt="Ivory gift box with a rani pink Deepawali card"
-              fill
-              sizes="(min-width: 1024px) 22vw, 40vw"
-              className="object-cover object-top"
-            />
+          <div className="flex flex-col gap-4 pt-14" data-parallax="0.07">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+              <Image
+                src="/diwali/pichwai-gift-box.jpg"
+                alt="Pichwai Diwali gift box with lotus Shubh Labh hangings"
+                fill
+                priority
+                sizes="(min-width: 1024px) 22vw, 40vw"
+                className="object-cover"
+              />
+            </div>
+            <div className="relative aspect-square overflow-hidden rounded-2xl">
+              <Image
+                src="/diwali/ivory-rani-pink.jpg"
+                alt="Ivory gift box with a rani pink Deepawali card"
+                fill
+                sizes="(min-width: 1024px) 22vw, 40vw"
+                className="object-cover object-top"
+              />
+            </div>
           </div>
-        </div>
-        <div className="bg-card/90 border-line absolute bottom-6 -left-3 max-w-[15rem] rounded-2xl border p-4 shadow-[0_20px_50px_-25px_rgb(22_26_17/0.45)] backdrop-blur sm:-left-8">
-          <p className="eyebrow !text-[0.62rem]">Bridesmaid proposal</p>
-          <p className="mt-1 font-serif text-xl leading-tight">
-            &ldquo;Will you be my bridesmaid?&rdquo;
-          </p>
+          <div
+            data-parallax="0.14"
+            className="bg-card/90 border-line absolute bottom-6 -left-3 max-w-[15rem] rounded-2xl border p-4 shadow-[0_20px_50px_-25px_rgb(22_26_17/0.45)] backdrop-blur sm:-left-8"
+          >
+            <p className="eyebrow !text-[0.62rem]">Bridesmaid proposal</p>
+            <p className="mt-1 font-serif text-xl leading-tight">
+              &ldquo;Will you be my bridesmaid?&rdquo;
+            </p>
+          </div>
         </div>
       </div>
     </section>
@@ -272,11 +278,12 @@ function DiwaliFeature({ days }: { days: number }) {
     .map((slug) => hampers.find((h) => h.slug === slug))
     .filter((h) => h !== undefined);
   return (
-    <section className="bg-night text-paper relative overflow-hidden py-24 md:py-32">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/2 h-[36rem] w-[60rem] -translate-x-1/2 rounded-full opacity-25 blur-3xl"
-        style={{ background: "radial-gradient(closest-side, #c6a15b, transparent)" }}
+    <section className="bg-night text-paper relative isolate overflow-hidden py-24 md:py-32">
+      <VantaFog
+        palette={fogPalettes.diya}
+        fallback={
+          "radial-gradient(60% 50% at 70% 40%, rgb(198 161 91 / 0.28), transparent 70%), #161a11"
+        }
       />
       <div className="wrap relative">
         <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
