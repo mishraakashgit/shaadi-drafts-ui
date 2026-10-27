@@ -29,6 +29,25 @@
 
   --animate-marquee: marquee 40s linear infinite;
   --animate-flicker: flicker 2.4s ease-in-out infinite;
+  --animate-kenburns: kenburns 6.5s ease-out both;
+  --animate-caption: caption 0.8s var(--ease-out-soft) both;
+
+  @keyframes kenburns {
+    from {
+      transform: scale(1.12);
+    }
+    to {
+      transform: scale(1.02);
+    }
+  }
+
+  @keyframes caption {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
   --animate-menu-in: menu-in 0.45s var(--ease-out-soft) both;
   --animate-menu-item: menu-item 0.6s var(--ease-out-soft) both;
 

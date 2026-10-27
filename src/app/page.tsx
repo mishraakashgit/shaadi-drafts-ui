@@ -7,9 +7,9 @@ import { EnquireSection } from "@/components/enquire-section";
 import { Header } from "@/components/header";
 import { ArrowIcon } from "@/components/icons";
 import { Carousel } from "@/components/carousel";
+import { HeroShowcase } from "@/components/hero-showcase";
 import { SectionHead } from "@/components/section-head";
-import { SilkBackground } from "@/components/silk-background";
-import { SpinningBadge } from "@/components/spinning-badge";
+import { FestiveBackground } from "@/components/festive-background";
 import { fogPalettes, VantaFog } from "@/components/vanta-fog";
 import { DIWALI_DATE, hampers } from "@/content/diwali";
 import { founder } from "@/content/founder";
@@ -29,7 +29,6 @@ export default function Home() {
         <Hero />
         <Marquee />
         <Occasions />
-        <Studio />
         {days > 0 && <DiwaliFeature days={days} />}
         <RecentWork />
         <Founder />
@@ -43,14 +42,14 @@ export default function Home() {
 function Hero() {
   return (
     <section className="relative isolate overflow-hidden">
-      <SilkBackground />
+      <FestiveBackground />
       {/* Keeps the headline side calm over the moving silk */}
       <div
         aria-hidden="true"
-        className="from-paper/85 via-paper/35 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r to-transparent"
+        className="from-paper/60 via-paper/15 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r to-transparent"
       />
       <div className="wrap grid items-center gap-14 pt-12 pb-20 md:pt-16 lg:grid-cols-[1fr_1.05fr] lg:gap-10 lg:pt-20 lg:pb-28">
-        <div data-reveal>
+        <div data-reveal data-calm>
           <p className="eyebrow flex items-center gap-3">
             <span className="bg-gold inline-block h-px w-8" /> A gifting &amp; design studio
           </p>
@@ -79,60 +78,12 @@ function Hero() {
           </div>
         </div>
 
-        {/* Editorial mosaic of real work */}
         <div
           data-reveal
           style={{ ["--reveal-delay" as string]: "150ms" }}
-          className="relative grid grid-cols-[1.35fr_1fr] gap-4"
+          className="pt-4 pb-6 lg:pt-0"
         >
-          <div data-reveal="image" className="relative aspect-[3/4] overflow-hidden rounded-t-full">
-            <Image
-              src="/work/bridesmaid-proposal-box.jpg"
-              alt="Will you be my bridesmaid proposal box in a sage keepsake chest"
-              fill
-              priority
-              sizes="(min-width: 1024px) 30vw, 55vw"
-              className="object-cover"
-            />
-          </div>
-          <div className="flex flex-col gap-4 pt-14" data-parallax="0.07">
-            <div
-              data-reveal="image"
-              style={{ ["--reveal-delay" as string]: "200ms" }}
-              className="relative aspect-[4/5] overflow-hidden rounded-2xl"
-            >
-              <Image
-                src="/diwali/pichwai-gift-box.jpg"
-                alt="Pichwai Diwali gift box with lotus Shubh Labh hangings"
-                fill
-                priority
-                sizes="(min-width: 1024px) 22vw, 40vw"
-                className="object-cover"
-              />
-            </div>
-            <div
-              data-reveal="image"
-              style={{ ["--reveal-delay" as string]: "380ms" }}
-              className="relative aspect-square overflow-hidden rounded-2xl"
-            >
-              <Image
-                src="/diwali/ivory-rani-pink.jpg"
-                alt="Ivory gift box with a rani pink Deepawali card"
-                fill
-                sizes="(min-width: 1024px) 22vw, 40vw"
-                className="object-cover object-top"
-              />
-            </div>
-          </div>
-          <div
-            data-parallax="0.14"
-            className="bg-card/90 border-line absolute bottom-6 -left-3 max-w-[15rem] rounded-2xl border p-4 shadow-[0_20px_50px_-25px_rgb(22_26_17/0.45)] backdrop-blur sm:-left-8"
-          >
-            <p className="eyebrow !text-[0.62rem]">Bridesmaid proposal</p>
-            <p className="mt-1 font-serif text-xl leading-tight">
-              &ldquo;Will you be my bridesmaid?&rdquo;
-            </p>
-          </div>
+          <HeroShowcase />
         </div>
       </div>
     </section>
@@ -239,37 +190,6 @@ function OccasionCard({
         <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
       </span>
     </Link>
-  );
-}
-
-function Studio() {
-  return (
-    <section className="bg-paper-deep py-20 md:py-32">
-      <div className="wrap grid items-center gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-14">
-        <div data-reveal className="relative mx-auto w-full max-w-md">
-          <div
-            data-reveal="image"
-            className="relative aspect-[4/3] overflow-hidden rounded-3xl md:aspect-[4/5]"
-          >
-            <Image
-              src="/diwali/organza-crate-detail.jpg"
-              alt="Close-up of a gold organza wrapped crate pinned with a mirror-work flower"
-              fill
-              sizes="(min-width: 1024px) 30vw, 90vw"
-              className="object-cover"
-            />
-          </div>
-          <SpinningBadge className="absolute -right-3 -bottom-8 size-28 drop-shadow-xl md:-right-12 md:-bottom-10 md:size-36" />
-        </div>
-        <div data-reveal style={{ ["--reveal-delay" as string]: "120ms" }}>
-          <p className="eyebrow">The studio</p>
-          <p className="mt-6 font-serif text-[2rem] leading-[1.2] md:text-[2.7rem]">
-            We treat every gift like a wedding invitation: <em className="text-olive">drafted</em>,
-            refined and finished by hand, until it could only have come from you.
-          </p>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -384,13 +304,8 @@ function Founder() {
   return (
     <section
       id="founder"
-      className="bg-olive-deep text-paper relative isolate overflow-hidden py-20 md:py-28"
+      className="bg-olive-deep text-paper relative overflow-hidden py-20 md:py-28"
     >
-      <VantaFog
-        palette={fogPalettes.olive}
-        speed={0.7}
-        fallback="radial-gradient(55% 60% at 80% 30%, rgb(198 161 91 / 0.22), transparent 70%), #3b4422"
-      />
       <div className="wrap grid items-center gap-10 md:grid-cols-[auto_1fr] md:gap-16">
         <div data-reveal className="relative mx-auto w-44 md:w-64">
           <div data-reveal="image" className="relative aspect-[4/5] overflow-hidden rounded-t-full">
