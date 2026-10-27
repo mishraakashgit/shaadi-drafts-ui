@@ -1,14 +1,17 @@
 "use client";
 
-import { Children, useEffect, useRef, useState } from "react";
+import { Children, useEffect, useRef } from "react";
+import type { Swiper as SwiperInstance } from "swiper";
 import { ArrowIcon } from "./icons";
 
 /**
- * A swipeable, snapping carousel on small screens that becomes a normal grid from `md` up.
+ * A Swiper carousel on phones that becomes a normal grid from `md` up (Swiper is destroyed there, so
+ * the same markup serves both and nothing renders twice).
  *
  * - `grid`: classes for the desktop layout, e.g. "md:grid-cols-3 md:gap-6"
- * - `slide`: width of each slide on mobile (default 82% so the next card peeks in)
+ * - `slide`: width of each slide on phones (default 82% so the next card peeks in)
  * - `spans`: optional per-slide desktop classes, e.g. ["md:col-span-2", ""]
+ * - `effect`: "slide" (focus on the active card) or "cards" (a stacked deck)
  */
 export function Carousel({
   children,
@@ -17,6 +20,7 @@ export function Carousel({
   slide = "w-[82%] sm:w-[46%]",
   spans = [],
   tone = "ink",
+  effect = "slide",
 }: {
   children: React.ReactNode;
   label: string;
@@ -24,86 +28,109 @@ export function Carousel({
   slide?: string;
   spans?: string[];
   tone?: "ink" | "light";
+  effect?: "slide" | "cards";
 }) {
-  const track = useRef<HTMLDivElement>(null);
+  const root = useRef<HTMLDivElement>(null);
+  const pagination = useRef<HTMLDivElement>(null);
+  const prev = useRef<HTMLButtonElement>(null);
+  const next = useRef<HTMLButtonElement>(null);
   const items = Children.toArray(children);
-  const [active, setActive] = useState(0);
+  const cards = effect === "cards";
 
   useEffect(() => {
-    const el = track.current;
-    if (!el) return;
-    const onScroll = () => {
-      const first = el.firstElementChild as HTMLElement | null;
-      if (!first) return;
-      const step = first.offsetWidth + parseFloat(getComputedStyle(el).columnGap || "0");
-      setActive(Math.min(items.length - 1, Math.round(el.scrollLeft / step)));
-    };
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
-  }, [items.length]);
+    const el = root.current;
+    if (!el || items.length < 2) return;
+    const mobile = window.matchMedia("(max-width: 767.98px)");
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let swiper: SwiperInstance | null = null;
+    let alive = true;
 
-  const go = (i: number) => {
-    const el = track.current;
-    const target = el?.children[Math.max(0, Math.min(items.length - 1, i))] as
-      HTMLElement | undefined;
-    if (el && target)
-      el.scrollTo({ left: target.offsetLeft - el.offsetLeft - el.clientLeft, behavior: "smooth" });
-  };
+    const sync = async () => {
+      if (mobile.matches && !swiper) {
+        const [{ default: Swiper }, { A11y, EffectCards, Keyboard, Navigation, Pagination }] =
+          await Promise.all([import("swiper"), import("swiper/modules")]);
+        if (!alive || swiper || !mobile.matches) return;
+        swiper = new Swiper(el, {
+          modules: [A11y, Keyboard, Navigation, Pagination, ...(cards ? [EffectCards] : [])],
+          speed: reduced ? 0 : 650,
+          grabCursor: true,
+          keyboard: { enabled: true, onlyInViewport: true },
+          a11y: {
+            containerRoleDescriptionMessage: "carousel",
+            itemRoleDescriptionMessage: "slide",
+          },
+          navigation: { prevEl: prev.current, nextEl: next.current },
+          pagination: {
+            el: pagination.current,
+            clickable: true,
+            bulletClass: "sd-bullet",
+            bulletActiveClass: "sd-bullet-active",
+          },
+          ...(cards
+            ? {
+                effect: "cards",
+                cardsEffect: { perSlideOffset: 9, perSlideRotate: 3, slideShadows: false },
+              }
+            : {
+                slidesPerView: "auto",
+                spaceBetween: 14,
+                slidesOffsetBefore: 20,
+                slidesOffsetAfter: 20,
+              }),
+        });
+      } else if (!mobile.matches && swiper) {
+        swiper.destroy(true, true);
+        swiper = null;
+      }
+    };
+
+    void sync();
+    mobile.addEventListener("change", sync);
+    return () => {
+      alive = false;
+      mobile.removeEventListener("change", sync);
+      swiper?.destroy(true, true);
+    };
+  }, [items.length, cards]);
 
   const light = tone === "light";
+  const navClass = `flex size-10 items-center justify-center rounded-full border transition active:scale-95 ${
+    light ? "border-paper/25 text-paper" : "border-ink/15 text-ink"
+  }`;
 
   return (
-    <div role="region" aria-roledescription="carousel" aria-label={label}>
+    <div
+      role="region"
+      aria-label={label}
+      data-tone={tone}
+      className={`sd-carousel ${cards ? "sd-cards overflow-x-clip px-4 py-3 md:overflow-visible md:p-0" : ""}`}
+    >
       <div
-        ref={track}
-        className={`-mx-5 flex snap-x snap-mandatory scroll-px-5 [scrollbar-width:none] gap-4 overflow-x-auto overscroll-x-contain px-5 pb-1 md:mx-0 md:grid md:snap-none md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden ${grid}`}
+        ref={root}
+        className={`swiper md:!overflow-visible ${cards ? "mx-auto w-[78%] !overflow-visible md:w-auto" : "-mx-5 md:mx-0"}`}
       >
-        {items.map((child, i) => (
-          <div
-            key={i}
-            role="group"
-            aria-roledescription="slide"
-            aria-label={`${i + 1} of ${items.length}`}
-            className={`shrink-0 snap-start md:w-auto ${slide} ${spans[i] ?? ""}`}
-          >
-            {child}
-          </div>
-        ))}
+        <div className={`swiper-wrapper md:!grid md:!transform-none ${grid}`}>
+          {items.map((child, i) => (
+            <div
+              key={i}
+              className={`swiper-slide !h-auto md:!w-auto ${cards ? "" : slide} ${spans[i] ?? ""}`}
+            >
+              {child}
+            </div>
+          ))}
+        </div>
       </div>
 
       {items.length > 1 && (
         <div className="mt-6 flex items-center justify-between md:hidden">
-          <div className="flex items-center gap-1.5">
-            {items.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                aria-label={`Go to slide ${i + 1}`}
-                aria-current={i === active}
-                onClick={() => go(i)}
-                className={`h-1.5 rounded-full transition-all duration-500 ${
-                  i === active
-                    ? `w-6 ${light ? "bg-gold" : "bg-ink"}`
-                    : `w-1.5 ${light ? "bg-paper/30" : "bg-ink/20"}`
-                }`}
-              />
-            ))}
-          </div>
+          <div ref={pagination} className="flex items-center gap-1.5" />
           <div className="flex gap-2">
-            {[-1, 1].map((dir) => (
-              <button
-                key={dir}
-                type="button"
-                aria-label={dir < 0 ? "Previous" : "Next"}
-                disabled={dir < 0 ? active === 0 : active === items.length - 1}
-                onClick={() => go(active + dir)}
-                className={`flex size-10 items-center justify-center rounded-full border transition disabled:opacity-30 ${
-                  light ? "border-paper/25 text-paper" : "border-ink/15 text-ink"
-                }`}
-              >
-                <ArrowIcon className={`size-4 ${dir < 0 ? "rotate-180" : ""}`} />
-              </button>
-            ))}
+            <button ref={prev} type="button" aria-label="Previous slide" className={navClass}>
+              <ArrowIcon className="size-4 rotate-180" />
+            </button>
+            <button ref={next} type="button" aria-label="Next slide" className={navClass}>
+              <ArrowIcon className="size-4" />
+            </button>
           </div>
         </div>
       )}

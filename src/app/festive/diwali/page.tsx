@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Accordion } from "@/components/accordion";
 import { ButtonLink, textLink } from "@/components/button";
 import { Carousel } from "@/components/carousel";
 import { DaysToDiwali } from "@/components/days-to-diwali";
@@ -89,9 +90,14 @@ function Hero({ days }: { days: number }) {
             </p>
           )}
           <h1 className="display mt-8 text-[3.6rem] sm:text-7xl xl:text-[6rem]">
-            Light up
-            <br />
-            <em className="text-gold">their Diwali.</em>
+            <span className="line-mask">
+              <span>Light up</span>
+            </span>
+            <span className="line-mask">
+              <span style={{ ["--line-delay" as string]: "140ms" }}>
+                <em className="text-gold">their Diwali.</em>
+              </span>
+            </span>
           </h1>
           <p className="text-paper/65 mt-7 max-w-md text-lg leading-relaxed">
             Hampers for family, friends and teams: made by hand, personalised to the last tag and
@@ -336,21 +342,8 @@ function Faqs() {
     <section className="py-20 md:py-36">
       <div className="wrap grid gap-14 lg:grid-cols-[0.8fr_1.2fr]">
         <SectionHead eyebrow="Good to know" title="Questions," accent="answered." />
-        <div data-reveal className="border-ink/15 border-t">
-          {diwaliFaqs.map((f) => (
-            <details key={f.q} className="group border-ink/15 border-b">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-7 font-serif text-2xl [&::-webkit-details-marker]:hidden">
-                {f.q}
-                <span
-                  aria-hidden="true"
-                  className="border-ink/20 flex size-9 shrink-0 items-center justify-center rounded-full border font-sans text-lg transition-transform duration-300 group-open:rotate-45"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="text-ink-soft -mt-2 max-w-xl pb-7 leading-relaxed">{f.a}</p>
-            </details>
-          ))}
+        <div data-reveal>
+          <Accordion items={diwaliFaqs} />
         </div>
       </div>
     </section>

@@ -10,7 +10,7 @@ const styles = {
 } as const;
 
 export const buttonBase =
-  "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[0.9rem] font-semibold tracking-[-0.005em] transition-all duration-300 disabled:opacity-60";
+  "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[0.9rem] font-semibold tracking-[-0.005em] transition-[background-color,border-color,color,transform] duration-300 ease-out disabled:opacity-60";
 
 type Variant = keyof typeof styles;
 type Props = ComponentProps<typeof Link> & { variant?: Variant };
@@ -19,6 +19,7 @@ export function ButtonLink({ variant = "solid", className = "", ...props }: Prop
   const external = typeof props.href === "string" && props.href.startsWith("http");
   return (
     <Link
+      data-magnetic
       {...props}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       className={`${buttonBase} ${styles[variant]} ${className}`}

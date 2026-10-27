@@ -6,9 +6,9 @@ import { DiwaliBar } from "@/components/diwali-bar";
 import { EnquireSection } from "@/components/enquire-section";
 import { Header } from "@/components/header";
 import { ArrowIcon } from "@/components/icons";
-import { LogoMark } from "@/components/logo";
 import { Carousel } from "@/components/carousel";
 import { SectionHead } from "@/components/section-head";
+import { SpinningBadge } from "@/components/spinning-badge";
 import { fogPalettes, VantaFog } from "@/components/vanta-fog";
 import { DIWALI_DATE, hampers } from "@/content/diwali";
 import { founder } from "@/content/founder";
@@ -48,9 +48,14 @@ function Hero() {
             <span className="bg-gold inline-block h-px w-8" /> A gifting &amp; design studio
           </p>
           <h1 className="display mt-7 text-[3.4rem] sm:text-7xl xl:text-[5.6rem]">
-            Gifts, drafted
-            <br />
-            with <em className="text-olive">meaning.</em>
+            <span className="line-mask">
+              <span>Gifts, drafted</span>
+            </span>
+            <span className="line-mask">
+              <span style={{ ["--line-delay" as string]: "140ms" }}>
+                with <em className="text-olive">meaning.</em>
+              </span>
+            </span>
           </h1>
           <p className="text-ink-soft mt-7 max-w-[30rem] text-lg leading-relaxed">
             Wedding gifting, invitations, festive hampers and custom keepsakes. Designed in-house,
@@ -73,7 +78,7 @@ function Hero() {
           style={{ ["--reveal-delay" as string]: "150ms" }}
           className="relative grid grid-cols-[1.35fr_1fr] gap-4"
         >
-          <div className="relative aspect-[3/4] overflow-hidden rounded-t-full">
+          <div data-reveal="image" className="relative aspect-[3/4] overflow-hidden rounded-t-full">
             <Image
               src="/work/bridesmaid-proposal-box.jpg"
               alt="Will you be my bridesmaid proposal box in a sage keepsake chest"
@@ -84,7 +89,11 @@ function Hero() {
             />
           </div>
           <div className="flex flex-col gap-4 pt-14" data-parallax="0.07">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+            <div
+              data-reveal="image"
+              style={{ ["--reveal-delay" as string]: "200ms" }}
+              className="relative aspect-[4/5] overflow-hidden rounded-2xl"
+            >
               <Image
                 src="/diwali/pichwai-gift-box.jpg"
                 alt="Pichwai Diwali gift box with lotus Shubh Labh hangings"
@@ -94,7 +103,11 @@ function Hero() {
                 className="object-cover"
               />
             </div>
-            <div className="relative aspect-square overflow-hidden rounded-2xl">
+            <div
+              data-reveal="image"
+              style={{ ["--reveal-delay" as string]: "380ms" }}
+              className="relative aspect-square overflow-hidden rounded-2xl"
+            >
               <Image
                 src="/diwali/ivory-rani-pink.jpg"
                 alt="Ivory gift box with a rani pink Deepawali card"
@@ -227,7 +240,10 @@ function Studio() {
     <section className="bg-paper-deep py-20 md:py-32">
       <div className="wrap grid items-center gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-14">
         <div data-reveal className="relative mx-auto w-full max-w-md">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl md:aspect-[4/5]">
+          <div
+            data-reveal="image"
+            className="relative aspect-[4/3] overflow-hidden rounded-3xl md:aspect-[4/5]"
+          >
             <Image
               src="/diwali/organza-crate-detail.jpg"
               alt="Close-up of a gold organza wrapped crate pinned with a mirror-work flower"
@@ -236,7 +252,7 @@ function Studio() {
               className="object-cover"
             />
           </div>
-          <LogoMark className="absolute -right-3 -bottom-6 size-20 drop-shadow-xl md:-right-10 md:-bottom-8 md:size-28" />
+          <SpinningBadge className="absolute -right-3 -bottom-8 size-28 drop-shadow-xl md:-right-12 md:-bottom-10 md:size-36" />
         </div>
         <div data-reveal style={{ ["--reveal-delay" as string]: "120ms" }}>
           <p className="eyebrow">The studio</p>
@@ -283,7 +299,12 @@ function DiwaliFeature({ days }: { days: number }) {
           </ButtonLink>
         </div>
         <div className="mt-12 md:mt-14">
-          <Carousel label="Diwali hampers" grid="md:grid-cols-3 md:gap-5" tone="light">
+          <Carousel
+            label="Diwali hampers"
+            grid="md:grid-cols-3 md:gap-5"
+            tone="light"
+            effect="cards"
+          >
             {picks.map((h, i) => (
               <div
                 key={h.slug}
@@ -327,7 +348,7 @@ function RecentWork() {
           </Link>
         </div>
         <div className="mt-12 md:mt-16">
-          <Carousel label="Recent work" grid="md:grid-cols-4 md:gap-5" slide="w-[72%] sm:w-[40%]">
+          <Carousel label="Recent work" grid="md:grid-cols-4 md:gap-5" effect="cards">
             {picks.map((w, i) => (
               <div key={w.slug} data-reveal style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}>
                 <Link href={`/work?c=${w.category}`} className="group block">
@@ -365,7 +386,7 @@ function Founder() {
       />
       <div className="wrap grid items-center gap-10 md:grid-cols-[auto_1fr] md:gap-16">
         <div data-reveal className="relative mx-auto w-44 md:w-64">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-t-full">
+          <div data-reveal="image" className="relative aspect-[4/5] overflow-hidden rounded-t-full">
             <Image
               src={founder.portrait}
               alt={`${founder.name}, ${founder.title} of Shaadi Drafts`}

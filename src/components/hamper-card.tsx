@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { Hamper } from "@/content/diwali";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { textLink } from "./button";
+import { Collapsible } from "./collapsible";
 import { ArrowIcon } from "./icons";
 
 const sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
@@ -89,26 +90,45 @@ export function HamperCard({
         </div>
       )}
 
-      <ul
-        className="text-ink-soft border-line mt-5 space-y-1.5 border-t pt-5 text-[0.88rem]"
-        aria-live="polite"
-      >
-        {contents.map((c) => (
-          <li
-            key={c}
-            className="before:bg-gold flex items-center gap-3 before:size-1 before:shrink-0 before:rounded-full before:content-['']"
+      <Collapsible
+        className="border-line mt-5 border-t"
+        trigger={({ open, toggle, id }) => (
+          <button
+            type="button"
+            onClick={toggle}
+            aria-expanded={open}
+            aria-controls={id}
+            className="text-ink flex w-full items-center justify-between py-4 text-[0.85rem] font-semibold"
           >
-            {c}
-          </li>
-        ))}
-      </ul>
+            What&apos;s inside{" "}
+            <span className="text-ink-soft ml-1.5 font-normal">({contents.length} items)</span>
+            <span
+              aria-hidden="true"
+              className={`ml-auto text-lg leading-none transition-transform duration-500 ${open ? "rotate-45" : ""}`}
+            >
+              +
+            </span>
+          </button>
+        )}
+      >
+        <ul className="text-ink-soft space-y-1.5 pb-2 text-[0.88rem]" aria-live="polite">
+          {contents.map((c) => (
+            <li
+              key={c}
+              className="before:bg-gold flex items-center gap-3 before:size-1 before:shrink-0 before:rounded-full before:content-['']"
+            >
+              {c}
+            </li>
+          ))}
+        </ul>
+      </Collapsible>
       <a
         href={whatsappUrl(
           `Hi Shaadi Drafts! I'm interested in "${h.name}"${variant ? ` (${variant.label} filling)` : ""} for Diwali.`,
         )}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${textLink} mt-6`}
+        className={`${textLink} mt-auto pt-5`}
       >
         Enquire about this{" "}
         <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
