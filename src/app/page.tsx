@@ -8,6 +8,7 @@ import { Header } from "@/components/header";
 import { ArrowIcon } from "@/components/icons";
 import { Carousel } from "@/components/carousel";
 import { SectionHead } from "@/components/section-head";
+import { SilkBackground } from "@/components/silk-background";
 import { SpinningBadge } from "@/components/spinning-badge";
 import { fogPalettes, VantaFog } from "@/components/vanta-fog";
 import { DIWALI_DATE, hampers } from "@/content/diwali";
@@ -42,6 +43,12 @@ export default function Home() {
 function Hero() {
   return (
     <section className="relative isolate overflow-hidden">
+      <SilkBackground />
+      {/* Keeps the headline side calm over the moving silk */}
+      <div
+        aria-hidden="true"
+        className="from-paper/85 via-paper/35 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r to-transparent"
+      />
       <div className="wrap grid items-center gap-14 pt-12 pb-20 md:pt-16 lg:grid-cols-[1fr_1.05fr] lg:gap-10 lg:pt-20 lg:pb-28">
         <div data-reveal>
           <p className="eyebrow flex items-center gap-3">
@@ -53,7 +60,7 @@ function Hero() {
             </span>
             <span className="line-mask">
               <span style={{ ["--line-delay" as string]: "140ms" }}>
-                with <em className="text-olive">meaning.</em>
+                with <em className="shimmer-text">meaning.</em>
               </span>
             </span>
           </h1>

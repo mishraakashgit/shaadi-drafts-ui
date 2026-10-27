@@ -285,6 +285,37 @@
   }
 }
 
+/* A slow gold light passing across olive lettering */
+.shimmer-text {
+  color: var(--color-olive);
+  background: linear-gradient(
+      100deg,
+      var(--color-olive) 0%,
+      var(--color-olive) 38%,
+      #c9a35a 48%,
+      #f0dca8 52%,
+      #c9a35a 56%,
+      var(--color-olive) 66%,
+      var(--color-olive) 100%
+    )
+    0 0 / 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s 1.2s var(--ease-out-soft) infinite;
+  padding-right: 0.08em;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  45%,
+  100% {
+    background-position: 0% 0;
+  }
+}
+
 @keyframes line-up {
   from {
     transform: translateY(105%);
@@ -292,6 +323,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .shimmer-text {
+    animation: none;
+    background-position: 100% 0;
+  }
   .js [data-reveal="image"] img,
   .js [data-reveal="letters"] > span {
     clip-path: none !important;
