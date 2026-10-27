@@ -7,6 +7,7 @@ import { HamperCard } from "@/components/hamper-card";
 import { Header } from "@/components/header";
 import { ArrowIcon, WhatsAppIcon } from "@/components/icons";
 import { SectionHead } from "@/components/section-head";
+import { fogPalettes, VantaFog } from "@/components/vanta-fog";
 import { DIWALI_DATE, diwaliFaqs, gifts, hampers, personalisation } from "@/content/diwali";
 import { site } from "@/content/site";
 import { daysUntil } from "@/lib/dates";
@@ -71,11 +72,12 @@ export default function DiwaliPage() {
 
 function Hero({ days }: { days: number }) {
   return (
-    <section className="bg-night text-paper relative overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/3 right-0 h-[40rem] w-[40rem] translate-x-1/4 rounded-full opacity-30 blur-3xl"
-        style={{ background: "radial-gradient(closest-side, #c6a15b, transparent)" }}
+    <section className="bg-night text-paper relative isolate overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28">
+      <VantaFog
+        palette={fogPalettes.diya}
+        fallback={
+          "radial-gradient(60% 50% at 70% 40%, rgb(198 161 91 / 0.28), transparent 70%), #161a11"
+        }
       />
       <div className="wrap relative grid items-center gap-16 lg:grid-cols-[1.05fr_1fr]">
         <div data-reveal>
