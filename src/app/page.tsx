@@ -5,7 +5,7 @@ import { DaysToDiwali, DaysUnit } from "@/components/days-to-diwali";
 import { DiwaliBar } from "@/components/diwali-bar";
 import { EnquireSection } from "@/components/enquire-section";
 import { Header } from "@/components/header";
-import { ArrowIcon } from "@/components/icons";
+import { ArrowIcon, InstagramIcon } from "@/components/icons";
 import { CardSlides } from "@/components/card-slides";
 import { Carousel } from "@/components/carousel";
 import { HeroShowcase } from "@/components/hero-showcase";
@@ -15,6 +15,7 @@ import { DiwaliNight } from "@/components/diwali-night";
 import { DIWALI_DATE, hampers } from "@/content/diwali";
 import { founder } from "@/content/founder";
 import { occasions, services } from "@/content/occasions";
+import { site } from "@/content/site";
 import { testimonials } from "@/content/testimonials";
 import { work } from "@/content/work";
 import { daysUntil } from "@/lib/dates";
@@ -283,10 +284,15 @@ function RecentWork() {
       <div className="wrap">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <SectionHead eyebrow="Recent work" title="Made for someone," accent="every time." />
-          <Link href="/work" className={textLink}>
-            View all work{" "}
-            <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
-          </Link>
+          <div data-reveal className="flex flex-wrap items-center gap-x-6 gap-y-4">
+            <Link href="/work" className={textLink}>
+              View all work{" "}
+              <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+            <ButtonLink href={site.social.instagram} variant="outline" className="!py-2.5">
+              <InstagramIcon className="size-4" /> Follow on Instagram
+            </ButtonLink>
+          </div>
         </div>
         <div className="mt-12 md:mt-16">
           <Carousel label="Recent work" grid="md:grid-cols-4 md:gap-5" effect="cards">
