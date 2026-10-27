@@ -36,7 +36,8 @@ const fragment = /* glsl */ `
 
   void main() {
     vec2 uv = vUv;
-    uv.x *= uAspect;
+    // Scale by the longer side so wide desktops get the same broad folds as phones
+    uv = vec2(uv.x * uAspect, uv.y) * (0.9 / max(uAspect, 1.0));
     float t = uTime * 0.06;
 
     vec2 q = vec2(fbm(uv * 0.8 + vec2(0.0, t)), fbm(uv * 0.8 + vec2(5.2, 1.3) - t));
@@ -264,24 +265,29 @@ export function FestiveBackground({ className = "" }: { className?: string }) {
         petalFragment,
       );
 
+      let size = { w: 1, h: 1 };
       const resize = () => {
         const { clientWidth: w, clientHeight: h } = host;
+        size = { w, h };
         renderer.setSize(w, h, false);
         silk.uniforms.uAspect.value = w / Math.max(h, 1);
-        // The text block marked data-calm, in canvas coordinates (0–1, y up)
-        const calm = host.parentElement?.querySelector<HTMLElement>("[data-calm]");
+        for (const layer of layers) layer.uniforms.uResolution.value.set(w * ratio, h * ratio);
+      };
+      // The text block marked data-calm, in canvas coordinates (0–1, y up). Re-read every frame
+      // because the canvas stays pinned while the page scrolls underneath it.
+      const calm = document.querySelector<HTMLElement>("[data-calm]");
+      const updateCalm = () => {
+        if (!calm) return;
         const box = host.getBoundingClientRect();
-        const r = calm?.getBoundingClientRect();
-        for (const layer of layers) {
-          layer.uniforms.uResolution.value.set(w * ratio, h * ratio);
-          if (r)
-            layer.uniforms.uCalm.value.set(
-              (r.left - box.left) / w,
-              1 - (r.bottom - box.top) / h,
-              (r.right - box.left) / w,
-              1 - (r.top - box.top) / h,
-            );
-        }
+        const r = calm.getBoundingClientRect();
+        const { w, h } = size;
+        for (const layer of layers)
+          layer.uniforms.uCalm.value.set(
+            (r.left - box.left) / w,
+            1 - (r.bottom - box.top) / h,
+            (r.right - box.left) / w,
+            1 - (r.top - box.top) / h,
+          );
       };
       resize();
       const ro = new ResizeObserver(resize);
@@ -303,6 +309,7 @@ export function FestiveBackground({ className = "" }: { className?: string }) {
         silk.uniforms.uTime.value = t;
         for (const layer of layers) layer.uniforms.uTime.value = t;
         (silk.uniforms.uMouse.value as InstanceType<typeof THREE.Vector2>).lerp(target, 0.04);
+        updateCalm();
         renderer.render(scene, camera);
       };
       const loop = () => {

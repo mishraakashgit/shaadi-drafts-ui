@@ -10,7 +10,7 @@ import { Carousel } from "@/components/carousel";
 import { HeroShowcase } from "@/components/hero-showcase";
 import { SectionHead } from "@/components/section-head";
 import { FestiveBackground } from "@/components/festive-background";
-import { fogPalettes, VantaFog } from "@/components/vanta-fog";
+import { DiwaliNight } from "@/components/diwali-night";
 import { DIWALI_DATE, hampers } from "@/content/diwali";
 import { founder } from "@/content/founder";
 import { occasions, services } from "@/content/occasions";
@@ -26,11 +26,23 @@ export default function Home() {
       {days > 0 && <DiwaliBar days={days} />}
       <Header />
       <main id="main">
-        <Hero />
-        <Marquee />
-        <Occasions />
-        {days > 0 && <DiwaliFeature days={days} />}
-        <RecentWork />
+        {/* The festive scene stays pinned behind everything from the hero down to the founder */}
+        <div className="relative isolate">
+          {/* overflow-clip (not hidden) keeps the canvas inside this block without breaking sticky */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10 overflow-clip"
+          >
+            <div className="sticky top-0 h-[100svh]">
+              <FestiveBackground />
+            </div>
+          </div>
+          <Hero />
+          <Marquee />
+          <Occasions />
+          {days > 0 && <DiwaliFeature days={days} />}
+          <RecentWork />
+        </div>
         <Founder />
         {testimonials.length > 0 && <Testimonials />}
         <EnquireSection />
@@ -42,7 +54,6 @@ export default function Home() {
 function Hero() {
   return (
     <section className="relative isolate overflow-hidden">
-      <FestiveBackground />
       {/* Keeps the headline side calm over the moving silk */}
       <div
         aria-hidden="true"
@@ -199,12 +210,7 @@ function DiwaliFeature({ days }: { days: number }) {
     .filter((h) => h !== undefined);
   return (
     <section className="bg-night text-paper relative isolate overflow-hidden py-20 md:py-32">
-      <VantaFog
-        palette={fogPalettes.diya}
-        fallback={
-          "radial-gradient(60% 50% at 70% 40%, rgb(198 161 91 / 0.28), transparent 70%), #161a11"
-        }
-      />
+      <DiwaliNight />
       <div className="wrap relative">
         <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
           <div data-reveal>
