@@ -6,6 +6,7 @@ import { DiwaliBar } from "@/components/diwali-bar";
 import { EnquireSection } from "@/components/enquire-section";
 import { Header } from "@/components/header";
 import { ArrowIcon } from "@/components/icons";
+import { CardSlides } from "@/components/card-slides";
 import { Carousel } from "@/components/carousel";
 import { HeroShowcase } from "@/components/hero-showcase";
 import { SectionHead } from "@/components/section-head";
@@ -170,13 +171,20 @@ function OccasionCard({
         large ? "md:min-h-[44rem]" : ""
       }`}
     >
-      <Image
-        src={o.image}
-        alt={o.alt}
-        fill
-        sizes={large ? "(min-width: 768px) 60vw, 100vw" : "(min-width: 768px) 30vw, 100vw"}
-        className="-z-10 object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
-      />
+      {o.slides ? (
+        <CardSlides
+          slides={o.slides}
+          sizes={large ? "(min-width: 768px) 60vw, 100vw" : "(min-width: 768px) 30vw, 100vw"}
+        />
+      ) : (
+        <Image
+          src={o.image}
+          alt={o.alt}
+          fill
+          sizes={large ? "(min-width: 768px) 60vw, 100vw" : "(min-width: 768px) 30vw, 100vw"}
+          className="-z-10 object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
+        />
+      )}
       <div
         className={`absolute inset-0 -z-10 bg-gradient-to-t ${large ? "from-night/95 via-night/65 to-night/35" : "from-night/90 via-night/40 via-45% to-transparent"}`}
       />
