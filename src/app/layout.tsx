@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Jost, Manrope } from "next/font/google";
 import { Analytics } from "@/components/analytics";
 import { Footer } from "@/components/footer";
+import { Interactions } from "@/components/interactions";
 import { RevealObserver } from "@/components/reveal-observer";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { WhatsAppFloat } from "@/components/whatsapp-float";
@@ -70,6 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <WhatsAppFloat />
         <RevealObserver />
         <SmoothScroll />
+        <Interactions />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}

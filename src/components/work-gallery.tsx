@@ -42,11 +42,11 @@ export function GalleryView({ filter }: { filter: Filter }) {
         </div>
       </nav>
 
-      <ul className="mt-14 columns-1 gap-7 sm:columns-2 lg:columns-3" aria-live="polite">
+      <ul className="mt-10 columns-2 gap-3 md:mt-14 md:gap-7 lg:columns-3" aria-live="polite">
         {pieces.map((w, i) => (
-          <li key={w.slug} className="group mb-16 break-inside-avoid">
+          <li key={w.slug} className="group mb-7 break-inside-avoid md:mb-16">
             {w.size ? (
-              <div className="bg-card border-line overflow-hidden rounded-3xl border p-3">
+              <div className="bg-card border-line overflow-hidden rounded-2xl border p-1.5 md:rounded-3xl md:p-3">
                 <Image
                   src={w.image}
                   alt={w.alt}
@@ -54,12 +54,12 @@ export function GalleryView({ filter }: { filter: Filter }) {
                   height={w.size.height}
                   priority={i < 3}
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="h-auto w-full rounded-2xl transition-transform duration-[1.1s] group-hover:scale-[1.02]"
+                  className="h-auto w-full rounded-xl transition-transform duration-[1.1s] group-hover:scale-[1.02]"
                 />
               </div>
             ) : (
               <div
-                className={`bg-paper-deep relative overflow-hidden rounded-3xl ${
+                className={`bg-paper-deep relative overflow-hidden rounded-2xl md:rounded-3xl ${
                   i % 3 === 1 ? "aspect-[4/5]" : "aspect-[3/4]"
                 }`}
               >
@@ -73,10 +73,10 @@ export function GalleryView({ filter }: { filter: Filter }) {
                 />
               </div>
             )}
-            <p className="eyebrow mt-6">{w.occasion}</p>
-            <h2 className="mt-2 text-[2rem] leading-tight">{w.title}</h2>
-            <p className="text-ink-soft mt-2 leading-relaxed">{w.story}</p>
-            <ul className="mt-4 flex flex-wrap gap-1.5">
+            <p className="eyebrow mt-3 !text-[0.6rem] md:mt-6 md:!text-[0.7rem]">{w.occasion}</p>
+            <h2 className="mt-1 text-xl leading-tight md:mt-2 md:text-[2rem]">{w.title}</h2>
+            <p className="text-ink-soft mt-2 hidden leading-relaxed md:block">{w.story}</p>
+            <ul className="mt-4 hidden flex-wrap gap-1.5 md:flex">
               {w.inside.map((item) => (
                 <li
                   key={item}
@@ -92,7 +92,7 @@ export function GalleryView({ filter }: { filter: Filter }) {
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${textLink} mt-5`}
+              className={`${textLink} mt-5 !hidden md:!inline-flex`}
             >
               Make me one like this
               <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />

@@ -19,10 +19,3 @@ export const nav = [
   { label: "Our work", href: "/work" },
   { label: "About", href: "/#founder" },
 ] as const;
-
-/** Promises carried over from the original site. */
-export const promises = [
-  "Fully customised, revisions included",
-  "Printed & handmade, shipped across India",
-  "WhatsApp replies, usually the same day",
-] as const;

@@ -5,14 +5,15 @@ import { DaysToDiwali, DaysUnit } from "@/components/days-to-diwali";
 import { DiwaliBar } from "@/components/diwali-bar";
 import { EnquireSection } from "@/components/enquire-section";
 import { Header } from "@/components/header";
-import { ArrowIcon, CheckIcon } from "@/components/icons";
-import { LogoMark } from "@/components/logo";
+import { ArrowIcon } from "@/components/icons";
+import { Carousel } from "@/components/carousel";
 import { SectionHead } from "@/components/section-head";
+import { SilkBackground } from "@/components/silk-background";
+import { SpinningBadge } from "@/components/spinning-badge";
 import { fogPalettes, VantaFog } from "@/components/vanta-fog";
 import { DIWALI_DATE, hampers } from "@/content/diwali";
 import { founder } from "@/content/founder";
-import { occasions, process, services } from "@/content/occasions";
-import { promises } from "@/content/site";
+import { occasions, services } from "@/content/occasions";
 import { testimonials } from "@/content/testimonials";
 import { work } from "@/content/work";
 import { daysUntil } from "@/lib/dates";
@@ -31,7 +32,6 @@ export default function Home() {
         <Studio />
         {days > 0 && <DiwaliFeature days={days} />}
         <RecentWork />
-        <Process />
         <Founder />
         {testimonials.length > 0 && <Testimonials />}
         <EnquireSection />
@@ -43,15 +43,26 @@ export default function Home() {
 function Hero() {
   return (
     <section className="relative isolate overflow-hidden">
+      <SilkBackground />
+      {/* Keeps the headline side calm over the moving silk */}
+      <div
+        aria-hidden="true"
+        className="from-paper/85 via-paper/35 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-r to-transparent"
+      />
       <div className="wrap grid items-center gap-14 pt-12 pb-20 md:pt-16 lg:grid-cols-[1fr_1.05fr] lg:gap-10 lg:pt-20 lg:pb-28">
         <div data-reveal>
           <p className="eyebrow flex items-center gap-3">
             <span className="bg-gold inline-block h-px w-8" /> A gifting &amp; design studio
           </p>
           <h1 className="display mt-7 text-[3.4rem] sm:text-7xl xl:text-[5.6rem]">
-            Gifts, drafted
-            <br />
-            with <em className="text-olive">meaning.</em>
+            <span className="line-mask">
+              <span>Gifts, drafted</span>
+            </span>
+            <span className="line-mask">
+              <span style={{ ["--line-delay" as string]: "140ms" }}>
+                with <em className="shimmer-text">meaning.</em>
+              </span>
+            </span>
           </h1>
           <p className="text-ink-soft mt-7 max-w-[30rem] text-lg leading-relaxed">
             Wedding gifting, invitations, festive hampers and custom keepsakes. Designed in-house,
@@ -66,13 +77,6 @@ function Hero() {
               See our work
             </ButtonLink>
           </div>
-          <ul className="text-ink-soft mt-12 grid gap-2.5 text-[0.88rem] sm:grid-cols-1">
-            {promises.map((p) => (
-              <li key={p} className="flex items-center gap-2.5">
-                <CheckIcon className="text-olive size-4 shrink-0" /> {p}
-              </li>
-            ))}
-          </ul>
         </div>
 
         {/* Editorial mosaic of real work */}
@@ -81,7 +85,7 @@ function Hero() {
           style={{ ["--reveal-delay" as string]: "150ms" }}
           className="relative grid grid-cols-[1.35fr_1fr] gap-4"
         >
-          <div className="relative aspect-[3/4] overflow-hidden rounded-t-full">
+          <div data-reveal="image" className="relative aspect-[3/4] overflow-hidden rounded-t-full">
             <Image
               src="/work/bridesmaid-proposal-box.jpg"
               alt="Will you be my bridesmaid proposal box in a sage keepsake chest"
@@ -92,7 +96,11 @@ function Hero() {
             />
           </div>
           <div className="flex flex-col gap-4 pt-14" data-parallax="0.07">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+            <div
+              data-reveal="image"
+              style={{ ["--reveal-delay" as string]: "200ms" }}
+              className="relative aspect-[4/5] overflow-hidden rounded-2xl"
+            >
               <Image
                 src="/diwali/pichwai-gift-box.jpg"
                 alt="Pichwai Diwali gift box with lotus Shubh Labh hangings"
@@ -102,7 +110,11 @@ function Hero() {
                 className="object-cover"
               />
             </div>
-            <div className="relative aspect-square overflow-hidden rounded-2xl">
+            <div
+              data-reveal="image"
+              style={{ ["--reveal-delay" as string]: "380ms" }}
+              className="relative aspect-square overflow-hidden rounded-2xl"
+            >
               <Image
                 src="/diwali/ivory-rani-pink.jpg"
                 alt="Ivory gift box with a rani pink Deepawali card"
@@ -150,7 +162,7 @@ function Marquee() {
 function Occasions() {
   const [lead, ...rest] = occasions;
   return (
-    <section id="occasions" className="py-24 md:py-36">
+    <section id="occasions" className="py-20 md:py-36">
       <div className="wrap">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <SectionHead
@@ -161,11 +173,17 @@ function Occasions() {
           />
         </div>
 
-        <div className="mt-16 grid gap-5 md:grid-cols-4 md:grid-rows-2">
-          {lead && <OccasionCard o={lead} large />}
-          {rest.map((o, i) => (
-            <OccasionCard key={o.slug} o={o} wide={i === rest.length - 1} delay={(i + 1) * 90} />
-          ))}
+        <div className="mt-12 md:mt-16">
+          <Carousel
+            label="What we make"
+            grid="md:grid-cols-4 md:grid-rows-2 md:gap-5"
+            spans={["md:col-span-2 md:row-span-2", "", "", "md:col-span-2"]}
+          >
+            {lead && <OccasionCard o={lead} large />}
+            {rest.map((o, i) => (
+              <OccasionCard key={o.slug} o={o} delay={(i + 1) * 90} />
+            ))}
+          </Carousel>
         </div>
       </div>
     </section>
@@ -175,12 +193,10 @@ function Occasions() {
 function OccasionCard({
   o,
   large = false,
-  wide = false,
   delay = 0,
 }: {
   o: (typeof occasions)[number];
   large?: boolean;
-  wide?: boolean;
   delay?: number;
 }) {
   return (
@@ -188,12 +204,8 @@ function OccasionCard({
       href={o.href}
       data-reveal
       style={{ ["--reveal-delay" as string]: `${delay}ms` }}
-      className={`group text-paper relative isolate flex min-h-[22rem] flex-col justify-end overflow-hidden rounded-3xl p-7 md:p-9 ${
-        large
-          ? "min-h-[32rem] md:col-span-2 md:row-span-2 md:min-h-[44rem]"
-          : wide
-            ? "md:col-span-2"
-            : ""
+      className={`group text-paper relative isolate flex h-full min-h-[26rem] flex-col justify-end overflow-hidden rounded-3xl p-7 md:min-h-[21rem] md:p-9 ${
+        large ? "md:min-h-[44rem]" : ""
       }`}
     >
       <Image
@@ -206,12 +218,12 @@ function OccasionCard({
       <div
         className={`absolute inset-0 -z-10 bg-gradient-to-t ${large ? "from-night/95 via-night/65 to-night/35" : "from-night/90 via-night/40 via-45% to-transparent"}`}
       />
-      <h3 className={large ? "text-5xl md:text-6xl" : "text-4xl"}>{o.title}</h3>
-      <p className={`text-paper/80 mt-3 max-w-md leading-relaxed ${large ? "text-lg" : ""}`}>
+      <h3 className={large ? "text-4xl md:text-6xl" : "text-4xl"}>{o.title}</h3>
+      <p className={`text-paper/80 mt-3 max-w-md leading-relaxed ${large ? "md:text-lg" : ""}`}>
         {o.summary}
       </p>
       {large && (
-        <ul className="mt-6 hidden flex-wrap gap-2 sm:flex">
+        <ul className="mt-6 hidden flex-wrap gap-2 md:flex">
           {o.items.map((item) => (
             <li
               key={item}
@@ -232,10 +244,13 @@ function OccasionCard({
 
 function Studio() {
   return (
-    <section className="bg-paper-deep py-24 md:py-36">
-      <div className="wrap grid gap-14 lg:grid-cols-[1fr_1.3fr] lg:items-center">
+    <section className="bg-paper-deep py-20 md:py-32">
+      <div className="wrap grid items-center gap-12 lg:grid-cols-[1fr_1.3fr] lg:gap-14">
         <div data-reveal className="relative mx-auto w-full max-w-md">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
+          <div
+            data-reveal="image"
+            className="relative aspect-[4/3] overflow-hidden rounded-3xl md:aspect-[4/5]"
+          >
             <Image
               src="/diwali/organza-crate-detail.jpg"
               alt="Close-up of a gold organza wrapped crate pinned with a mirror-work flower"
@@ -244,7 +259,7 @@ function Studio() {
               className="object-cover"
             />
           </div>
-          <LogoMark className="absolute -right-5 -bottom-8 size-28 drop-shadow-xl md:-right-10" />
+          <SpinningBadge className="absolute -right-3 -bottom-8 size-28 drop-shadow-xl md:-right-12 md:-bottom-10 md:size-36" />
         </div>
         <div data-reveal style={{ ["--reveal-delay" as string]: "120ms" }}>
           <p className="eyebrow">The studio</p>
@@ -252,21 +267,6 @@ function Studio() {
             We treat every gift like a wedding invitation: <em className="text-olive">drafted</em>,
             refined and finished by hand, until it could only have come from you.
           </p>
-          <dl className="border-ink/15 mt-12 grid gap-8 border-t pt-8 sm:grid-cols-3">
-            {[
-              [
-                "Designed by an architect",
-                "Every card, tag, monogram and box is drawn in-house, with an eye for detail.",
-              ],
-              ["One or a thousand", "A single proposal box or bulk favours, with the same care."],
-              ["Pan-India delivery", "Packed to travel, shipped wherever your people are."],
-            ].map(([t, d]) => (
-              <div key={t}>
-                <dt className="font-serif text-2xl">{t}</dt>
-                <dd className="text-ink-soft mt-2 text-[0.92rem] leading-relaxed">{d}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
       </div>
     </section>
@@ -278,7 +278,7 @@ function DiwaliFeature({ days }: { days: number }) {
     .map((slug) => hampers.find((h) => h.slug === slug))
     .filter((h) => h !== undefined);
   return (
-    <section className="bg-night text-paper relative isolate overflow-hidden py-24 md:py-32">
+    <section className="bg-night text-paper relative isolate overflow-hidden py-20 md:py-32">
       <VantaFog
         palette={fogPalettes.diya}
         fallback={
@@ -305,25 +305,36 @@ function DiwaliFeature({ days }: { days: number }) {
             <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
           </ButtonLink>
         </div>
-        <ul className="mt-14 grid gap-5 sm:grid-cols-3">
-          {picks.map((h, i) => (
-            <li key={h.slug} data-reveal style={{ ["--reveal-delay" as string]: `${i * 100}ms` }}>
-              <Link href="/festive/diwali#collection" className="group block">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
-                  <Image
-                    src={h.image}
-                    alt={h.alt}
-                    fill
-                    sizes="(min-width: 640px) 30vw, 100vw"
-                    className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]"
-                  />
-                </div>
-                <p className="mt-4 font-serif text-2xl">{h.name}</p>
-                <p className="text-paper/55 mt-1 text-sm">{h.tags.join(" · ")}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-12 md:mt-14">
+          <Carousel
+            label="Diwali hampers"
+            grid="md:grid-cols-3 md:gap-5"
+            tone="light"
+            effect="cards"
+          >
+            {picks.map((h, i) => (
+              <div
+                key={h.slug}
+                data-reveal
+                style={{ ["--reveal-delay" as string]: `${i * 100}ms` }}
+              >
+                <Link href="/festive/diwali#collection" className="group block">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+                    <Image
+                      src={h.image}
+                      alt={h.alt}
+                      fill
+                      sizes="(min-width: 640px) 30vw, 100vw"
+                      className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]"
+                    />
+                  </div>
+                  <p className="mt-4 font-serif text-2xl">{h.name}</p>
+                  <p className="text-paper/55 mt-1 text-sm">{h.tags.join(" · ")}</p>
+                </Link>
+              </div>
+            ))}
+          </Carousel>
+        </div>
       </div>
     </section>
   );
@@ -334,7 +345,7 @@ function RecentWork() {
     .map((slug) => work.find((w) => w.slug === slug))
     .filter((w) => w !== undefined);
   return (
-    <section className="py-24 md:py-36">
+    <section className="py-20 md:py-36">
       <div className="wrap">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <SectionHead eyebrow="Recent work" title="Made for someone," accent="every time." />
@@ -343,55 +354,27 @@ function RecentWork() {
             <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
-        <ul className="mt-16 grid grid-cols-2 gap-x-5 gap-y-12 lg:grid-cols-4">
-          {picks.map((w, i) => (
-            <li key={w.slug} data-reveal style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}>
-              <Link href={`/work?c=${w.category}`} className="group block">
-                <div className="bg-paper-deep relative aspect-[4/5] overflow-hidden rounded-2xl">
-                  <Image
-                    src={w.image}
-                    alt={w.alt}
-                    fill
-                    sizes="(min-width: 1024px) 24vw, 50vw"
-                    className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]"
-                  />
-                </div>
-                <p className="eyebrow mt-5">{w.occasion}</p>
-                <p className="mt-1.5 font-serif text-2xl leading-tight">{w.title}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-function Process() {
-  return (
-    <section className="border-line border-t py-24 md:py-32">
-      <div className="wrap grid gap-16 lg:grid-cols-[0.8fr_1.2fr]">
-        <SectionHead
-          eyebrow="How it works"
-          title="From a conversation"
-          accent="to a keepsake."
-          intro="Book 3–6 weeks ahead for weddings. Festive and bulk orders, as early as you can."
-        />
-        <ol className="grid gap-x-10 gap-y-12 sm:grid-cols-2">
-          {process.map((step, i) => (
-            <li
-              key={step.title}
-              data-reveal
-              style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}
-            >
-              <span className="text-gold font-serif text-6xl leading-none italic">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <h3 className="border-ink/15 mt-4 border-t pt-4 text-3xl">{step.title}</h3>
-              <p className="text-ink-soft mt-2 leading-relaxed">{step.body}</p>
-            </li>
-          ))}
-        </ol>
+        <div className="mt-12 md:mt-16">
+          <Carousel label="Recent work" grid="md:grid-cols-4 md:gap-5" effect="cards">
+            {picks.map((w, i) => (
+              <div key={w.slug} data-reveal style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}>
+                <Link href={`/work?c=${w.category}`} className="group block">
+                  <div className="bg-paper-deep relative aspect-[4/5] overflow-hidden rounded-2xl">
+                    <Image
+                      src={w.image}
+                      alt={w.alt}
+                      fill
+                      sizes="(min-width: 768px) 24vw, 72vw"
+                      className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]"
+                    />
+                  </div>
+                  <p className="eyebrow mt-5">{w.occasion}</p>
+                  <p className="mt-1.5 font-serif text-2xl leading-tight">{w.title}</p>
+                </Link>
+              </div>
+            ))}
+          </Carousel>
+        </div>
       </div>
     </section>
   );
@@ -399,46 +382,50 @@ function Process() {
 
 function Founder() {
   return (
-    <section id="founder" className="bg-paper-deep py-24 md:py-36">
-      <div className="wrap grid items-start gap-16 md:grid-cols-[0.8fr_1.2fr] lg:gap-24">
-        <div data-reveal className="relative mx-auto w-full max-w-sm md:sticky md:top-32">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-t-full">
+    <section
+      id="founder"
+      className="bg-olive-deep text-paper relative isolate overflow-hidden py-20 md:py-28"
+    >
+      <VantaFog
+        palette={fogPalettes.olive}
+        speed={0.7}
+        fallback="radial-gradient(55% 60% at 80% 30%, rgb(198 161 91 / 0.22), transparent 70%), #3b4422"
+      />
+      <div className="wrap grid items-center gap-10 md:grid-cols-[auto_1fr] md:gap-16">
+        <div data-reveal className="relative mx-auto w-44 md:w-64">
+          <div data-reveal="image" className="relative aspect-[4/5] overflow-hidden rounded-t-full">
             <Image
               src={founder.portrait}
               alt={`${founder.name}, ${founder.title} of Shaadi Drafts`}
               fill
-              sizes="(min-width: 768px) 30vw, 80vw"
+              sizes="(min-width: 768px) 16rem, 11rem"
               className="object-cover object-[50%_35%]"
             />
           </div>
           <div
-            className="border-gold/50 pointer-events-none absolute -inset-3 rounded-t-full border"
+            className="border-gold/50 pointer-events-none absolute -inset-2.5 rounded-t-full border"
             aria-hidden="true"
           />
-          <div className="bg-card border-line absolute -bottom-6 left-1/2 w-max -translate-x-1/2 rounded-2xl border px-5 py-3 text-center shadow-[0_20px_40px_-24px_rgb(22_26_17/0.4)]">
-            <p className="font-serif text-xl leading-tight">{founder.name}</p>
-            <p className="text-ink-soft text-[0.78rem]">{founder.title} · Architect</p>
-          </div>
         </div>
 
-        <div data-reveal style={{ ["--reveal-delay" as string]: "120ms" }} className="pt-4 md:pt-0">
-          <p className="eyebrow">Meet the founder</p>
-          <div className="mt-7 space-y-4 font-serif text-[1.9rem] leading-[1.18] md:text-[2.5rem]">
-            {founder.intro.map((line) => (
-              <p key={line.accent}>
-                {line.before} <em className="text-olive">{line.accent}</em>
-              </p>
-            ))}
-          </div>
-          <div className="text-ink-soft border-ink/15 mt-10 max-w-xl space-y-5 border-t pt-8 text-[1.02rem] leading-relaxed">
-            {founder.bio.map((p) => (
-              <p key={p.slice(0, 24)}>{p}</p>
-            ))}
-          </div>
-          <div className="mt-8 flex items-center gap-4">
-            <span className="bg-gold h-px w-10" />
-            <p className="font-serif text-2xl italic">{founder.name.split(" ")[0]}</p>
-          </div>
+        <div
+          data-reveal
+          style={{ ["--reveal-delay" as string]: "120ms" }}
+          className="text-center md:text-left"
+        >
+          <p className="eyebrow text-gold-soft">Meet the founder</p>
+          <blockquote className="mt-5 font-serif text-[2rem] leading-[1.12] md:text-5xl">
+            &ldquo;{founder.quote}&rdquo;
+          </blockquote>
+          <p className="text-paper/70 mx-auto mt-5 max-w-xl leading-relaxed md:mx-0">
+            {founder.bio}
+          </p>
+          <p className="mt-6">
+            <span className="font-serif text-2xl italic">{founder.name}</span>
+            <span className="text-paper/60 block text-[0.85rem] md:ml-3 md:inline">
+              {founder.title} · Architect
+            </span>
+          </p>
         </div>
       </div>
     </section>

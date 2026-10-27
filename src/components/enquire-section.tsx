@@ -1,7 +1,7 @@
 import { site } from "@/content/site";
 import type { OccasionValue } from "@/lib/enquiry";
 import { whatsappUrl } from "@/lib/whatsapp";
-import { EnquiryForm } from "./enquiry-form";
+import { EnquiryPanel } from "./enquiry-panel";
 import { ArrowIcon, DownloadIcon, InstagramIcon, MailIcon, WhatsAppIcon } from "./icons";
 
 export function EnquireSection({
@@ -22,7 +22,7 @@ export function EnquireSection({
       <div className="wrap">
         <div
           data-reveal
-          className="bg-card border-line grid overflow-hidden rounded-[2rem] border shadow-[0_40px_80px_-50px_rgb(22_26_17/0.35)] lg:grid-cols-[0.9fr_1.1fr]"
+          className="bg-card border-line grid grid-cols-1 overflow-hidden rounded-[2rem] border shadow-[0_40px_80px_-50px_rgb(22_26_17/0.35)] lg:grid-cols-[0.9fr_1.1fr]"
         >
           <div className="bg-olive-deep text-paper relative p-8 sm:p-12 lg:p-14">
             <p className="eyebrow text-gold-soft">{eyebrow}</p>
@@ -58,7 +58,7 @@ export function EnquireSection({
             </div>
           </div>
           <div className="p-8 sm:p-12 lg:p-14">
-            <EnquiryForm defaultOccasion={defaultOccasion} />
+            <EnquiryPanel defaultOccasion={defaultOccasion} />
           </div>
         </div>
       </div>

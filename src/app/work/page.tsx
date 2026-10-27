@@ -29,7 +29,14 @@ export default function WorkPage() {
             <div>
               <p className="eyebrow">Our work</p>
               <h1 className="display mt-6 text-[3.4rem] sm:text-7xl">
-                Every box tells <em className="text-olive">someone&apos;s story.</em>
+                <span className="line-mask">
+                  <span>Every box tells</span>
+                </span>
+                <span className="line-mask">
+                  <span style={{ ["--line-delay" as string]: "140ms" }}>
+                    <em className="text-olive">someone&apos;s story.</em>
+                  </span>
+                </span>
               </h1>
             </div>
             <p className="text-ink-soft max-w-md text-lg leading-relaxed lg:justify-self-end">

@@ -90,9 +90,14 @@ export function Footer() {
 
         <p
           aria-hidden="true"
+          data-reveal="letters"
           className="text-paper/[0.07] mt-20 text-center font-serif text-[16vw] leading-[0.8] tracking-[-0.03em] whitespace-nowrap select-none md:text-[13.5vw]"
         >
-          Shaadi Drafts
+          {[..."Shaadi Drafts"].map((ch, i) => (
+            <span key={i} style={{ ["--i" as string]: i }}>
+              {ch === " " ? "\u00a0" : ch}
+            </span>
+          ))}
         </p>
 
         <div className="border-paper/10 mt-8 flex flex-col justify-between gap-2 border-t pt-6 text-[0.8rem] sm:flex-row">

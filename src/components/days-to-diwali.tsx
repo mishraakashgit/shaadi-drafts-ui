@@ -3,6 +3,7 @@
 import { useSyncExternalStore } from "react";
 import { DIWALI_DATE } from "@/content/diwali";
 import { daysUntil } from "@/lib/dates";
+import { CountUp } from "./count-up";
 
 const subscribe = () => () => {};
 
@@ -22,7 +23,7 @@ export function DaysToDiwali({ initial, unit = true }: { initial: number; unit?:
   const days = useDaysToDiwali(initial);
   return (
     <>
-      {days}
+      <CountUp value={days} />
       {unit && ` ${days === 1 ? "day" : "days"}`}
     </>
   );
