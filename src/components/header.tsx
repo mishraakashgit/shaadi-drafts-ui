@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { nav } from "@/content/site";
-import { buttonClass } from "./button";
 import { HeaderBar } from "./header-bar";
 import { Logo } from "./logo";
 import { MobileNav } from "./mobile-nav";
@@ -26,13 +25,8 @@ export function Header({ tone = "ink" }: { tone?: "ink" | "light" }) {
           ))}
         </ul>
       </nav>
-      <div className="flex items-center gap-2">
-        <Link
-          href="/#enquire"
-          className={`${buttonClass(light ? "light" : "solid")} hidden !px-5 !py-2.5 sm:inline-flex`}
-        >
-          Start a gift
-        </Link>
+      {/* Same width as the logo so the desktop nav stays centred */}
+      <div className="flex items-center justify-end md:w-14">
         <MobileNav tone={tone} />
       </div>
     </div>
