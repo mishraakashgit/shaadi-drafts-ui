@@ -5,7 +5,8 @@ import { DaysToDiwali, DaysUnit } from "@/components/days-to-diwali";
 import { DiwaliBar } from "@/components/diwali-bar";
 import { EnquireSection } from "@/components/enquire-section";
 import { Header } from "@/components/header";
-import { ArrowIcon } from "@/components/icons";
+import { ArrowIcon, InstagramIcon } from "@/components/icons";
+import { CardSlides } from "@/components/card-slides";
 import { Carousel } from "@/components/carousel";
 import { HeroShowcase } from "@/components/hero-showcase";
 import { SectionHead } from "@/components/section-head";
@@ -14,6 +15,7 @@ import { DiwaliNight } from "@/components/diwali-night";
 import { DIWALI_DATE, hampers } from "@/content/diwali";
 import { founder } from "@/content/founder";
 import { occasions, services } from "@/content/occasions";
+import { site } from "@/content/site";
 import { testimonials } from "@/content/testimonials";
 import { work } from "@/content/work";
 import { daysUntil } from "@/lib/dates";
@@ -170,13 +172,20 @@ function OccasionCard({
         large ? "md:min-h-[44rem]" : ""
       }`}
     >
-      <Image
-        src={o.image}
-        alt={o.alt}
-        fill
-        sizes={large ? "(min-width: 768px) 60vw, 100vw" : "(min-width: 768px) 30vw, 100vw"}
-        className="-z-10 object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
-      />
+      {o.slides ? (
+        <CardSlides
+          slides={o.slides}
+          sizes={large ? "(min-width: 768px) 60vw, 100vw" : "(min-width: 768px) 30vw, 100vw"}
+        />
+      ) : (
+        <Image
+          src={o.image}
+          alt={o.alt}
+          fill
+          sizes={large ? "(min-width: 768px) 60vw, 100vw" : "(min-width: 768px) 30vw, 100vw"}
+          className="-z-10 object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.04]"
+        />
+      )}
       <div
         className={`absolute inset-0 -z-10 bg-gradient-to-t ${large ? "from-night/95 via-night/65 to-night/35" : "from-night/90 via-night/40 via-45% to-transparent"}`}
       />
@@ -275,10 +284,15 @@ function RecentWork() {
       <div className="wrap">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <SectionHead eyebrow="Recent work" title="Made for someone," accent="every time." />
-          <Link href="/work" className={textLink}>
-            View all work{" "}
-            <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
-          </Link>
+          <div data-reveal className="flex flex-wrap items-center gap-x-6 gap-y-4">
+            <Link href="/work" className={textLink}>
+              View all work{" "}
+              <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+            <ButtonLink href={site.social.instagram} variant="outline" className="!py-2.5">
+              <InstagramIcon className="size-4" /> Follow on Instagram
+            </ButtonLink>
+          </div>
         </div>
         <div className="mt-12 md:mt-16">
           <Carousel label="Recent work" grid="md:grid-cols-4 md:gap-5" effect="cards">

@@ -42,6 +42,17 @@ export const work: WorkPiece[] = [
     alt: "Sage green chest with a Will you be my bridesmaid card, a polaroid string, a jewellery case, a mini tote and a fairy-light jar",
   },
   {
+    slug: "beaded-potlis-envelopes",
+    title: "Beaded Potlis & Shagun Envelopes",
+    occasion: "Return favours",
+    category: "wedding",
+    story:
+      "Hand-beaded potlis and envelopes in coral, sky, mint, ivory, lilac and pink: one for every guest, matched to the wedding palette.",
+    inside: ["Pearl-beaded potlis", "Beaded shagun envelopes", "Gota & stone detailing"],
+    image: "/work/beaded-potlis-envelopes-2.jpg",
+    alt: "Hand-beaded potlis in ivory, red and peach with pink and lilac beaded shagun envelopes",
+  },
+  {
     slug: "bhai-box",
     title: "The ‘Aye Bhai’ Box",
     occasion: "Groomsman gift",
@@ -208,9 +219,9 @@ export const work: WorkPiece[] = [
   },
   {
     slug: "lakshmi-charan-potlis",
-    title: "Lakshmi Charan Potlis",
-    occasion: "Diwali favours",
-    category: "festive",
+    title: "Pink Potli Favours",
+    occasion: "Return favours",
+    category: "wedding",
     story:
       "A potli for every guest: satin, pearls and a lotus, made in bulk without losing the detail.",
     inside: ["Satin potli", "Lakshmi charan stickers", "Tea-lights"],

@@ -7,6 +7,8 @@ export type Occasion = {
   alt: string;
   href: string;
   cta: string;
+  /** Extra photos the card crossfades through, each with a label. */
+  slides?: { image: string; alt: string; label: string }[];
 };
 
 export const occasions: Occasion[] = [
@@ -22,8 +24,25 @@ export const occasions: Occasion[] = [
       "Hampers & return favours",
       "Post-wedding stationery",
     ],
-    image: "/work/save-the-date-shraddha-shubham.webp",
-    alt: "Layered arch save the date cards with lavender sprigs",
+    image: "/diwali/lakshmi-charan-potlis.jpg",
+    alt: "Rows of pink satin potlis with lotus and pearl tassels, made as return favours",
+    slides: [
+      {
+        image: "/diwali/lakshmi-charan-potlis.jpg",
+        alt: "Rows of pink satin potlis with lotus and pearl tassels, made as return favours",
+        label: "Return favours",
+      },
+      {
+        image: "/work/beaded-potlis-envelopes.jpg",
+        alt: "Hand-beaded potlis and shagun envelopes in coral, sky blue, mint, ivory, lilac and pink",
+        label: "Beaded potlis & envelopes",
+      },
+      {
+        image: "/work/save-the-date-shraddha-shubham.webp",
+        alt: "Layered arch save the date cards with lavender sprigs",
+        label: "Save the dates",
+      },
+    ],
     href: "/work?c=wedding",
     cta: "Wedding work",
   },
@@ -42,8 +61,8 @@ export const occasions: Occasion[] = [
     title: "Corporate",
     summary: "Client and team gifting, in bulk, without losing the detail.",
     items: ["Festive bulk orders", "Branded packaging"],
-    image: "/diwali/lakshmi-charan-potlis.jpg",
-    alt: "Rows of pink satin potlis made in bulk",
+    image: "/diwali/navy-nuts.jpg",
+    alt: "Navy gift box with a Happy Deepawali card, gold diya stands and jars of nuts, ready for client gifting",
     href: "/#enquire",
     cta: "Get a bulk quote",
   },

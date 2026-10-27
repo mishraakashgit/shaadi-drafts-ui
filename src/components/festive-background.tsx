@@ -178,6 +178,8 @@ export function FestiveBackground({ className = "" }: { className?: string }) {
       });
       const ratio = Math.min(window.devicePixelRatio, small ? 1.25 : 1.75);
       renderer.setPixelRatio(ratio);
+      // Resizing wipes the canvas; clear to the section colour rather than black
+      renderer.setClearColor("#f6f1e7");
       renderer.domElement.className =
         "absolute inset-0 size-full opacity-0 transition-opacity duration-[1.6s]";
       host.appendChild(renderer.domElement);
@@ -290,7 +292,12 @@ export function FestiveBackground({ className = "" }: { className?: string }) {
           );
       };
       resize();
-      const ro = new ResizeObserver(resize);
+      // Redraw after every resize: when paused (reduced motion, off screen) nothing else would,
+      // and a resized WebGL canvas is blank until drawn again
+      const ro = new ResizeObserver(() => {
+        resize();
+        render();
+      });
       ro.observe(host);
 
       // Soft light that follows the cursor, eased towards the target each frame

@@ -151,6 +151,8 @@ export function DiwaliNight({ className = "" }: { className?: string }) {
       const renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: "low-power" });
       const ratio = Math.min(window.devicePixelRatio, small ? 1.25 : 1.75);
       renderer.setPixelRatio(ratio);
+      // Resizing wipes the canvas; clear to the section colour rather than black
+      renderer.setClearColor("#161a11");
       renderer.domElement.className =
         "absolute inset-0 size-full opacity-0 transition-opacity duration-[1.6s]";
       host.appendChild(renderer.domElement);
@@ -241,7 +243,12 @@ export function DiwaliNight({ className = "" }: { className?: string }) {
         shared.uAspect.value = w / Math.max(h, 1);
       };
       resize();
-      const ro = new ResizeObserver(resize);
+      // Redraw after every resize: when paused (reduced motion, off screen) nothing else would,
+      // and a resized WebGL canvas is blank until drawn again
+      const ro = new ResizeObserver(() => {
+        resize();
+        render();
+      });
       ro.observe(host);
 
       let frame = 0;
