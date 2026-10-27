@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { ButtonLink, textLink } from "@/components/button";
+import { Carousel } from "@/components/carousel";
 import { DaysToDiwali } from "@/components/days-to-diwali";
 import { EnquireSection } from "@/components/enquire-section";
 import { HamperCard } from "@/components/hamper-card";
@@ -156,7 +157,7 @@ function Hero({ days }: { days: number }) {
 
 function Collection() {
   return (
-    <section id="collection" className="py-24 md:py-36">
+    <section id="collection" className="py-20 md:py-36">
       <div className="wrap">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <SectionHead eyebrow="The collection" title="Hampers," accent="made to be remembered." />
@@ -164,11 +165,17 @@ function Collection() {
             Every hamper can be customised, from contents to budget. Prices shared on request.
           </p>
         </div>
-        <ul className="mt-16 grid gap-x-7 gap-y-20 sm:grid-cols-2 lg:grid-cols-3">
-          {hampers.map((h, i) => (
-            <HamperCard key={h.slug} hamper={h} priority={i < 3} />
-          ))}
-        </ul>
+        <div className="mt-12 md:mt-16">
+          <Carousel
+            label="Diwali hampers"
+            grid="md:grid-cols-2 md:gap-x-7 md:gap-y-20 lg:grid-cols-3"
+            slide="w-[85%] sm:w-[48%]"
+          >
+            {hampers.map((h, i) => (
+              <HamperCard key={h.slug} hamper={h} priority={i < 3} />
+            ))}
+          </Carousel>
+        </div>
       </div>
     </section>
   );
@@ -176,7 +183,7 @@ function Collection() {
 
 function Gifts() {
   return (
-    <section id="gifts" className="bg-paper-deep py-24 md:py-32">
+    <section id="gifts" className="bg-paper-deep py-20 md:py-32">
       <div className="wrap">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <SectionHead
@@ -188,49 +195,57 @@ function Gifts() {
             Order them on their own, in bulk for guests and teams, or add them to any hamper.
           </p>
         </div>
-        <ul className="mt-16 grid gap-6 md:grid-cols-2">
-          {gifts.map((g, i) => (
-            <li
-              key={g.slug}
-              data-reveal
-              style={{ ["--reveal-delay" as string]: `${i * 100}ms` }}
-              className="group bg-card border-line grid grid-cols-[2fr_3fr] items-stretch overflow-hidden rounded-3xl border"
-            >
-              <div className="relative min-h-64 overflow-hidden">
-                <Image
-                  src={g.image}
-                  alt={g.alt}
-                  fill
-                  sizes="(min-width: 768px) 20vw, 40vw"
-                  className="object-cover transition-transform duration-[1.1s] group-hover:scale-[1.04]"
-                />
+        <div className="mt-12 md:mt-16">
+          <Carousel
+            label="Little gifts and favours"
+            grid="md:grid-cols-2 md:gap-6"
+            slide="w-[88%] sm:w-[60%]"
+          >
+            {gifts.map((g, i) => (
+              <div
+                key={g.slug}
+                data-reveal
+                style={{ ["--reveal-delay" as string]: `${i * 100}ms` }}
+                className="group bg-card border-line grid h-full grid-cols-[2fr_3fr] items-stretch overflow-hidden rounded-3xl border"
+              >
+                <div className="relative min-h-52 overflow-hidden md:min-h-64">
+                  <Image
+                    src={g.image}
+                    alt={g.alt}
+                    fill
+                    sizes="(min-width: 768px) 20vw, 40vw"
+                    className="object-cover transition-transform duration-[1.1s] group-hover:scale-[1.04]"
+                  />
+                </div>
+                <div className="flex flex-col p-5 sm:p-8">
+                  <ul className="flex flex-wrap gap-1.5">
+                    {g.tags.map((t) => (
+                      <li
+                        key={t}
+                        className="bg-paper-deep rounded-full px-3 py-1 text-[0.72rem] font-semibold"
+                      >
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                  <h3 className="mt-3 text-2xl md:mt-4 md:text-3xl">{g.name}</h3>
+                  <p className="text-ink-soft mt-2 text-[0.9rem] leading-relaxed md:text-base">
+                    {g.blurb}
+                  </p>
+                  <a
+                    href={whatsappUrl(`Hi Shaadi Drafts! I'm interested in "${g.name}".`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${textLink} mt-auto pt-6`}
+                  >
+                    Enquire{" "}
+                    <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                </div>
               </div>
-              <div className="flex flex-col p-6 sm:p-8">
-                <ul className="flex flex-wrap gap-1.5">
-                  {g.tags.map((t) => (
-                    <li
-                      key={t}
-                      className="bg-paper-deep rounded-full px-3 py-1 text-[0.72rem] font-semibold"
-                    >
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-                <h3 className="mt-4 text-3xl">{g.name}</h3>
-                <p className="text-ink-soft mt-2 leading-relaxed">{g.blurb}</p>
-                <a
-                  href={whatsappUrl(`Hi Shaadi Drafts! I'm interested in "${g.name}".`)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${textLink} mt-auto pt-6`}
-                >
-                  Enquire{" "}
-                  <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
-                </a>
-              </div>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </Carousel>
+        </div>
       </div>
     </section>
   );
@@ -238,9 +253,12 @@ function Gifts() {
 
 function Personalise() {
   return (
-    <section className="py-24 md:py-36">
+    <section className="py-20 md:py-36">
       <div className="wrap grid items-center gap-16 lg:grid-cols-2">
-        <div data-reveal className="relative aspect-[4/5] overflow-hidden rounded-3xl">
+        <div
+          data-reveal
+          className="relative aspect-[16/10] overflow-hidden rounded-3xl md:aspect-[4/5]"
+        >
           <Image
             src="/diwali/organza-crate-detail.jpg"
             alt="Detail of a gold organza wrap with a mirror-work flower and a pink Deepawali card"
@@ -256,7 +274,7 @@ function Personalise() {
             accent="to the last tag."
             intro="Names, monograms, logos and handwritten notes: the details that make a hamper feel chosen, not bought."
           />
-          <dl className="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2">
+          <dl className="mt-10 grid grid-cols-2 gap-x-5 gap-y-7 md:mt-12 md:gap-x-10 md:gap-y-9">
             {personalisation.map((p, i) => (
               <div
                 key={p.title}
@@ -264,8 +282,10 @@ function Personalise() {
                 style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}
                 className="border-ink/15 border-t pt-5"
               >
-                <dt className="font-serif text-2xl">{p.title}</dt>
-                <dd className="text-ink-soft mt-1.5 leading-relaxed">{p.body}</dd>
+                <dt className="font-serif text-xl md:text-2xl">{p.title}</dt>
+                <dd className="text-ink-soft mt-1.5 text-[0.85rem] leading-relaxed md:text-base">
+                  {p.body}
+                </dd>
               </div>
             ))}
           </dl>
@@ -313,7 +333,7 @@ function Corporate() {
 
 function Faqs() {
   return (
-    <section className="py-24 md:py-36">
+    <section className="py-20 md:py-36">
       <div className="wrap grid gap-14 lg:grid-cols-[0.8fr_1.2fr]">
         <SectionHead eyebrow="Good to know" title="Questions," accent="answered." />
         <div data-reveal className="border-ink/15 border-t">

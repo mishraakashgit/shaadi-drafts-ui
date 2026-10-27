@@ -23,7 +23,7 @@ export function HamperCard({
   const images = variants.length > 0 ? variants : [{ label: "", image: h.image, alt: h.alt }];
 
   return (
-    <li data-reveal className="group flex flex-col">
+    <article data-reveal className="group flex h-full flex-col">
       <div className="bg-paper-deep relative aspect-[4/5] overflow-hidden rounded-3xl">
         {images.map((img, i) => (
           <Image
@@ -113,6 +113,6 @@ export function HamperCard({
         Enquire about this{" "}
         <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
       </a>
-    </li>
+    </article>
   );
 }

@@ -59,19 +59,6 @@ export const occasions: Occasion[] = [
   },
 ];
 
-export const process = [
-  {
-    title: "Tell us",
-    body: "The occasion, how many people, your budget and the feeling you're after.",
-  },
-  { title: "We draft", body: "A concept with packaging, contents and personalisation options." },
-  {
-    title: "You approve",
-    body: "Revisions until it feels right. Nothing is made without your yes.",
-  },
-  { title: "We deliver", body: "Handcrafted, packed with care and shipped across India." },
-];
-
 export const services = [
   "Save the dates",
   "Invitations & monograms",

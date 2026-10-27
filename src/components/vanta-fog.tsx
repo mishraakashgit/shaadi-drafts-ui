@@ -13,6 +13,8 @@ type Palette = {
 export const fogPalettes = {
   /** Warm diya glow on the night background */
   diya: { highlight: 0xc6a15b, midtone: 0x6e5526, lowlight: 0x2a2614, base: 0x161a11 },
+  /** Gold drifting through the brand olive */
+  olive: { highlight: 0xb8995a, midtone: 0x56612f, lowlight: 0x2c3318, base: 0x3b4422 },
 } satisfies Record<string, Palette>;
 
 /**
