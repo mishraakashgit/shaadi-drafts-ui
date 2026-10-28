@@ -56,7 +56,8 @@ npm run brochure            # public/brochure/shaadi-drafts-brochure.pdf (screen
 npm run brochure -- --print # brochure/out/shaadi-drafts-brochure-print.pdf (216 × 303 mm: A4 + 3 mm bleed)
 ```
 
-It uses the photos in `public/` and the same fonts and colours as the site. Set `CHROMIUM_PATH` if
+It uses the photos in `public/` and the same fonts and colours as the site. Earlier editions are kept in
+`brochure/archive/` (Edition 01: `shaadi-drafts-brochure-v1.pdf`). Set `CHROMIUM_PATH` if
 Playwright's Chromium isn't installed.
 
 ## Analytics
