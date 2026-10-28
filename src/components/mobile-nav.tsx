@@ -57,9 +57,9 @@ export function MobileNav({ tone }: { tone: "ink" | "light" }) {
             data-lenis-prevent
             className="bg-paper animate-menu-in fixed inset-0 z-[70] flex flex-col overflow-y-auto"
           >
-            <div className="wrap border-line flex h-20 shrink-0 items-center justify-between border-b">
+            <div className="wrap border-line flex h-24 shrink-0 items-center justify-between border-b">
               <Link href="/" onClick={close} aria-label="Shaadi Drafts home">
-                <LogoMark className="size-14" />
+                <LogoMark className="size-[4.5rem]" />
               </Link>
               <button
                 ref={closeRef}

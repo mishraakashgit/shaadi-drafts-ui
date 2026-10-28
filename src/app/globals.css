@@ -91,7 +91,7 @@
 @layer base {
   /* Smooth scrolling comes from Lenis; native smooth scrolling would fight it */
   html {
-    scroll-padding-top: 6rem;
+    scroll-padding-top: 7rem;
   }
 
   body {
@@ -242,10 +242,10 @@
     border-radius: 1.5rem;
   }
   /* In the stacked deck only the top card's caption shows */
-  .sd-cards .swiper-initialized .swiper-slide :is(p, h3) {
+  .sd-cards .swiper-cards .swiper-slide :is(p, h3) {
     transition: opacity 0.4s;
   }
-  .sd-cards .swiper-initialized .swiper-slide:not(.swiper-slide-active) :is(p, h3) {
+  .sd-cards .swiper-cards .swiper-slide:not(.swiper-slide-active) :is(p, h3) {
     opacity: 0;
   }
 }

@@ -11,7 +11,8 @@ import { ArrowIcon } from "./icons";
  * - `grid`: classes for the desktop layout, e.g. "md:grid-cols-3 md:gap-6"
  * - `slide`: width of each slide on phones (default 82% so the next card peeks in)
  * - `spans`: optional per-slide desktop classes, e.g. ["md:col-span-2", ""]
- * - `effect`: "slide" (focus on the active card) or "cards" (a stacked deck)
+ * - `effect`: "slide" (focus on the active card) or "cards" (a stacked deck), on phones
+ * - `desktop`: "grid" (default) or "carousel" to keep a sliding row from `md` up as well
  */
 export function Carousel({
   children,
@@ -21,6 +22,7 @@ export function Carousel({
   spans = [],
   tone = "ink",
   effect = "slide",
+  desktop = "grid",
 }: {
   children: React.ReactNode;
   label: string;
@@ -29,6 +31,7 @@ export function Carousel({
   spans?: string[];
   tone?: "ink" | "light";
   effect?: "slide" | "cards";
+  desktop?: "grid" | "carousel";
 }) {
   const root = useRef<HTMLDivElement>(null);
   const pagination = useRef<HTMLDivElement>(null);
@@ -36,6 +39,7 @@ export function Carousel({
   const next = useRef<HTMLButtonElement>(null);
   const items = Children.toArray(children);
   const cards = effect === "cards";
+  const deskCarousel = desktop === "carousel";
 
   useEffect(() => {
     const el = root.current;
@@ -43,15 +47,24 @@ export function Carousel({
     const mobile = window.matchMedia("(max-width: 767.98px)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let swiper: SwiperInstance | null = null;
+    let current: string | null = null;
     let alive = true;
 
     const sync = async () => {
-      if (mobile.matches && !swiper) {
-        const [{ default: Swiper }, { A11y, EffectCards, Keyboard, Navigation, Pagination }] =
-          await Promise.all([import("swiper"), import("swiper/modules")]);
-        if (!alive || swiper || !mobile.matches) return;
+      // Which layout this width wants: the phone effect, a desktop row, or none (CSS grid)
+      const mode = mobile.matches ? effect : deskCarousel ? "row" : null;
+      if (mode === current) return;
+      swiper?.destroy(true, true);
+      swiper = null;
+      current = mode;
+      if (!mode) return;
+      const [{ default: Swiper }, { A11y, EffectCards, Keyboard, Navigation, Pagination }] =
+        await Promise.all([import("swiper"), import("swiper/modules")]);
+      if (!alive || current !== mode) return;
+      {
+        const stacked = mode === "cards";
         swiper = new Swiper(el, {
-          modules: [A11y, Keyboard, Navigation, Pagination, ...(cards ? [EffectCards] : [])],
+          modules: [A11y, Keyboard, Navigation, Pagination, ...(stacked ? [EffectCards] : [])],
           speed: reduced ? 0 : 650,
           grabCursor: true,
           keyboard: { enabled: true, onlyInViewport: true },
@@ -66,21 +79,20 @@ export function Carousel({
             bulletClass: "sd-bullet",
             bulletActiveClass: "sd-bullet-active",
           },
-          ...(cards
+          ...(stacked
             ? {
                 effect: "cards",
                 cardsEffect: { perSlideOffset: 9, perSlideRotate: 3, slideShadows: false },
               }
-            : {
-                slidesPerView: "auto",
-                spaceBetween: 14,
-                slidesOffsetBefore: 20,
-                slidesOffsetAfter: 20,
-              }),
+            : mode === "row"
+              ? { slidesPerView: 3.25, spaceBetween: 20 }
+              : {
+                  slidesPerView: "auto",
+                  spaceBetween: 14,
+                  slidesOffsetBefore: 20,
+                  slidesOffsetAfter: 20,
+                }),
         });
-      } else if (!mobile.matches && swiper) {
-        swiper.destroy(true, true);
-        swiper = null;
       }
     };
 
@@ -91,7 +103,7 @@ export function Carousel({
       mobile.removeEventListener("change", sync);
       swiper?.destroy(true, true);
     };
-  }, [items.length, cards]);
+  }, [items.length, effect, deskCarousel]);
 
   const light = tone === "light";
   const navClass = `flex size-10 items-center justify-center rounded-full border transition active:scale-95 ${
@@ -107,13 +119,15 @@ export function Carousel({
     >
       <div
         ref={root}
-        className={`swiper md:!overflow-visible ${cards ? "mx-auto w-[78%] !overflow-visible md:w-auto" : "-mx-5 md:mx-0"}`}
+        className={`swiper ${deskCarousel ? "md:!overflow-hidden" : "md:!overflow-visible"} ${cards ? "mx-auto w-[78%] !overflow-visible md:w-auto" : "-mx-5 md:mx-0"}`}
       >
-        <div className={`swiper-wrapper md:!grid md:!transform-none ${grid}`}>
+        <div
+          className={`swiper-wrapper ${deskCarousel ? "" : `md:!grid md:!transform-none ${grid}`}`}
+        >
           {items.map((child, i) => (
             <div
               key={i}
-              className={`swiper-slide !h-auto md:!w-auto ${cards ? "" : slide} ${spans[i] ?? ""}`}
+              className={`swiper-slide !h-auto ${deskCarousel ? "" : "md:!w-auto"} ${cards ? "" : slide} ${spans[i] ?? ""}`}
             >
               {child}
             </div>
@@ -122,7 +136,9 @@ export function Carousel({
       </div>
 
       {items.length > 1 && (
-        <div className="mt-6 flex items-center justify-between md:hidden">
+        <div
+          className={`mt-6 flex items-center justify-between ${deskCarousel ? "md:mt-10" : "md:hidden"}`}
+        >
           <div ref={pagination} className="flex items-center gap-1.5" />
           <div className="flex gap-2">
             <button ref={prev} type="button" aria-label="Previous slide" className={navClass}>

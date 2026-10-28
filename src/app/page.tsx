@@ -12,7 +12,7 @@ import { HeroShowcase } from "@/components/hero-showcase";
 import { SectionHead } from "@/components/section-head";
 import { FestiveBackground } from "@/components/festive-background";
 import { DiwaliNight } from "@/components/diwali-night";
-import { DIWALI_DATE, hampers } from "@/content/diwali";
+import { DIWALI_DATE, gifts, hampers } from "@/content/diwali";
 import { founder } from "@/content/founder";
 import { occasions, services } from "@/content/occasions";
 import { site } from "@/content/site";
@@ -214,9 +214,11 @@ function OccasionCard({
 }
 
 function DiwaliFeature({ days }: { days: number }) {
-  const picks = ["deepawali-keepsake-box", "organza-crate", "blush-shubh-labh-bag"]
-    .map((slug) => hampers.find((h) => h.slug === slug))
-    .filter((h) => h !== undefined);
+  // Every hamper, then the little gifts
+  const picks = [
+    ...hampers.map((h) => ({ ...h, href: "/festive/diwali#collection" })),
+    ...gifts.map((g) => ({ ...g, href: "/festive/diwali#gifts" })),
+  ];
   return (
     <section className="bg-night text-paper relative isolate overflow-hidden py-20 md:py-32">
       <DiwaliNight />
@@ -241,25 +243,20 @@ function DiwaliFeature({ days }: { days: number }) {
           </ButtonLink>
         </div>
         <div className="mt-12 md:mt-14">
-          <Carousel
-            label="Diwali hampers"
-            grid="md:grid-cols-3 md:gap-5"
-            tone="light"
-            effect="cards"
-          >
+          <Carousel label="Diwali hampers" grid="" tone="light" effect="cards" desktop="carousel">
             {picks.map((h, i) => (
               <div
                 key={h.slug}
                 data-reveal
-                style={{ ["--reveal-delay" as string]: `${i * 100}ms` }}
+                style={{ ["--reveal-delay" as string]: `${Math.min(i, 3) * 100}ms` }}
               >
-                <Link href="/festive/diwali#collection" className="group block">
+                <Link href={h.href} className="group block">
                   <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
                     <Image
                       src={h.image}
                       alt={h.alt}
                       fill
-                      sizes="(min-width: 640px) 30vw, 100vw"
+                      sizes="(min-width: 768px) 30vw, 80vw"
                       className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]"
                     />
                   </div>

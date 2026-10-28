@@ -7,8 +7,8 @@ import { MobileNav } from "./mobile-nav";
 export function Header({ tone = "ink" }: { tone?: "ink" | "light" }) {
   const light = tone === "light";
   const inner = (
-    <div className="wrap flex h-20 items-center justify-between gap-6">
-      <Logo className="size-14" />
+    <div className="wrap flex h-24 items-center justify-between gap-6">
+      <Logo className="size-[4.5rem] md:size-20" />
       <nav aria-label="Main" className="hidden md:block">
         <ul className="flex items-center gap-1">
           {nav.map((item) => (
@@ -26,7 +26,7 @@ export function Header({ tone = "ink" }: { tone?: "ink" | "light" }) {
         </ul>
       </nav>
       {/* Same width as the logo so the desktop nav stays centred */}
-      <div className="flex items-center justify-end md:w-14">
+      <div className="flex items-center justify-end md:w-20">
         <MobileNav tone={tone} />
       </div>
     </div>
