@@ -60,6 +60,16 @@ It uses the photos in `public/` and the same fonts and colours as the site. Earl
 `brochure/archive/` (Edition 01: `shaadi-drafts-brochure-v1.pdf`). Set `CHROMIUM_PATH` if
 Playwright's Chromium isn't installed.
 
+### Diwali price list
+
+A separate 14-page Diwali 2026 hamper price list (cover, price table, one page per hamper, back cover) is generated
+from `brochure/diwali/hampers.mjs`, so prices and contents live in one place:
+
+```bash
+npm run brochure -- --diwali          # brochure/diwali/shaadi-drafts-diwali-2026.pdf (screen)
+npm run brochure -- --diwali --print  # brochure/out/shaadi-drafts-diwali-2026-print.pdf (3 mm bleed)
+```
+
 ## Analytics
 
 Google Analytics 4 (`G-PF6XLJN7V0`) loads on production builds only; set `NEXT_PUBLIC_GA_ID` to use another
