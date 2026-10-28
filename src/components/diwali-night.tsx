@@ -23,7 +23,9 @@ const skyFragment = /* glsl */ `
     vec3 top = vec3(0.075, 0.086, 0.059);
     vec3 bottom = vec3(0.17, 0.12, 0.05);
     vec3 col = mix(bottom, top, smoothstep(0.0, 0.75, vUv.y));
-    float glow = exp(-pow((vUv.y - 0.02) * 4.0, 2.0)) * (0.14 + 0.03 * sin(uTime * 1.7));
+    // Square by multiplying: pow() with a negative base returns NaN (black) on Windows and Android GPUs
+    float g = (vUv.y - 0.02) * 4.0;
+    float glow = exp(-g * g) * (0.14 + 0.03 * sin(uTime * 1.7));
     col += vec3(0.85, 0.55, 0.18) * glow;
     gl_FragColor = vec4(col, 1.0);
   }

@@ -48,7 +48,9 @@ const fragment = /* glsl */ `
 
     vec3 col = mix(uShadow, uBase, shade);
     col = mix(col, uHighlight, pow(max(folds, 0.0), 3.0) * 0.75);
-    float sheen = pow(1.0 - abs(folds - 0.45), 10.0);
+    // pow() of a negative base is undefined in GLSL: Windows (ANGLE/D3D) and many Android GPUs
+    // return NaN, which renders black. Always clamp the base to >= 0.
+    float sheen = pow(max(1.0 - abs(folds - 0.45), 0.0), 10.0);
     col = mix(col, uGold, sheen * 0.18);
 
     vec2 m = vec2(uMouse.x * uAspect, uMouse.y);
@@ -103,7 +105,7 @@ const petalFragment = /* glsl */ `
     float width = 0.2 + 0.22 * (0.45 - p.y);
     float r = length(vec2(p.x / width, (p.y - 0.02) / 0.4));
     // a softly ruffled outer edge, like a marigold petal
-    r += 0.035 * sin(atan(p.y, p.x) * 9.0) * smoothstep(0.0, -0.3, p.y);
+    r += 0.035 * sin(atan(p.y, p.x + 1e-4) * 9.0) * smoothstep(0.0, -0.3, p.y);
     float a = smoothstep(1.0, 0.86, r);
     if (a < 0.01) discard;
     vec3 col = vColor * (0.88 + 0.3 * (0.5 - p.y));
