@@ -3,3 +3,4 @@ node_modules
 legacy
 package-lock.json
 brochure/brochure.html
+brochure/archive
