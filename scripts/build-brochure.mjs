@@ -1,6 +1,8 @@
-// Renders brochure/brochure.html to PDF.
-//   npm run brochure            -> public/brochure/shaadi-drafts-brochure.pdf (screen, compressed images)
-//   npm run brochure -- --print -> brochure/out/shaadi-drafts-brochure-print.pdf (3 mm bleed, full-size images)
+// Renders a brochure template to PDF.
+//   npm run brochure                     -> public/brochure/shaadi-drafts-brochure.pdf (brand brochure, screen)
+//   npm run brochure -- --print          -> brochure/out/shaadi-drafts-brochure-print.pdf (3 mm bleed, full-size images)
+//   npm run brochure -- --diwali         -> brochure/diwali/shaadi-drafts-diwali-2026.pdf (Diwali price list, screen)
+//   npm run brochure -- --diwali --print -> brochure/out/shaadi-drafts-diwali-2026-print.pdf
 import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
@@ -10,6 +12,8 @@ import sharp from "sharp";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const print = process.argv.includes("--print");
+const diwali = process.argv.includes("--diwali");
+const photosDir = path.join(root, "brochure/diwali/photos");
 const work = path.join(root, "brochure", ".build");
 
 const site = { whatsapp: "918329049746", instagram: "https://www.instagram.com/shaadi_drafts/" };
@@ -63,14 +67,19 @@ const hamperCard = ([img, name, tag, text]) => `
 
 /** Screen version: downscale photos so the PDF is small enough to share on WhatsApp. */
 async function prepareAssets() {
-  if (print) return path.join(root, "public");
+  if (print) return { assets: path.join(root, "public"), photos: photosDir };
   const out = path.join(work, "assets");
-  const dirs = ["diwali", "work", "founder"];
-  for (const d of dirs) {
+  const dirs = [
+    [path.join(root, "public/diwali"), "diwali"],
+    [path.join(root, "public/work"), "work"],
+    [path.join(root, "public/founder"), "founder"],
+    [photosDir, "photos"],
+  ];
+  for (const [dir, d] of dirs) {
     await mkdir(path.join(out, d), { recursive: true });
     const { readdir } = await import("node:fs/promises");
-    for (const f of await readdir(path.join(root, "public", d))) {
-      const src = path.join(root, "public", d, f);
+    for (const f of await readdir(dir)) {
+      const src = path.join(dir, f);
       const pipeline = sharp(src).resize({
         width: 1400,
         height: 1400,
@@ -84,7 +93,7 @@ async function prepareAssets() {
       else await pipeline.jpeg({ quality: 80, mozjpeg: true }).toFile(path.join(out, d, f));
     }
   }
-  return out;
+  return { assets: out, photos: path.join(out, "photos") };
 }
 
 const qr = (text) =>
@@ -92,26 +101,40 @@ const qr = (text) =>
 
 await rm(work, { recursive: true, force: true });
 await mkdir(work, { recursive: true });
-const assets = await prepareAssets();
+const { assets, photos } = await prepareAssets();
 
 const logo = (await readFile(path.join(root, "public/brand/shaadi-drafts-logo.svg"), "utf8"))
   .replace(/^[\s\S]*?<svg[^>]*>/, "")
   .replace(/<\/svg>\s*$/, "");
 
-let html = await readFile(path.join(root, "brochure/brochure.html"), "utf8");
+const qrWhatsapp = await qr(
+  `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
+    diwali
+      ? "Hi Shaadi Drafts! I saw your Diwali hamper list and would like to place an order."
+      : "Hi Shaadi Drafts! I saw your brochure and would love to plan a gift.",
+  )}`,
+);
+const qrInstagram = await qr(site.instagram);
+
+let html = await readFile(
+  path.join(root, diwali ? "brochure/diwali.html" : "brochure/brochure.html"),
+  "utf8",
+);
+if (diwali) {
+  const { renderDiwali } = await import(
+    pathToFileURL(path.join(root, "brochure/diwali/pages.mjs")).href
+  );
+  html = html.replace("{{BODY}}", () => renderDiwali({ qrWhatsapp, qrInstagram }));
+}
 html = html
   .replaceAll("{{HAMPERS}}", hampers.map(hamperCard).join(""))
   .replaceAll("{{ASSETS}}", pathToFileURL(assets).href)
+  .replaceAll("{{PHOTOS}}", pathToFileURL(photos).href)
   .replaceAll("{{FONTS}}", pathToFileURL(path.join(root, "node_modules/@fontsource")).href)
   .replaceAll("{{BLEED}}", print ? "3mm" : "0mm")
   .replaceAll("{{LOGO}}", logo)
-  .replaceAll(
-    "{{QR_WHATSAPP}}",
-    await qr(
-      `https://wa.me/${site.whatsapp}?text=${encodeURIComponent("Hi Shaadi Drafts! I saw your brochure and would love to plan a gift.")}`,
-    ),
-  )
-  .replaceAll("{{QR_INSTAGRAM}}", await qr(site.instagram));
+  .replaceAll("{{QR_WHATSAPP}}", qrWhatsapp)
+  .replaceAll("{{QR_INSTAGRAM}}", qrInstagram);
 
 const page = path.join(work, "brochure.html");
 await writeFile(page, html);
@@ -121,9 +144,12 @@ const tab = await browser.newPage();
 await tab.goto(pathToFileURL(page).href, { waitUntil: "networkidle" });
 await tab.evaluate(() => document.fonts.ready);
 
+const name = diwali ? "shaadi-drafts-diwali-2026" : "shaadi-drafts-brochure";
 const outFile = print
-  ? path.join(root, "brochure/out/shaadi-drafts-brochure-print.pdf")
-  : path.join(root, "public/brochure/shaadi-drafts-brochure.pdf");
+  ? path.join(root, `brochure/out/${name}-print.pdf`)
+  : diwali
+    ? path.join(root, `brochure/diwali/${name}.pdf`)
+    : path.join(root, `public/brochure/${name}.pdf`);
 await mkdir(path.dirname(outFile), { recursive: true });
 await tab.pdf({ path: outFile, preferCSSPageSize: true, printBackground: true });
 if (process.argv.includes("--preview")) {

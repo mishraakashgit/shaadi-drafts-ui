@@ -1,6 +1,6 @@
 "use client";
 
-import { Children, useEffect, useRef } from "react";
+import { Children, useEffect, useRef, useState } from "react";
 import type { Swiper as SwiperInstance } from "swiper";
 import { ArrowIcon } from "./icons";
 
@@ -40,6 +40,7 @@ export function Carousel({
   const items = Children.toArray(children);
   const cards = effect === "cards";
   const deskCarousel = desktop === "carousel";
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const el = root.current;
@@ -57,6 +58,7 @@ export function Carousel({
       swiper?.destroy(true, true);
       swiper = null;
       current = mode;
+      setIndex(0);
       if (!mode) return;
       const [{ default: Swiper }, { A11y, EffectCards, Keyboard, Navigation, Pagination }] =
         await Promise.all([import("swiper"), import("swiper/modules")]);
@@ -88,11 +90,14 @@ export function Carousel({
               ? { slidesPerView: 3.25, spaceBetween: 20 }
               : {
                   slidesPerView: "auto",
+                  // Fit the carousel to the card on show, so short cards leave no gap
+                  autoHeight: true,
                   spaceBetween: 14,
                   slidesOffsetBefore: 20,
                   slidesOffsetAfter: 20,
                 }),
         });
+        swiper.on("slideChange", (sw) => setIndex(sw.realIndex));
       }
     };
 
@@ -106,8 +111,11 @@ export function Carousel({
   }, [items.length, effect, deskCarousel]);
 
   const light = tone === "light";
-  const navClass = `flex size-10 items-center justify-center rounded-full border transition active:scale-95 ${
-    light ? "border-paper/25 text-paper" : "border-ink/15 text-ink"
+  const navClass = `flex size-11 items-center justify-center rounded-full border transition active:scale-95 ${
+    light ? "border-paper/30 text-paper" : "border-ink/20 text-ink"
+  }`;
+  const nextClass = `flex size-11 items-center justify-center rounded-full transition active:scale-95 ${
+    light ? "bg-gold text-night" : "bg-ink text-paper"
   }`;
 
   return (
@@ -139,12 +147,28 @@ export function Carousel({
         <div
           className={`mt-6 flex items-center justify-between ${deskCarousel ? "md:mt-10" : "md:hidden"}`}
         >
-          <div ref={pagination} className="flex items-center gap-1.5" />
+          <div className="flex flex-col gap-2">
+            <p
+              className={`text-[0.78rem] font-semibold tabular-nums ${light ? "text-paper/80" : "text-ink/70"}`}
+            >
+              {String(index + 1).padStart(2, "0")}
+              <span className={light ? "text-paper/40" : "text-ink/35"}>
+                {" "}
+                / {String(items.length).padStart(2, "0")}
+              </span>
+              <span
+                className={`ml-2 font-normal md:hidden ${light ? "text-paper/50" : "text-ink-soft"}`}
+              >
+                · Swipe
+              </span>
+            </p>
+            <div ref={pagination} className="flex items-center gap-1.5" />
+          </div>
           <div className="flex gap-2">
             <button ref={prev} type="button" aria-label="Previous slide" className={navClass}>
               <ArrowIcon className="size-4 rotate-180" />
             </button>
-            <button ref={next} type="button" aria-label="Next slide" className={navClass}>
+            <button ref={next} type="button" aria-label="Next slide" className={nextClass}>
               <ArrowIcon className="size-4" />
             </button>
           </div>

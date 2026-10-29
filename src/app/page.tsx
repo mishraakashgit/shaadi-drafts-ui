@@ -9,6 +9,7 @@ import { ArrowIcon, InstagramIcon } from "@/components/icons";
 import { CardSlides } from "@/components/card-slides";
 import { Carousel } from "@/components/carousel";
 import { HeroShowcase } from "@/components/hero-showcase";
+import { QuickViewTrigger } from "@/components/quick-view";
 import { SectionHead } from "@/components/section-head";
 import { FestiveBackground } from "@/components/festive-background";
 import { DiwaliNight } from "@/components/diwali-night";
@@ -19,6 +20,7 @@ import { site } from "@/content/site";
 import { testimonials } from "@/content/testimonials";
 import { work } from "@/content/work";
 import { daysUntil } from "@/lib/dates";
+import { hamperView, workView } from "@/lib/quick-view";
 
 export default function Home() {
   const days = daysUntil(DIWALI_DATE);
@@ -250,8 +252,11 @@ function DiwaliFeature({ days }: { days: number }) {
                 data-reveal
                 style={{ ["--reveal-delay" as string]: `${Math.min(i, 3) * 100}ms` }}
               >
-                <Link href={h.href} className="group block">
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+                <div className="group">
+                  <QuickViewTrigger
+                    item={hamperView(h)}
+                    className="aspect-[4/5] overflow-hidden rounded-2xl"
+                  >
                     <Image
                       src={h.image}
                       alt={h.alt}
@@ -259,10 +264,12 @@ function DiwaliFeature({ days }: { days: number }) {
                       sizes="(min-width: 768px) 30vw, 80vw"
                       className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]"
                     />
-                  </div>
-                  <p className="mt-4 font-serif text-2xl">{h.name}</p>
+                  </QuickViewTrigger>
+                  <Link href={h.href} className="mt-4 block font-serif text-2xl hover:underline">
+                    {h.name}
+                  </Link>
                   <p className="text-paper/55 mt-1 text-sm">{h.tags.join(" · ")}</p>
-                </Link>
+                </div>
               </div>
             ))}
           </Carousel>
@@ -295,8 +302,11 @@ function RecentWork() {
           <Carousel label="Recent work" grid="md:grid-cols-4 md:gap-5" effect="cards">
             {picks.map((w, i) => (
               <div key={w.slug} data-reveal style={{ ["--reveal-delay" as string]: `${i * 80}ms` }}>
-                <Link href={`/work?c=${w.category}`} className="group block">
-                  <div className="bg-paper-deep relative aspect-[4/5] overflow-hidden rounded-2xl">
+                <div className="group">
+                  <QuickViewTrigger
+                    item={workView(w)}
+                    className="bg-paper-deep aspect-[4/5] overflow-hidden rounded-2xl"
+                  >
                     <Image
                       src={w.image}
                       alt={w.alt}
@@ -304,10 +314,15 @@ function RecentWork() {
                       sizes="(min-width: 768px) 24vw, 72vw"
                       className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]"
                     />
-                  </div>
+                  </QuickViewTrigger>
                   <p className="eyebrow mt-5">{w.occasion}</p>
-                  <p className="mt-1.5 font-serif text-2xl leading-tight">{w.title}</p>
-                </Link>
+                  <Link
+                    href={`/work?c=${w.category}`}
+                    className="mt-1.5 block font-serif text-2xl leading-tight hover:underline"
+                  >
+                    {w.title}
+                  </Link>
+                </div>
               </div>
             ))}
           </Carousel>

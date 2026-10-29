@@ -2,36 +2,48 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { hampers } from "@/content/diwali";
+import { work } from "@/content/work";
+import { hamperView, type QuickViewItem, workView } from "@/lib/quick-view";
+import { QuickViewTrigger } from "./quick-view";
 
-const slides = [
+const hamper = (slug: string) => hamperView(hampers.find((h) => h.slug === slug)!);
+const piece = (slug: string) => workView(work.find((w) => w.slug === slug)!);
+
+const slides: { src: string; alt: string; title: string; tag: string; view: QuickViewItem }[] = [
   {
     src: "/diwali/pichwai-gift-box.jpg",
     alt: "The Pichwai Gift Box with lotus Shubh Labh hangings",
     title: "The Pichwai Gift Box",
+    view: hamper("pichwai-gift-box"),
     tag: "Diwali",
   },
   {
     src: "/diwali/organza-crate.jpg",
     alt: "A wooden crate wrapped in gold organza with a mirror-work flower",
     title: "The Organza Crate",
+    view: hamper("organza-crate"),
     tag: "Festive",
   },
   {
     src: "/diwali/ivory-rani-pink.jpg",
     alt: "Ivory gift box with a rani pink Deepawali card",
     title: "Ivory & Rani Pink Box",
+    view: hamper("ivory-rani-pink-box"),
     tag: "Festive",
   },
   {
     src: "/work/save-the-date-shraddha-shubham.webp",
     alt: "Layered arch save the date cards with lavender sprigs",
     title: "Shraddha & Shubham",
+    view: piece("save-the-date-shraddha-shubham"),
     tag: "Save the date",
   },
   {
     src: "/diwali/blush-shubh-labh-bag.jpg",
     alt: "Blush Shubh Labh bag with gold diya stands and a beaded potli",
     title: "Blush Shubh Labh Bag",
+    view: hamper("blush-shubh-labh-bag"),
     tag: "Diwali",
   },
 ];
@@ -57,24 +69,30 @@ export function HeroShowcase() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div
-        data-reveal="image"
-        className="bg-paper-deep relative aspect-[4/5] overflow-hidden rounded-t-full shadow-[0_40px_80px_-40px_rgb(22_26_17/0.45)]"
+      <QuickViewTrigger
+        item={current.view}
+        className="rounded-t-full"
+        badgeClass="top-[18%] right-[12%]"
       >
-        {slides.map((s, i) => (
-          <Image
-            key={s.src}
-            src={s.src}
-            alt={i === active ? s.alt : ""}
-            fill
-            priority={i === 0}
-            sizes="(min-width: 1024px) 27rem, (min-width: 640px) 24rem, 19rem"
-            className={`object-cover transition-opacity duration-[1.4s] ease-out ${
-              i === active ? "animate-kenburns opacity-100" : "opacity-0"
-            }`}
-          />
-        ))}
-      </div>
+        <div
+          data-reveal="image"
+          className="bg-paper-deep relative aspect-[4/5] overflow-hidden rounded-t-full shadow-[0_40px_80px_-40px_rgb(22_26_17/0.45)]"
+        >
+          {slides.map((s, i) => (
+            <Image
+              key={s.src}
+              src={s.src}
+              alt={i === active ? s.alt : ""}
+              fill
+              priority={i === 0}
+              sizes="(min-width: 1024px) 27rem, (min-width: 640px) 24rem, 19rem"
+              className={`object-cover transition-opacity duration-[1.4s] ease-out ${
+                i === active ? "animate-kenburns opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
+        </div>
+      </QuickViewTrigger>
       {/* Gold double frame around the arch */}
       <div
         aria-hidden="true"

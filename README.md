@@ -56,8 +56,19 @@ npm run brochure            # public/brochure/shaadi-drafts-brochure.pdf (screen
 npm run brochure -- --print # brochure/out/shaadi-drafts-brochure-print.pdf (216 × 303 mm: A4 + 3 mm bleed)
 ```
 
-It uses the photos in `public/` and the same fonts and colours as the site. Set `CHROMIUM_PATH` if
+It uses the photos in `public/` and the same fonts and colours as the site. Earlier editions are kept in
+`brochure/archive/` (Edition 01: `shaadi-drafts-brochure-v1.pdf`). Set `CHROMIUM_PATH` if
 Playwright's Chromium isn't installed.
+
+### Diwali price list
+
+A separate 14-page Diwali 2026 hamper price list (cover, price table, one page per hamper, back cover) is generated
+from `brochure/diwali/hampers.mjs`, so prices and contents live in one place:
+
+```bash
+npm run brochure -- --diwali          # brochure/diwali/shaadi-drafts-diwali-2026.pdf (screen)
+npm run brochure -- --diwali --print  # brochure/out/shaadi-drafts-diwali-2026-print.pdf (3 mm bleed)
+```
 
 ## Analytics
 

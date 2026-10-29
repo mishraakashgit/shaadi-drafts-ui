@@ -103,6 +103,10 @@
   .cover h1 { font-size: 50pt; line-height: 0.98; margin-top: auto; letter-spacing: -0.025em; }
   .cover .sub { display: flex; justify-content: space-between; align-items: end; margin-top: 6mm; }
 
+  /* ---------- Festive petals (matches the site's petal shower) ---------- */
+  .petals { position: absolute; inset: 0; pointer-events: none; }
+  .petals svg { position: absolute; width: 6mm; height: 6mm; }
+
   /* ---------- Grids ---------- */
   .row { display: flex; gap: 6mm; }
   .col { display: flex; flex-direction: column; min-height: 0; }
@@ -113,9 +117,10 @@
 
 <!-- 1 · Cover -->
 <section class="page cover">
-  <div class="top">
+  <div class="petals" aria-hidden="true"><svg viewBox="-12 -12 24 24" style="left:12%;top:9%;transform:rotate(-20deg) scale(1.1)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#f2a52b"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:26%;top:14%;transform:rotate(35deg) scale(0.8)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#d6336c"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:80%;top:8%;transform:rotate(15deg) scale(1.0)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#e77c94"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:88%;top:20%;transform:rotate(-40deg) scale(0.9)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#e8821e"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:8%;top:34%;transform:rotate(60deg) scale(0.9)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#dcab55"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:90%;top:42%;transform:rotate(-10deg) scale(1.2)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#d6336c"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:15%;top:52%;transform:rotate(-55deg) scale(0.8)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#f2a52b"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:84%;top:58%;transform:rotate(25deg) scale(0.85)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#f2a52b"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:70%;top:70%;transform:rotate(-30deg) scale(0.7)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#e77c94"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:6%;top:66%;transform:rotate(20deg) scale(1.0)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#d6336c"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg></div>
+  <div class="top" style="position: relative">
     <span class="eyebrow">Shaadi Drafts</span>
-    <span class="eyebrow">Brochure · 2026</span>
+    <span class="eyebrow">Brochure · 2026 · Edition 02</span>
   </div>
   <div class="hero">
     <div class="ph arch"><img src="{{ASSETS}}/diwali/organza-crate-detail.jpg" alt="" style="object-position: 50% 40%" /></div>
@@ -135,20 +140,6 @@
   <p class="serif" style="font-size: 25pt; line-height: 1.18; margin-top: 7mm">
     We treat every gift like a wedding invitation: <em class="accent">drafted</em>, refined and finished by hand, until it could only have come from you.
   </p>
-  <div class="row" style="margin-top: 11mm; padding-top: 6mm; border-top: 1px solid var(--line)">
-    <div style="flex: 1">
-      <h3 style="font-size: 15pt">Designed by an architect</h3>
-      <p class="soft" style="margin-top: 2mm">Every card, tag, monogram and box is drawn in-house, with an eye for detail.</p>
-    </div>
-    <div style="flex: 1">
-      <h3 style="font-size: 15pt">One or a thousand</h3>
-      <p class="soft" style="margin-top: 2mm">A single proposal box or bulk favours, made with the same care.</p>
-    </div>
-    <div style="flex: 1">
-      <h3 style="font-size: 15pt">Pan-India delivery</h3>
-      <p class="soft" style="margin-top: 2mm">Packed to travel and shipped wherever your people are.</p>
-    </div>
-  </div>
 
   <div class="row" style="margin-top: 12mm; flex: 1; min-height: 0">
     <div class="ph" style="flex: 1.25"><img src="{{ASSETS}}/diwali/pichwai-contents.jpg" alt="" /></div>
@@ -156,14 +147,14 @@
       <div>
         <span class="eyebrow">Inside</span>
         <ol style="list-style: none; margin-top: 4mm" class="serif">
-          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.6mm 0; border-bottom: 1px solid var(--line)"><span>Meet the founder</span><span class="soft">03</span></li>
-          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.6mm 0; border-bottom: 1px solid var(--line)"><span>What we make</span><span class="soft">04</span></li>
-          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.6mm 0; border-bottom: 1px solid var(--line)"><span>Wedding stationery</span><span class="soft">05</span></li>
-          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.6mm 0; border-bottom: 1px solid var(--line)"><span>Wedding gifting</span><span class="soft">06</span></li>
-          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.6mm 0; border-bottom: 1px solid var(--line)"><span>Diwali 2026</span><span class="soft">07</span></li>
-          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.6mm 0; border-bottom: 1px solid var(--line)"><span>Favours &amp; corporate</span><span class="soft">09</span></li>
-          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.6mm 0; border-bottom: 1px solid var(--line)"><span>Custom &amp; personal</span><span class="soft">10</span></li>
-          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.6mm 0; border-bottom: 1px solid var(--line)"><span>How it works</span><span class="soft">11</span></li>
+          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.8mm 0; border-bottom: 1px solid var(--line)"><span>Meet the founder</span><span class="soft">03</span></li>
+          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.8mm 0; border-bottom: 1px solid var(--line)"><span>What we make</span><span class="soft">04</span></li>
+          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.8mm 0; border-bottom: 1px solid var(--line)"><span>Wedding stationery</span><span class="soft">05</span></li>
+          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.8mm 0; border-bottom: 1px solid var(--line)"><span>Wedding gifting</span><span class="soft">06</span></li>
+          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.8mm 0; border-bottom: 1px solid var(--line)"><span>Return favours</span><span class="soft">07</span></li>
+          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.8mm 0; border-bottom: 1px solid var(--line)"><span>Diwali 2026</span><span class="soft">08</span></li>
+          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.8mm 0; border-bottom: 1px solid var(--line)"><span>Corporate gifting</span><span class="soft">10</span></li>
+          <li style="display: flex; justify-content: space-between; font-size: 13pt; padding: 1.8mm 0; border-bottom: 1px solid var(--line)"><span>Custom &amp; personal</span><span class="soft">11</span></li>
         </ol>
       </div>
       <p class="serif" style="font-size: 15pt; line-height: 1.25">Weddings are where we started, and what we love most. Every piece is drafted for the people receiving it.</p>
@@ -175,37 +166,25 @@
 <!-- 3 · Founder -->
 <section class="page dark">
   <span class="eyebrow">Meet the founder</span>
-  <div class="row" style="margin-top: 8mm; gap: 10mm; align-items: flex-start">
-    <div style="position: relative; width: 70mm; flex-shrink: 0">
-      <div class="ph arch" style="height: 90mm"><img src="{{ASSETS}}/founder/shrutika-jaju.jpg" alt="" style="object-position: 50% 30%" /></div>
+  <div class="row" style="margin-top: 10mm; gap: 12mm; align-items: center">
+    <div style="position: relative; width: 72mm; flex-shrink: 0">
+      <div class="ph arch" style="height: 92mm"><img src="{{ASSETS}}/founder/shrutika-jaju.jpg" alt="" style="object-position: 50% 30%" /></div>
       <div style="position: absolute; inset: -2.6mm; border: 0.3mm solid rgba(231, 214, 168, 0.5); border-radius: 999mm 999mm 0 0"></div>
-      <div style="margin-top: 6mm">
-        <p class="serif" style="font-size: 17pt">Shrutika Jaju</p>
-        <p class="soft" style="font-size: 8pt">Founder &amp; CEO · Architect</p>
-      </div>
     </div>
-    <div class="serif" style="font-size: 20pt; line-height: 1.2; padding-top: 2mm">
-      <p>Some people know me as <em class="accent">Shrutika.</em></p>
-      <p style="margin-top: 4mm">My colleagues know me as an <em class="accent">architect.</em></p>
-      <p style="margin-top: 4mm">My family? They&rsquo;d probably describe me as <em class="accent">&ldquo;slightly dramatic, with suspiciously high standards for details.&rdquo;</em></p>
+    <div>
+      <p class="serif" style="font-size: 27pt; line-height: 1.12">&ldquo;Slightly dramatic, with suspiciously high standards for details.&rdquo;</p>
+      <p class="soft" style="margin-top: 6mm; font-size: 10pt; line-height: 1.7">That&rsquo;s how my family describes me. I&rsquo;m an architect who has always taken gift-giving very seriously, and Shaadi Drafts is where that obsession with handmade details became invitations, keepsakes and every small touch that makes a celebration feel personal.</p>
+      <p style="margin-top: 7mm"><span class="serif" style="font-size: 20pt; font-style: italic">Shrutika Jaju</span></p>
+      <p class="soft" style="font-size: 8.4pt">Founder &amp; CEO · Architect</p>
     </div>
-  </div>
-  <div class="rule" style="margin-top: 12mm"></div>
-  <div class="row soft" style="margin-top: 8mm; gap: 9mm; font-size: 9.6pt; line-height: 1.7">
-    <p style="flex: 1">Growing up, I took gift-giving very seriously. Turns out, some things never change. The little girl who obsessed over handmade details found herself obsessing over an entire wedding aesthetic: the invitations, the little notes, the keepsakes, the tiny touches that make a celebration feel personal. Somewhere between the chaos, the excitement and countless design drafts, Shaadi Drafts was born.</p>
-    <p style="flex: 1">Today we create bespoke stationery and thoughtful details for every phase of a celebration, from save-the-dates and invitations to signage, hampers, keepsakes and post-wedding stationery. Because weddings aren&rsquo;t just about the big moments. They&rsquo;re about the couple, and the families, big or small.</p>
-  </div>
-  <div style="margin-top: 7mm; display: flex; align-items: center; gap: 4mm">
-    <span style="width: 12mm; height: 1px; background: var(--gold)"></span>
-    <span class="serif" style="font-size: 22pt; font-style: italic">Shrutika</span>
   </div>
   <div style="margin-top: auto; margin-bottom: 12mm">
     <span class="eyebrow">From her drafting table</span>
-    <div class="row" style="margin-top: 4mm; gap: 4mm; height: 52mm">
+    <div class="row" style="margin-top: 4mm; gap: 4mm; height: 96mm">
       <div class="ph" style="flex: 1"><img src="{{ASSETS}}/work/save-the-date-shraddha-shubham.webp" alt="" /></div>
+      <div class="ph" style="flex: 1"><img src="{{ASSETS}}/work/beaded-potlis-envelopes.jpg" alt="" /></div>
       <div class="ph" style="flex: 1"><img src="{{ASSETS}}/diwali/organza-crate.jpg" alt="" /></div>
-      <div class="ph" style="flex: 1"><img src="{{ASSETS}}/work/bridesmaid-proposal-box.jpg" alt="" style="object-position: 50% 62%" /></div>
-      <div class="ph" style="flex: 1"><img src="{{ASSETS}}/diwali/gota-shagun-envelopes.jpg" alt="" /></div>
+      <div class="ph" style="flex: 1"><img src="{{ASSETS}}/work/card-game-couples.jpg" alt="" /></div>
     </div>
   </div>
   <div class="folio"><span>Shaadi Drafts</span><span>03</span></div>
@@ -216,13 +195,13 @@
   <span class="eyebrow">What we make</span>
   <h2 class="h2">One studio, <em class="accent">every occasion.</em></h2>
   <div style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 5mm; margin-top: 9mm; flex: 1; min-height: 0; margin-bottom: 12mm">
-    <div class="col"><div class="ph" style="flex: 1"><img src="{{ASSETS}}/work/save-the-date-shraddha-shubham.webp" alt="" /></div>
+    <div class="col"><div class="ph" style="flex: 1"><img src="{{ASSETS}}/diwali/lakshmi-charan-potlis.jpg" alt="" /><span class="tag" style="position: absolute; top: 3mm; left: 3mm; background: rgba(251,248,241,0.92)">Return favours</span></div>
       <h3 style="font-size: 18pt; margin-top: 3.5mm">Weddings</h3>
       <p class="soft" style="margin-top: 1mm">Every phase, from save-the-dates to post-wedding thank-yous, as one matching story.</p></div>
     <div class="col"><div class="ph" style="flex: 1"><img src="{{ASSETS}}/diwali/pichwai-tray.jpg" alt="" /></div>
       <h3 style="font-size: 18pt; margin-top: 3.5mm">Festive</h3>
       <p class="soft" style="margin-top: 1mm">Diwali, Rakhi and every festival in between, with hampers that feel chosen, not bought.</p></div>
-    <div class="col"><div class="ph" style="flex: 1"><img src="{{ASSETS}}/diwali/lakshmi-charan-potlis.jpg" alt="" /></div>
+    <div class="col"><div class="ph" style="flex: 1"><img src="{{ASSETS}}/diwali/navy-nuts.jpg" alt="" style="object-position: 50% 40%" /></div>
       <h3 style="font-size: 18pt; margin-top: 3.5mm">Corporate</h3>
       <p class="soft" style="margin-top: 1mm">Client and team gifting in bulk, with your brand on the box and no detail lost.</p></div>
     <div class="col"><div class="ph" style="flex: 1"><img src="{{ASSETS}}/work/card-game-couples.jpg" alt="" /></div>
@@ -281,12 +260,42 @@
   <div class="folio"><span>Shaadi Drafts</span><span>06</span></div>
 </section>
 
-<!-- 7 · Diwali opener -->
+<!-- 7 · Return favours -->
+<section class="page">
+  <span class="eyebrow">Weddings · Return favours</span>
+  <h2 class="h2">A little something <em class="accent">for every guest.</em></h2>
+  <p class="lead soft">Hand-beaded potlis, satin favours and shagun envelopes, matched to your wedding palette and made function-wise, in bulk, without losing the detail.</p>
+  <div class="row" style="margin-top: 8mm; flex: 1; min-height: 0">
+    <figure class="col" style="flex: 1.15">
+      <div class="ph" style="flex: 1"><img src="{{ASSETS}}/work/beaded-potlis-envelopes.jpg" alt="" style="object-position: 50% 45%" /></div>
+      <figcaption style="margin-top: 3mm"><p class="serif" style="font-size: 15pt">Beaded potlis &amp; shagun envelopes</p><p class="soft" style="font-size: 7.8pt">Pearl beading, gota and stone work in coral, sky, mint, ivory, lilac and pink</p></figcaption>
+    </figure>
+    <div class="col" style="flex: 1; gap: 4mm">
+      <figure class="col" style="flex: 1">
+        <div class="ph" style="flex: 1"><img src="{{ASSETS}}/diwali/lakshmi-charan-potlis.jpg" alt="" /></div>
+        <figcaption style="margin-top: 2.5mm"><p class="serif" style="font-size: 13pt">Pink potli favours</p><p class="soft" style="font-size: 7.6pt">Satin potlis with a lotus and pearl tassel</p></figcaption>
+      </figure>
+      <figure class="col" style="flex: 1">
+        <div class="ph" style="flex: 1"><img src="{{ASSETS}}/diwali/gota-shagun-envelopes.jpg" alt="" /></div>
+        <figcaption style="margin-top: 2.5mm"><p class="serif" style="font-size: 13pt">Gota shagun envelopes</p><p class="soft" style="font-size: 7.6pt">Hand-stitched fabric with gota leaf detailing</p></figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="row" style="margin: 7mm 0 11mm; padding-top: 4mm; border-top: 1px solid var(--line); gap: 8mm; font-size: 8.6pt">
+    <div style="flex: 1"><span class="eyebrow">Made to match</span><p style="margin-top: 2mm">Colours, tassels and beadwork picked from your outfits and decor.</p></div>
+    <div style="flex: 1"><span class="eyebrow">Function-wise</span><p style="margin-top: 2mm">A different favour for the mehendi, the sangeet and the wedding day.</p></div>
+    <div style="flex: 1"><span class="eyebrow">Any quantity</span><p style="margin-top: 2mm">From a family dinner to a full guest list.</p></div>
+  </div>
+  <div class="folio"><span>Shaadi Drafts</span><span>07</span></div>
+</section>
+
+<!-- 8 · Diwali opener -->
 <section class="page night" style="padding: 0">
   <div style="position: absolute; inset: 0">
     <img src="{{ASSETS}}/diwali/pichwai-gift-box.jpg" alt="" style="object-position: 50% 45%" />
     <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(22,26,17,0.96) 0%, rgba(22,26,17,0.75) 38%, rgba(22,26,17,0.1) 70%)"></div>
   </div>
+  <div class="petals" aria-hidden="true"><svg viewBox="-12 -12 24 24" style="left:80%;top:10%;transform:rotate(20deg) scale(1.1)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#f2a52b"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:88%;top:22%;transform:rotate(-35deg) scale(0.9)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#d6336c"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:70%;top:6%;transform:rotate(50deg) scale(0.8)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#dcab55"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:92%;top:36%;transform:rotate(10deg) scale(0.8)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#e8821e"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:62%;top:16%;transform:rotate(-15deg) scale(0.7)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#e77c94"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg></div>
   <div style="position: relative; margin-top: auto; padding: var(--m); padding-bottom: calc(var(--m) + 8mm)">
     <span class="eyebrow">Festive · Diwali 2026</span>
     <h2 style="font-size: 54pt; margin-top: 5mm; line-height: 0.98">Light up<br /><em style="color: var(--gold)">their Diwali.</em></h2>
@@ -298,10 +307,10 @@
       <div style="flex: 1"><p class="serif" style="font-size: 13pt">Build your own</p><p class="soft">Mix items to fit your list and budget</p></div>
     </div>
   </div>
-  <div class="folio"><span>Shaadi Drafts</span><span>07</span></div>
+  <div class="folio"><span>Shaadi Drafts</span><span>08</span></div>
 </section>
 
-<!-- 8 · Diwali hampers -->
+<!-- 9 · Diwali hampers -->
 <section class="page">
   <span class="eyebrow">The Diwali collection</span>
   <h2 class="h2">Hampers, <em class="accent">made to be remembered.</em></h2>
@@ -309,46 +318,31 @@
     {{HAMPERS}}
   </div>
   <p class="soft" style="margin: 6mm 0 11mm; font-size: 8pt">Every hamper can be customised, from contents to budget. Prices shared on request, based on quantity and personalisation.</p>
-  <div class="folio"><span>Shaadi Drafts</span><span>08</span></div>
-</section>
-
-<!-- 9 · Favours & corporate -->
-<section class="page">
-  <span class="eyebrow">Little gifts &amp; favours</span>
-  <h2 class="h2">Small, but never <em class="accent">an afterthought.</em></h2>
-  <div class="row" style="margin-top: 8mm; height: 80mm">
-    <div class="row" style="flex: 1; gap: 4mm; background: var(--card); border: 1px solid var(--line); border-radius: 4mm; overflow: hidden">
-      <div style="width: 45%"><img src="{{ASSETS}}/diwali/lakshmi-charan-potlis.jpg" alt="" /></div>
-      <div style="flex: 1; padding: 5mm 4mm 5mm 0"><span class="tag">Bulk</span><span class="tag">Favours</span>
-        <h3 style="font-size: 16pt; margin-top: 2mm">Lakshmi Charan Potli</h3>
-        <p class="soft" style="margin-top: 1.5mm; font-size: 8.2pt">Satin potli with a lotus and pearl tassel, Lakshmi charan stickers and tea-lights. One for every guest.</p></div>
-    </div>
-    <div class="row" style="flex: 1; gap: 4mm; background: var(--card); border: 1px solid var(--line); border-radius: 4mm; overflow: hidden">
-      <div style="width: 45%"><img src="{{ASSETS}}/diwali/gota-shagun-envelopes.jpg" alt="" /></div>
-      <div style="flex: 1; padding: 5mm 4mm 5mm 0"><span class="tag">Shagun</span><span class="tag">Bulk</span>
-        <h3 style="font-size: 16pt; margin-top: 2mm">Gota Shagun Envelopes</h3>
-        <p class="soft" style="margin-top: 1.5mm; font-size: 8.2pt">Hand-stitched fabric envelopes with gota leaf detailing, in rani pink, red, yellow, beige and sage.</p></div>
-    </div>
-  </div>
-
-  <div class="dark" style="position: relative; margin-top: 9mm; margin-bottom: 11mm; flex: 1; border-radius: 5mm; overflow: hidden; display: flex">
-    <div style="flex: 1.1; padding: 9mm; display: flex; flex-direction: column">
-      <span class="eyebrow">Corporate &amp; bulk</span>
-      <h2 style="font-size: 27pt; margin-top: 4mm">Thanking a team or a client list? <em class="accent">We&rsquo;ll brand it, pack it, ship it.</em></h2>
-      <p class="soft" style="margin-top: 4mm; font-size: 9pt">Festive gifting, onboarding kits and event favours, for one team or many offices.</p>
-      <ul class="dots soft" style="margin-top: 6mm; font-size: 8.8pt; line-height: 1.9">
-        <li>Your logo on boxes, sleeves and cards</li>
-        <li>A personal message in every hamper</li>
-        <li>Festive, onboarding and event gifting</li>
-        <li>Delivery to one office or many addresses</li>
-      </ul>
-    </div>
-    <div style="flex: 0.9"><img src="{{ASSETS}}/diwali/emerald-nuts.jpg" alt="" style="object-position: 50% 55%" /></div>
-  </div>
   <div class="folio"><span>Shaadi Drafts</span><span>09</span></div>
 </section>
 
-<!-- 10 · Custom & personal -->
+<!-- 10 · Corporate -->
+<section class="page dark">
+  <span class="eyebrow">Corporate &amp; bulk</span>
+  <h2 class="h2" style="max-width: 160mm">Thanking a team or a client list? <em class="accent">We&rsquo;ll brand it, pack it, ship it.</em></h2>
+  <p class="lead soft">Festive gifting, onboarding kits and event favours, for one team or many offices.</p>
+  <div class="row" style="margin-top: 9mm; flex: 1; min-height: 0; gap: 5mm">
+    <div class="ph" style="flex: 1.3"><img src="{{ASSETS}}/diwali/navy-nuts.jpg" alt="" style="object-position: 50% 45%" /></div>
+    <div class="col" style="flex: 1; gap: 5mm">
+      <div class="ph" style="flex: 1"><img src="{{ASSETS}}/diwali/emerald-candles.jpg" alt="" /></div>
+      <div class="ph" style="flex: 1"><img src="{{ASSETS}}/diwali/ivory-rani-pink.jpg" alt="" /></div>
+    </div>
+  </div>
+  <div class="row" style="margin: 8mm 0 12mm; padding-top: 5mm; border-top: 1px solid rgba(246,241,231,0.16); gap: 7mm; font-size: 8.6pt">
+    <div style="flex: 1"><p class="serif" style="font-size: 13pt">Your brand</p><p class="soft">Logo on boxes, sleeves and cards</p></div>
+    <div style="flex: 1"><p class="serif" style="font-size: 13pt">A note inside</p><p class="soft">A personal message in every hamper</p></div>
+    <div style="flex: 1"><p class="serif" style="font-size: 13pt">Any occasion</p><p class="soft">Festive, onboarding and event gifting</p></div>
+    <div style="flex: 1"><p class="serif" style="font-size: 13pt">Delivered</p><p class="soft">To one office or many addresses</p></div>
+  </div>
+  <div class="folio"><span>Shaadi Drafts</span><span>10</span></div>
+</section>
+
+<!-- 11 · Custom & personal -->
 <section class="page">
   <span class="eyebrow">Custom &amp; personal</span>
   <h2 class="h2">Made for <em class="accent">exactly one person.</em></h2>
@@ -367,37 +361,12 @@
     <figure class="col"><div class="ph" style="flex: 1"><img src="{{ASSETS}}/work/polaroid-memory-bag.jpg" alt="" style="object-position: 50% 45%" /></div>
       <figcaption style="margin-top: 2mm"><p class="serif" style="font-size: 12pt">Polaroid memory bag</p></figcaption></figure>
   </div>
-  <div class="folio"><span>Shaadi Drafts</span><span>10</span></div>
-</section>
-
-<!-- 11 · How it works -->
-<section class="page">
-  <span class="eyebrow">How it works</span>
-  <h2 class="h2">From a conversation <em class="accent">to a keepsake.</em></h2>
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8mm 10mm; margin-top: 10mm">
-    <div><p class="serif" style="font-size: 30pt; font-style: italic; color: var(--gold); line-height: 1">01</p><h3 style="font-size: 17pt; margin-top: 3mm; padding-top: 3mm; border-top: 1px solid var(--line)">Tell us</h3><p class="soft" style="margin-top: 1.5mm">The occasion, how many people, your budget and the feeling you&rsquo;re after.</p></div>
-    <div><p class="serif" style="font-size: 30pt; font-style: italic; color: var(--gold); line-height: 1">02</p><h3 style="font-size: 17pt; margin-top: 3mm; padding-top: 3mm; border-top: 1px solid var(--line)">We draft</h3><p class="soft" style="margin-top: 1.5mm">A concept with packaging, contents and personalisation options.</p></div>
-    <div><p class="serif" style="font-size: 30pt; font-style: italic; color: var(--gold); line-height: 1">03</p><h3 style="font-size: 17pt; margin-top: 3mm; padding-top: 3mm; border-top: 1px solid var(--line)">You approve</h3><p class="soft" style="margin-top: 1.5mm">Revisions until it feels right. Nothing is made without your yes.</p></div>
-    <div><p class="serif" style="font-size: 30pt; font-style: italic; color: var(--gold); line-height: 1">04</p><h3 style="font-size: 17pt; margin-top: 3mm; padding-top: 3mm; border-top: 1px solid var(--line)">We deliver</h3><p class="soft" style="margin-top: 1.5mm">Handcrafted, packed with care and shipped across India.</p></div>
-  </div>
-  <div class="row" style="margin-top: 11mm; flex: 1; min-height: 0; margin-bottom: 12mm">
-    <div class="ph" style="flex: 1"><img src="{{ASSETS}}/diwali/ivory-rani-pink.jpg" alt="" /></div>
-    <div style="flex: 1; background: var(--paper-deep); border-radius: 4mm; padding: 8mm; display: flex; flex-direction: column">
-      <span class="eyebrow">Good to know</span>
-      <ul class="dots" style="margin-top: 5mm; font-size: 9.4pt; line-height: 1.6; display: grid; gap: 4mm">
-        <li><span><b>Book 3&ndash;6 weeks ahead</b> of your wedding functions. For festive and bulk orders, as early as you can.</span></li>
-        <li><span><b>Fully customised,</b> with revisions included.</span></li>
-        <li><span><b>Printed, handmade and digital,</b> shipped across India.</span></li>
-        <li><span><b>Prices on request,</b> based on quantity and personalisation.</span></li>
-      </ul>
-      <p class="serif" style="margin-top: auto; font-size: 15pt; line-height: 1.25">Every hamper and every card can be changed to fit your list, your people and your budget.</p>
-    </div>
-  </div>
   <div class="folio"><span>Shaadi Drafts</span><span>11</span></div>
 </section>
 
 <!-- 12 · Back cover -->
 <section class="page dark" style="align-items: center; text-align: center">
+  <div class="petals" aria-hidden="true"><svg viewBox="-12 -12 24 24" style="left:10%;top:8%;transform:rotate(-25deg) scale(1.0)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#f2a52b"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:86%;top:6%;transform:rotate(30deg) scale(1.1)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#d6336c"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:6%;top:30%;transform:rotate(45deg) scale(0.8)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#e77c94"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:92%;top:28%;transform:rotate(-15deg) scale(0.9)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#e8821e"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:16%;top:44%;transform:rotate(10deg) scale(0.7)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#dcab55"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg><svg viewBox="-12 -12 24 24" style="left:84%;top:46%;transform:rotate(-50deg) scale(0.8)"><path d="M0,-10 C7,-6 7,6 0,10 C-7,6 -7,-6 0,-10 Z" fill="#f2a52b"/><path d="M0,-7 L0,7" stroke="rgba(0,0,0,0.12)" stroke-width="0.8"/></svg></div>
   <svg class="logo" viewBox="0 0 200 200" style="width: 40mm; height: 40mm; margin-top: 20mm">{{LOGO}}</svg>
   <h2 style="font-size: 44pt; margin-top: 14mm">Let&rsquo;s draft<br /><em class="accent">something beautiful.</em></h2>
   <p class="soft" style="font-size: 10.5pt; max-width: 120mm; margin-top: 6mm">Tell us who you&rsquo;re gifting and when. We&rsquo;ll come back with ideas, options and a quote, usually the same day.</p>
@@ -412,6 +381,8 @@
       <p class="eyebrow" style="margin-top: 3.5mm">Follow our work</p>
     </div>
   </div>
+
+  <p class="soft" style="margin-top: 12mm; font-size: 8.6pt; line-height: 1.7; max-width: 140mm">Book 3&ndash;6 weeks ahead for weddings, and as early as you can for festive and bulk orders. Everything is fully customised, with revisions included. Prices on request, based on quantity and personalisation.</p>
 
   <div style="margin-top: auto; margin-bottom: 14mm; width: 100%; padding-top: 7mm; border-top: 1px solid rgba(246,241,231,0.16); display: flex; justify-content: space-around; font-size: 10pt">
     <div><p class="eyebrow">WhatsApp</p><p style="margin-top: 1.5mm; font-weight: 600">+91 83290 49746</p></div>
