@@ -8,11 +8,13 @@ import { EnquireSection } from "@/components/enquire-section";
 import { HamperCard } from "@/components/hamper-card";
 import { Header } from "@/components/header";
 import { ArrowIcon, WhatsAppIcon } from "@/components/icons";
+import { QuickViewTrigger } from "@/components/quick-view";
 import { SectionHead } from "@/components/section-head";
 import { DiwaliNight } from "@/components/diwali-night";
 import { DIWALI_DATE, diwaliFaqs, gifts, hampers, personalisation } from "@/content/diwali";
 import { site } from "@/content/site";
 import { daysUntil } from "@/lib/dates";
+import { hamperView } from "@/lib/quick-view";
 import { whatsappUrl } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
@@ -207,9 +209,12 @@ function Gifts() {
                 key={g.slug}
                 data-reveal
                 style={{ ["--reveal-delay" as string]: `${i * 100}ms` }}
-                className="group bg-card border-line grid h-full grid-cols-[2fr_3fr] items-stretch overflow-hidden rounded-3xl border"
+                className="group bg-card border-line grid grid-cols-[2fr_3fr] items-stretch overflow-hidden rounded-3xl border"
               >
-                <div className="relative min-h-52 overflow-hidden md:min-h-64">
+                <QuickViewTrigger
+                  item={hamperView(g)}
+                  className="min-h-52 overflow-hidden md:min-h-64"
+                >
                   <Image
                     src={g.image}
                     alt={g.alt}
@@ -217,7 +222,7 @@ function Gifts() {
                     sizes="(min-width: 768px) 20vw, 40vw"
                     className="object-cover transition-transform duration-[1.1s] group-hover:scale-[1.04]"
                   />
-                </div>
+                </QuickViewTrigger>
                 <div className="flex flex-col p-5 sm:p-8">
                   <ul className="flex flex-wrap gap-1.5">
                     {g.tags.map((t) => (

@@ -4,9 +4,11 @@ import Image from "next/image";
 import { useState } from "react";
 import type { Hamper } from "@/content/diwali";
 import { whatsappUrl } from "@/lib/whatsapp";
+import { hamperView } from "@/lib/quick-view";
 import { textLink } from "./button";
 import { Collapsible } from "./collapsible";
 import { ArrowIcon } from "./icons";
+import { QuickViewTrigger } from "./quick-view";
 
 const sizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
 
@@ -24,8 +26,11 @@ export function HamperCard({
   const images = variants.length > 0 ? variants : [{ label: "", image: h.image, alt: h.alt }];
 
   return (
-    <article data-reveal className="group flex h-full flex-col">
-      <div className="bg-paper-deep relative aspect-[4/5] overflow-hidden rounded-3xl">
+    <article data-reveal className="group flex flex-col">
+      <QuickViewTrigger
+        item={hamperView(h, active)}
+        className="bg-paper-deep aspect-[4/5] overflow-hidden rounded-3xl"
+      >
         {images.map((img, i) => (
           <Image
             key={img.image}
@@ -48,22 +53,17 @@ export function HamperCard({
             className="object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100"
           />
         )}
-        <ul className="absolute top-4 left-4 flex flex-wrap gap-1.5">
+        <span className="absolute top-4 left-4 flex flex-wrap gap-1.5">
           {h.tags.map((t) => (
-            <li
+            <span
               key={t}
               className="bg-card/90 text-ink rounded-full px-3 py-1 text-[0.72rem] font-semibold backdrop-blur"
             >
               {t}
-            </li>
+            </span>
           ))}
-        </ul>
-        {h.hoverImage && (
-          <span className="bg-night/70 text-paper absolute right-4 bottom-4 rounded-full px-3 py-1 text-[0.72rem] opacity-0 backdrop-blur transition-opacity group-hover:opacity-100">
-            What&apos;s inside
-          </span>
-        )}
-      </div>
+        </span>
+      </QuickViewTrigger>
 
       <div className="mt-6 flex items-start justify-between gap-4">
         <h3 className="text-[2rem] leading-tight">{h.name}</h3>
@@ -128,7 +128,7 @@ export function HamperCard({
         )}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${textLink} mt-auto pt-5`}
+        className={`${textLink} mt-5`}
       >
         Enquire about this{" "}
         <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />

@@ -204,8 +204,8 @@
 @layer components {
   .sd-bullet {
     display: block;
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
     border-radius: 999px;
     background: rgb(38 44 29 / 0.2);
     cursor: pointer;
@@ -214,7 +214,7 @@
       background-color 0.5s;
   }
   .sd-bullet-active {
-    width: 24px;
+    width: 28px;
     background: var(--color-ink);
   }
   [data-tone="light"] .sd-bullet {
@@ -247,6 +247,20 @@
   }
   .sd-cards .swiper-cards .swiper-slide:not(.swiper-slide-active) :is(p, h3) {
     opacity: 0;
+  }
+}
+
+/* ---------- Quick view ---------- */
+dialog.quick-view[open] {
+  animation: quick-view-in 0.45s var(--ease-out-soft);
+}
+dialog.quick-view[open]::backdrop {
+  animation: caption 0.4s ease-out both;
+}
+@keyframes quick-view-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
   }
 }
 

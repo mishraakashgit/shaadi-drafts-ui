@@ -4,9 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { work, workCategories, type WorkCategory } from "@/content/work";
+import { workView } from "@/lib/quick-view";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { textLink } from "./button";
 import { ArrowIcon } from "./icons";
+import { QuickViewTrigger } from "./quick-view";
 
 type Filter = WorkCategory | "all";
 
@@ -46,7 +48,10 @@ export function GalleryView({ filter }: { filter: Filter }) {
         {pieces.map((w, i) => (
           <li key={w.slug} className="group mb-7 break-inside-avoid md:mb-16">
             {w.size ? (
-              <div className="bg-card border-line overflow-hidden rounded-2xl border p-1.5 md:rounded-3xl md:p-3">
+              <QuickViewTrigger
+                item={workView(w)}
+                className="bg-card border-line overflow-hidden rounded-2xl border p-1.5 md:rounded-3xl md:p-3"
+              >
                 <Image
                   src={w.image}
                   alt={w.alt}
@@ -56,10 +61,11 @@ export function GalleryView({ filter }: { filter: Filter }) {
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="h-auto w-full rounded-xl transition-transform duration-[1.1s] group-hover:scale-[1.02]"
                 />
-              </div>
+              </QuickViewTrigger>
             ) : (
-              <div
-                className={`bg-paper-deep relative overflow-hidden rounded-2xl md:rounded-3xl ${
+              <QuickViewTrigger
+                item={workView(w)}
+                className={`bg-paper-deep overflow-hidden rounded-2xl md:rounded-3xl ${
                   i % 3 === 1 ? "aspect-[4/5]" : "aspect-[3/4]"
                 }`}
               >
@@ -71,7 +77,7 @@ export function GalleryView({ filter }: { filter: Filter }) {
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   className="object-cover transition-transform duration-[1.1s] group-hover:scale-[1.03]"
                 />
-              </div>
+              </QuickViewTrigger>
             )}
             <p className="eyebrow mt-3 !text-[0.6rem] md:mt-6 md:!text-[0.7rem]">{w.occasion}</p>
             <h2 className="mt-1 text-xl leading-tight md:mt-2 md:text-[2rem]">{w.title}</h2>
