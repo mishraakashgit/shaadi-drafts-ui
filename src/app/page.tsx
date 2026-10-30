@@ -78,6 +78,10 @@ function Hero() {
               </span>
             </span>
           </h1>
+          <p className="text-ink-soft mt-7 max-w-[30rem] text-lg leading-relaxed">
+            Wedding gifting, invitations, festive hampers and custom keepsakes. Designed in-house,
+            made by hand and delivered across India.
+          </p>
         </div>
 
         <div
