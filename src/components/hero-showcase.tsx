@@ -69,11 +69,7 @@ export function HeroShowcase() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <QuickViewTrigger
-        item={current.view}
-        className="rounded-t-full"
-        badgeClass="top-[18%] right-[12%]"
-      >
+      <QuickViewTrigger item={current.view} className="rounded-t-full" hint={false}>
         <div
           data-reveal="image"
           className="bg-paper-deep relative aspect-[4/5] overflow-hidden rounded-t-full shadow-[0_40px_80px_-40px_rgb(22_26_17/0.45)]"

@@ -150,12 +150,15 @@ export function QuickViewTrigger({
   item,
   className = "",
   badgeClass = "right-3 bottom-3",
+  hint = true,
   children,
 }: {
   item: QuickViewItem;
   className?: string;
   /** Where the "View details" hint sits, so it can avoid other overlays. */
   badgeClass?: string;
+  /** Show the "View details" hint on the photo. */
+  hint?: boolean;
   children: React.ReactNode;
 }) {
   const open = useContext(QuickViewContext);
@@ -167,24 +170,26 @@ export function QuickViewTrigger({
       className={`group/qv relative block w-full cursor-zoom-in text-left ${className}`}
     >
       {children}
-      <span
-        aria-hidden="true"
-        className={`bg-card/90 text-ink pointer-events-none absolute ${badgeClass} flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.72rem] font-semibold opacity-90 shadow-sm backdrop-blur transition md:opacity-0 md:group-hover/qv:opacity-100`}
-      >
-        <svg
-          viewBox="0 0 24 24"
-          className="size-3.5"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={1.8}
-          strokeLinecap="round"
+      {hint && (
+        <span
           aria-hidden="true"
+          className={`bg-card/90 text-ink pointer-events-none absolute ${badgeClass} flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.72rem] font-semibold opacity-90 shadow-sm backdrop-blur transition md:opacity-0 md:group-hover/qv:opacity-100`}
         >
-          <circle cx="11" cy="11" r="6.5" />
-          <path d="M16 16l4 4M11 8.5v5M8.5 11h5" />
-        </svg>
-        View details
-      </span>
+          <svg
+            viewBox="0 0 24 24"
+            className="size-3.5"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.8}
+            strokeLinecap="round"
+            aria-hidden="true"
+          >
+            <circle cx="11" cy="11" r="6.5" />
+            <path d="M16 16l4 4M11 8.5v5M8.5 11h5" />
+          </svg>
+          View details
+        </span>
+      )}
     </button>
   );
 }
