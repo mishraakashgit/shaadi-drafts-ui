@@ -82,15 +82,6 @@ function Hero() {
             Wedding gifting, invitations, festive hampers and custom keepsakes. Designed in-house,
             made by hand and delivered across India.
           </p>
-          <div className="mt-10 flex flex-wrap gap-3">
-            <ButtonLink href="/#enquire" className="group">
-              Start a gift{" "}
-              <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-            </ButtonLink>
-            <ButtonLink href="/work" variant="outline">
-              See our work
-            </ButtonLink>
-          </div>
         </div>
 
         <div
