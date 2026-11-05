@@ -1,3 +1,5 @@
+import { dulheRaja } from "./dulhe-raja";
+
 export const workCategories = [
   { value: "all", label: "All" },
   { value: "wedding", label: "Weddings" },
@@ -25,6 +27,18 @@ export type WorkPiece = {
 
 // Past commissions. Titles and descriptions are drafts based on the photos; confirm before launch.
 export const work: WorkPiece[] = [
+  {
+    slug: dulheRaja.slug,
+    title: dulheRaja.name,
+    occasion: dulheRaja.occasion,
+    category: "wedding",
+    story: dulheRaja.blurb,
+    inside: [...dulheRaja.inside],
+    image: dulheRaja.pages[0].image,
+    alt: dulheRaja.pages[0].alt,
+    gallery: dulheRaja.pages.slice(1).map((p) => ({ image: p.image, alt: p.alt })),
+    size: { width: 1920, height: 1079 },
+  },
   {
     slug: "bridesmaid-proposal-box",
     title: "Will You Be My Bridesmaid?",

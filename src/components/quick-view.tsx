@@ -50,14 +50,16 @@ export function QuickViewProvider({ children }: { children: React.ReactNode }) {
             className="grid max-h-[inherit] overflow-y-auto md:grid-cols-[1.05fr_1fr]"
           >
             <div className="bg-paper-deep relative">
-              <div className="relative aspect-[4/3] md:aspect-auto md:h-full md:min-h-[32rem]">
+              <div
+                className={`relative md:aspect-auto md:h-full md:min-h-[32rem] ${item.contain ? "aspect-video" : "aspect-[4/3]"}`}
+              >
                 <Image
                   key={image.src}
                   src={image.src}
                   alt={image.alt}
                   fill
                   sizes="(min-width: 768px) 28rem, 100vw"
-                  className="animate-caption object-cover"
+                  className={`animate-caption ${item.contain ? "object-contain" : "object-cover"}`}
                 />
                 {image.label && (
                   <span className="bg-card/90 absolute top-4 left-4 rounded-full px-3 py-1 text-[0.72rem] font-semibold backdrop-blur">

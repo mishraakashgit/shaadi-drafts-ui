@@ -1,4 +1,5 @@
 import type { Hamper } from "@/content/diwali";
+import { dulheRaja, formatRupees, offerActive } from "@/content/dulhe-raja";
 import type { WorkPiece } from "@/content/work";
 import { whatsappUrl } from "./whatsapp";
 
@@ -10,6 +11,8 @@ export type QuickViewItem = {
   images: { src: string; alt: string; label?: string }[];
   items: string[];
   note?: string;
+  /** Show photos whole (letterboxed) instead of cropped to fill, for flat artwork. */
+  contain?: boolean;
   cta: { href: string; label: string };
 };
 
@@ -51,11 +54,35 @@ export function workView(w: WorkPiece): QuickViewItem {
       ...(w.gallery ?? []).map((g) => ({ src: g.image, alt: g.alt })),
     ],
     items: w.inside,
+    contain: Boolean(w.size),
     cta: {
       href: whatsappUrl(
         `Hi Shaadi Drafts! I saw "${w.title}" (${w.occasion}) on your site and would love something like it.`,
       ),
       label: "Make me one like this",
+    },
+  };
+}
+
+export function dulheRajaView(): QuickViewItem {
+  const active = offerActive();
+  return {
+    title: dulheRaja.name,
+    eyebrow: dulheRaja.occasion,
+    description: dulheRaja.blurb,
+    images: dulheRaja.pages.map((p) => ({ src: p.image, alt: p.alt, label: p.caption })),
+    items: [...dulheRaja.inside],
+    note: active
+      ? `${formatRupees(dulheRaja.offerPrice)} all November (regular price ${formatRupees(dulheRaja.price)})`
+      : formatRupees(dulheRaja.price),
+    contain: true,
+    cta: {
+      href: whatsappUrl(
+        `Hi Shaadi Drafts! I'd like to order "${dulheRaja.name}"${
+          active ? ` at the November price of ${formatRupees(dulheRaja.offerPrice)}` : ""
+        }.`,
+      ),
+      label: "Order on WhatsApp",
     },
   };
 }

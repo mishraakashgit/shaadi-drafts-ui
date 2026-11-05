@@ -28,6 +28,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Re-render hourly so the Diwali countdown stays current.
+export const revalidate = 3600;
+
 export default function DiwaliPage() {
   const days = daysUntil(DIWALI_DATE);
 

@@ -15,6 +15,7 @@ export const site = {
 
 export const nav = [
   { label: "Weddings", href: "/#occasions" },
+  { label: "Dulhe Raja", href: "/dulhe-raja" },
   { label: "Diwali", href: "/festive/diwali" },
   { label: "Our work", href: "/work" },
   { label: "About", href: "/#founder" },
