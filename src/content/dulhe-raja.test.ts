@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { dulheRaja, formatRupees, offerActive } from "./dulhe-raja";
+import { formatRupees } from "@/lib/format";
+import { dulheRaja, offerActive } from "./dulhe-raja";
 
 describe("launch offer", () => {
   it("runs through 30 November in India", () => {

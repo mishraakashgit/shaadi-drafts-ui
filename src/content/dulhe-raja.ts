@@ -103,5 +103,3 @@ export const dulheRaja = {
 export function offerActive(now: Date = new Date()): boolean {
   return now.getTime() < Date.parse(`${OFFER_ENDS}T00:00:00+05:30`);
 }
-
-export const formatRupees = (n: number) => `₹${n.toLocaleString("en-IN")}`;

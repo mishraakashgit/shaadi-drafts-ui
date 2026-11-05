@@ -20,9 +20,10 @@ import { founder } from "@/content/founder";
 import { occasions, services } from "@/content/occasions";
 import { site } from "@/content/site";
 import { testimonials } from "@/content/testimonials";
-import { work } from "@/content/work";
+import { referralOffer, work } from "@/content/work";
+import { formatRupees } from "@/lib/format";
 import { daysUntil } from "@/lib/dates";
-import { dulheRajaView, hamperView, workView } from "@/lib/quick-view";
+import { dulheRajaView, hamperView, referralUrl, workView } from "@/lib/quick-view";
 
 // Re-render hourly so date-based sections (Diwali countdown, launch offer) stay current.
 export const revalidate = 3600;
@@ -53,6 +54,7 @@ export default function Home() {
           <Occasions />
           {days > 0 && <DiwaliFeature days={days} />}
           <RecentWork />
+          <ReferralOffer />
         </div>
         <Founder />
         {testimonials.length > 0 && <Testimonials />}
@@ -389,6 +391,85 @@ function RecentWork() {
               </div>
             ))}
           </Carousel>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ReferralOffer() {
+  const decks = work.filter((w) => w.referral);
+  return (
+    <section id="refer-a-friend" className="pb-20 md:pb-32">
+      <div className="wrap">
+        <div
+          data-reveal
+          className="bg-card border-line grid items-center gap-10 overflow-hidden rounded-[2rem] border p-6 sm:p-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14 lg:p-14"
+        >
+          <ul className="grid grid-cols-2 gap-3 sm:gap-5">
+            {decks.map((w, i) => (
+              <li
+                key={w.slug}
+                className={`group ${i % 2 ? "translate-y-6" : "-translate-y-2"} transition-transform`}
+              >
+                <QuickViewTrigger
+                  item={workView(w)}
+                  className="bg-paper-deep aspect-[4/5] overflow-hidden rounded-2xl"
+                >
+                  <Image
+                    src={w.image}
+                    alt={w.alt}
+                    fill
+                    sizes="(min-width: 1024px) 22vw, 45vw"
+                    className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]"
+                  />
+                </QuickViewTrigger>
+                <p className="mt-3 font-serif text-lg leading-tight sm:text-xl">{w.title}</p>
+              </li>
+            ))}
+          </ul>
+
+          <div className="pt-4 lg:pt-0">
+            <p className="eyebrow">Refer a friend · Custom card games</p>
+            <h2 className="mt-5 text-[2.6rem] leading-[1.02] sm:text-5xl md:text-[3.4rem]">
+              Your 112-card deck,{" "}
+              <em className="text-olive">for {formatRupees(referralOffer.price)}.</em>
+            </h2>
+            <p className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span className="font-serif text-4xl">{formatRupees(referralOffer.price)}</span>
+              <span className="text-ink-soft line-through">
+                MRP {formatRupees(referralOffer.mrp)}
+              </span>
+              <span className="text-ink-soft text-sm">on both card games</span>
+            </p>
+            <ol className="mt-8 space-y-5">
+              {referralOffer.steps.map((s, i) => (
+                <li key={s.title} className="grid grid-cols-[auto_1fr] gap-4">
+                  <span className="bg-olive-deep text-paper flex size-8 items-center justify-center rounded-full text-sm font-semibold">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <p className="font-semibold">{s.title}</p>
+                    <p className="text-ink-soft mt-0.5 text-[0.95rem] leading-relaxed">{s.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <a
+                href={referralUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-magnetic
+                className={buttonClass("solid")}
+              >
+                <WhatsAppIcon className="size-4" /> Claim on WhatsApp
+              </a>
+              <ButtonLink href="/work?c=personal" variant="outline">
+                See both decks
+              </ButtonLink>
+            </div>
+          </div>
         </div>
       </div>
     </section>

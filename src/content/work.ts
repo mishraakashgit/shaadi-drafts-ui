@@ -23,7 +23,31 @@ export type WorkPiece = {
   gallery?: { image: string; alt: string }[];
   /** Intrinsic size for flat artwork: shown uncropped instead of in an arch frame. */
   size?: { width: number; height: number };
+  /** Sold at a fixed price with the refer-a-friend discount (see `referralOffer`). */
+  referral?: boolean;
 };
+
+/**
+ * Refer-a-friend offer on the custom card games: when a friend you refer buys anything worth
+ * more than ₹500, you get your card game at the special price instead of the MRP.
+ */
+export const referralOffer = {
+  mrp: 899,
+  price: 649,
+  minOrder: 500,
+  title: "Refer a friend, play for less",
+  steps: [
+    { title: "Refer a friend", body: "Send a friend our way for any gift, hamper or design." },
+    {
+      title: "They order over ₹500",
+      body: "Any Shaadi Drafts product worth more than ₹500 counts.",
+    },
+    {
+      title: "Your deck is ₹649",
+      body: "Get your custom 112-card game for ₹649 instead of the ₹899 MRP.",
+    },
+  ],
+} as const;
 
 // Past commissions. Titles and descriptions are drafts based on the photos; confirm before launch.
 export const work: WorkPiece[] = [
@@ -221,6 +245,7 @@ export const work: WorkPiece[] = [
     inside: ["112 cards", "Photo cards", "Personalised action cards", "Printed box"],
     image: "/work/card-game-couples.jpg",
     alt: "Personalised Couple's Edition card game with the couple's photos on the cards and custom messages like Skip, straight to hugs",
+    referral: true,
   },
   {
     slug: "card-game-best-friends",
@@ -232,6 +257,7 @@ export const work: WorkPiece[] = [
     inside: ["112 cards", "Photo cards", "Custom rules & messages", "Printed box"],
     image: "/work/card-game-best-friends.jpg",
     alt: "Red Best Friends Edition card game box printed with photos of two friends as children and today",
+    referral: true,
   },
   {
     slug: "polaroid-memory-bag",

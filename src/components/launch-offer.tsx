@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { type ReactNode, useSyncExternalStore } from "react";
-import { dulheRaja, formatRupees, offerActive } from "@/content/dulhe-raja";
+import { dulheRaja, offerActive } from "@/content/dulhe-raja";
+import { formatRupees } from "@/lib/format";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { ArrowIcon } from "./icons";
 
