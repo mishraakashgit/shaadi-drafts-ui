@@ -29,6 +29,18 @@ src/
 legacy/index.html       The previous single-file site, kept for reference until cutover
 ```
 
+### Photos and watermark
+
+Original photos live in `assets/photos/{diwali,work}`. The site serves watermarked copies from
+`public/{diwali,work}` (a faint repeating "SHAADI DRAFTS · @shaadi_drafts" pattern, baked into the file so it
+survives downloads and screenshots). After adding or replacing a photo in `assets/photos`, run:
+
+```bash
+npm run watermark
+```
+
+Brochures are built from the clean originals. The founder portrait is not watermarked.
+
 ### Updating content
 
 - **Founder:** edit `src/content/founder.ts`. Add a portrait to `public/` and render it in the founder

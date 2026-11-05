@@ -145,9 +145,9 @@ export function Carousel({
 
       {items.length > 1 && (
         <div
-          className={`mt-6 flex items-center justify-between ${deskCarousel ? "md:mt-10" : "md:hidden"}`}
+          className={`mt-6 flex flex-row-reverse items-center justify-between md:flex-row ${deskCarousel ? "md:mt-10" : "md:hidden"}`}
         >
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col items-end gap-2 md:items-start">
             <p
               className={`text-[0.78rem] font-semibold tabular-nums ${light ? "text-paper/80" : "text-ink/70"}`}
             >

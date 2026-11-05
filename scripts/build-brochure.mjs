@@ -65,21 +65,28 @@ const hamperCard = ([img, name, tag, text]) => `
     <p class="soft" style="font-size: 7.6pt; line-height: 1.5; margin-top: 1mm">${text}</p>
   </div>`;
 
-/** Screen version: downscale photos so the PDF is small enough to share on WhatsApp. */
+/**
+ * Brochures use the clean originals (assets/photos), not the watermarked copies the site serves.
+ * Screen version: photos are downscaled so the PDF is small enough to share on WhatsApp.
+ */
 async function prepareAssets() {
-  if (print) return { assets: path.join(root, "public"), photos: photosDir };
+  const { copyFile, readdir } = await import("node:fs/promises");
   const out = path.join(work, "assets");
   const dirs = [
-    [path.join(root, "public/diwali"), "diwali"],
-    [path.join(root, "public/work"), "work"],
+    [path.join(root, "assets/photos/diwali"), "diwali"],
+    [path.join(root, "assets/photos/work"), "work"],
     [path.join(root, "public/founder"), "founder"],
     [photosDir, "photos"],
   ];
   for (const [dir, d] of dirs) {
     await mkdir(path.join(out, d), { recursive: true });
-    const { readdir } = await import("node:fs/promises");
     for (const f of await readdir(dir)) {
       const src = path.join(dir, f);
+      const dest = path.join(out, d, f);
+      if (print) {
+        await copyFile(src, dest);
+        continue;
+      }
       const pipeline = sharp(src).resize({
         width: 1400,
         height: 1400,
@@ -87,10 +94,9 @@ async function prepareAssets() {
         withoutEnlargement: true,
       });
       if (f.endsWith(".png"))
-        await pipeline.png({ compressionLevel: 9, palette: true }).toFile(path.join(out, d, f));
-      else if (f.endsWith(".webp"))
-        await pipeline.webp({ quality: 82 }).toFile(path.join(out, d, f));
-      else await pipeline.jpeg({ quality: 80, mozjpeg: true }).toFile(path.join(out, d, f));
+        await pipeline.png({ compressionLevel: 9, palette: true }).toFile(dest);
+      else if (f.endsWith(".webp")) await pipeline.webp({ quality: 82 }).toFile(dest);
+      else await pipeline.jpeg({ quality: 80, mozjpeg: true }).toFile(dest);
     }
   }
   return { assets: out, photos: path.join(out, "photos") };

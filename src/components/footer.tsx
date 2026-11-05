@@ -24,7 +24,10 @@ export function Footer() {
           <FooterCol title="Explore">
             {nav.map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="hover:text-paper transition-colors">
+                <Link
+                  href={item.href}
+                  className="hover:text-paper inline-block py-1.5 transition-colors"
+                >
                   {item.label}
                 </Link>
               </li>
@@ -32,22 +35,42 @@ export function Footer() {
           </FooterCol>
           <FooterCol title="Gifting">
             <li>
-              <Link href="/work?c=wedding" className="hover:text-paper transition-colors">
+              <Link
+                href="/gifting"
+                className="hover:text-paper inline-block py-1.5 transition-colors"
+              >
+                Gifting guide
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/work?c=wedding"
+                className="hover:text-paper inline-block py-1.5 transition-colors"
+              >
                 Wedding gifting
               </Link>
             </li>
             <li>
-              <Link href="/work?c=design" className="hover:text-paper transition-colors">
+              <Link
+                href="/work?c=design"
+                className="hover:text-paper inline-block py-1.5 transition-colors"
+              >
                 Invitations &amp; monograms
               </Link>
             </li>
             <li>
-              <Link href="/festive/diwali" className="hover:text-paper transition-colors">
+              <Link
+                href="/festive/diwali"
+                className="hover:text-paper inline-block py-1.5 transition-colors"
+              >
                 Diwali hampers
               </Link>
             </li>
             <li>
-              <Link href="/work?c=personal" className="hover:text-paper transition-colors">
+              <Link
+                href="/work?c=personal"
+                className="hover:text-paper inline-block py-1.5 transition-colors"
+              >
                 Custom gifts
               </Link>
             </li>
@@ -55,7 +78,7 @@ export function Footer() {
               <a
                 href="/brochure/shaadi-drafts-brochure.pdf"
                 download
-                className="hover:text-paper transition-colors"
+                className="hover:text-paper inline-block py-1.5 transition-colors"
               >
                 Download brochure (PDF)
               </a>
@@ -65,13 +88,16 @@ export function Footer() {
             <li>
               <a
                 href={`https://wa.me/${site.whatsapp}`}
-                className="hover:text-paper transition-colors"
+                className="hover:text-paper inline-block py-1.5 transition-colors"
               >
                 {site.phoneDisplay}
               </a>
             </li>
             <li>
-              <a href={`mailto:${site.email}`} className="hover:text-paper transition-colors">
+              <a
+                href={`mailto:${site.email}`}
+                className="hover:text-paper inline-block py-1.5 transition-colors"
+              >
                 {site.email}
               </a>
             </li>
@@ -80,7 +106,7 @@ export function Footer() {
                 href={site.social.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-paper transition-colors"
+                className="hover:text-paper inline-block py-1.5 transition-colors"
               >
                 Facebook
               </a>
@@ -115,7 +141,7 @@ function FooterCol({ title, children }: { title: string; children: React.ReactNo
   return (
     <div>
       <p className="eyebrow text-paper/40 mb-5">{title}</p>
-      <ul className="space-y-3 text-[0.92rem]">{children}</ul>
+      <ul className="space-y-1 text-[0.92rem]">{children}</ul>
     </div>
   );
 }

@@ -17,6 +17,8 @@ export type WorkPiece = {
   inside: string[];
   image: string;
   alt: string;
+  /** Extra photos shown in the quick view after the main one. */
+  gallery?: { image: string; alt: string }[];
   /** Intrinsic size for flat artwork: shown uncropped instead of in an arch frame. */
   size?: { width: number; height: number };
 };
@@ -29,17 +31,23 @@ export const work: WorkPiece[] = [
     occasion: "Bridesmaid proposal",
     category: "wedding",
     story:
-      "A sage keepsake chest that asks the big question, lined with a string of polaroids from years of friendship.",
+      "A rattan hamper box that asks the big question, with a polaroid string of years of friendship, jewellery, a silk-scarf tote and a few sweet treats.",
     inside: [
+      "Rattan hamper box",
       "Proposal card",
       "Polaroid photo string",
-      "Jewellery case",
-      "Mini tote with silk scarf",
-      "Fairy-light jar",
-      "Chocolate",
+      "Jewellery box",
+      "Mini tote bag with silk scarf",
+      "Jute potli with sweet goodies",
+      "Automatic stirring coffee mug with Sleepy Owl coffee sachets",
+      "Cadbury Rum & Raisin chocolate",
+      "Pair of earrings",
+      "Custom fridge magnet",
+      "Custom postcard",
+      "Premium packaging",
     ],
     image: "/work/bridesmaid-proposal-box.jpg",
-    alt: "Sage green chest with a Will you be my bridesmaid card, a polaroid string, a jewellery case, a mini tote and a fairy-light jar",
+    alt: "Rattan hamper box with a Will you be my bridesmaid card, a polaroid string, a jewellery box, a mini tote with a silk scarf, a jute potli and Cadbury Rum & Raisin",
   },
   {
     slug: "beaded-potlis-envelopes",
@@ -51,6 +59,27 @@ export const work: WorkPiece[] = [
     inside: ["Pearl-beaded potlis", "Beaded shagun envelopes", "Gota & stone detailing"],
     image: "/work/beaded-potlis-envelopes-2.jpg",
     alt: "Hand-beaded potlis in ivory, red and peach with pink and lilac beaded shagun envelopes",
+    gallery: [
+      {
+        image: "/work/beaded-potlis-envelopes.jpg",
+        alt: "Hand-beaded potlis in coral, sky blue, mint and ivory with lilac and pink beaded shagun envelopes beside pink roses",
+      },
+    ],
+  },
+  {
+    slug: "gota-shagun-envelopes",
+    title: "Gota Shagun Envelopes",
+    occasion: "Return favours",
+    category: "wedding",
+    story:
+      "Hand-stitched fabric envelopes with gota leaf detailing, for shagun that looks as good as it feels. Colours mixed to match the wedding.",
+    inside: [
+      "Fabric envelope with gota-patti trim",
+      "Rani pink, red, yellow, beige & sage green",
+      "Made in bulk",
+    ],
+    image: "/diwali/gota-shagun-envelopes.jpg",
+    alt: "Fabric shagun envelopes in pink, red, yellow, beige and green with gold gota leaf stitching",
   },
   {
     slug: "bhai-box",
@@ -58,16 +87,19 @@ export const work: WorkPiece[] = [
     occasion: "Groomsman gift",
     category: "wedding",
     story:
-      "For the brother who has to get the suit stitched: inside jokes on cards, a sealed letter and a bow tie for the big day.",
+      "For the brother who has to get the suit stitched: his photo card, the save the date, a wax-sealed note, a framed photo and a bow tie for the big day.",
     inside: [
+      "Black hamper box",
       "Personalised photo card",
-      "Wax-sealed letter",
-      "Inside-joke quote cards",
+      "Save the date invite",
+      "Automatic stirring coffee mug with charging cable",
+      "Wax-sealed personalised note",
+      "Photo frame",
       "Bow tie",
       "Coffee & dark chocolate",
     ],
     image: "/work/bhai-box.jpg",
-    alt: "Charcoal gift box with a personalised Bhai photo card, a wax-sealed letter, quote cards, a bow tie, coffee and chocolate",
+    alt: "Black hamper box with a personalised Bhai photo card, a save the date, a wax-sealed note, a photo frame, a bow tie, coffee and dark chocolate",
   },
   {
     slug: "arnav-nayan-invite",
@@ -171,8 +203,8 @@ export const work: WorkPiece[] = [
     occasion: "Custom card deck",
     category: "personal",
     story:
-      "A full card-game deck starring the two of them: their photos on the cards, and in-jokes on every action card. ‘Skip → straight to hugs.’",
-    inside: ["Photo cards", "Personalised action cards", "Printed box"],
+      "A full 112-card deck starring the two of them: their photos on the cards, and in-jokes on every action card. ‘Skip → straight to hugs.’",
+    inside: ["112 cards", "Photo cards", "Personalised action cards", "Printed box"],
     image: "/work/card-game-couples.jpg",
     alt: "Personalised Couple's Edition card game with the couple's photos on the cards and custom messages like Skip, straight to hugs",
   },
@@ -182,8 +214,8 @@ export const work: WorkPiece[] = [
     occasion: "Custom card deck",
     category: "personal",
     story:
-      "The same idea for a best friend: childhood photos, then and now, on a deck made for game night.",
-    inside: ["Photo cards", "Custom rules & messages", "Printed box"],
+      "The same idea for a best friend: a 112-card deck with childhood photos, then and now, made for game night.",
+    inside: ["112 cards", "Photo cards", "Custom rules & messages", "Printed box"],
     image: "/work/card-game-best-friends.jpg",
     alt: "Red Best Friends Edition card game box printed with photos of two friends as children and today",
   },
@@ -192,8 +224,18 @@ export const work: WorkPiece[] = [
     title: "Polaroid Memory Bag",
     occasion: "For a best friend",
     category: "personal",
-    story: "Nicknames and memories on hanging polaroids, with a few pretty things tucked inside.",
-    inside: ["Polaroid tags with nicknames", "Skincare", "Pendant necklace", "Handwritten note"],
+    story:
+      "Nicknames and memories on hanging polaroids, with skincare, a pendant, perfume and a custom note tucked inside.",
+    inside: [
+      "Premium PVC hamper box (8″ × 8″ × 4″)",
+      "Skincare",
+      "Pendant necklace",
+      "Bellavita perfume (60 ml)",
+      "Face mask",
+      "Custom note",
+      "Polaroid pictures",
+      "Premium packaging",
+    ],
     image: "/work/polaroid-memory-bag.jpg",
     alt: "Clear gold-framed bag hung with personalised polaroid photos and handwritten nicknames",
   },

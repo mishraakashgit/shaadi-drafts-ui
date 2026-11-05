@@ -5,8 +5,9 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { getLenis, setLenis } from "@/lib/smooth-scroll";
 
-// Anchors land below the sticky header via `scroll-padding-top` in globals.css, which Lenis honours.
-const ANCHOR_OFFSET = 0;
+/** The page's scroll-padding-top in px (the space reserved for the sticky header, set in globals.css). */
+const scrollPadding = () =>
+  parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
 
 /**
  * Lenis smooth scrolling plus light parallax on elements marked `data-parallax="<speed>"`.
@@ -18,12 +19,28 @@ export function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const lenis = new Lenis({
-      autoRaf: true,
-      lerp: 0.09,
-      anchors: { offset: ANCHOR_OFFSET },
-    });
+    const lenis = new Lenis({ autoRaf: true, lerp: 0.09 });
     setLenis(lenis);
+
+    // In-page links: measure the target at tap time and glide there. (Lenis's own anchor handling
+    // could stop short on long pages at small widths.)
+    const onClick = (e: MouseEvent) => {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      // Keyboard activation (detail 0) keeps the browser's own jump, which also moves focus.
+      if (e.detail === 0) return;
+      const link = (e.target as Element | null)?.closest?.("a[href*='#']");
+      if (!(link instanceof HTMLAnchorElement)) return;
+      const url = new URL(link.href, location.href);
+      if (url.pathname !== location.pathname || url.search !== location.search || !url.hash) return;
+      const target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
+      if (!target) return;
+      e.preventDefault();
+      history.replaceState(null, "", url.hash);
+      lenis.resize();
+      const top = target.getBoundingClientRect().top + window.scrollY - scrollPadding();
+      lenis.scrollTo(Math.max(0, top), { force: true });
+    };
+    document.addEventListener("click", onClick);
 
     const parallax = () => {
       const vh = window.innerHeight;
@@ -39,6 +56,7 @@ export function SmoothScroll() {
     parallax();
 
     return () => {
+      document.removeEventListener("click", onClick);
       lenis.destroy();
       setLenis(null);
     };
@@ -54,7 +72,10 @@ export function SmoothScroll() {
     if (hash && document.querySelector(hash)) {
       requestAnimationFrame(() => {
         lenis.resize();
-        lenis.scrollTo(hash, { offset: ANCHOR_OFFSET, immediate: true, force: true });
+        const target = document.querySelector<HTMLElement>(hash);
+        if (!target) return;
+        const top = target.getBoundingClientRect().top + window.scrollY - scrollPadding();
+        lenis.scrollTo(Math.max(0, top), { immediate: true, force: true });
       });
     } else {
       lenis.scrollTo(0, { immediate: true, force: true });

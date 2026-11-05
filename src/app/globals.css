@@ -238,15 +238,17 @@
     opacity: 0.6;
     transform: scale(0.95);
   }
+  /* Swiper clips stacked cards; the photo already has rounded corners, so let the caption show */
   .sd-cards .swiper-slide {
-    border-radius: 1.5rem;
+    overflow: visible;
   }
   /* In the stacked deck only the top card's caption shows */
-  .sd-cards .swiper-cards .swiper-slide :is(p, h3) {
+  .sd-cards .swiper-cards .swiper-slide :is(p, h3, a, [data-qv-hint]) {
     transition: opacity 0.4s;
   }
-  .sd-cards .swiper-cards .swiper-slide:not(.swiper-slide-active) :is(p, h3) {
+  .sd-cards .swiper-cards .swiper-slide:not(.swiper-slide-active) :is(p, h3, a, [data-qv-hint]) {
     opacity: 0;
+    pointer-events: none;
   }
 }
 
