@@ -173,6 +173,7 @@ export function QuickViewTrigger({
       {hint && (
         <span
           aria-hidden="true"
+          data-qv-hint
           className={`bg-card/90 text-ink pointer-events-none absolute ${badgeClass} flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.72rem] font-semibold opacity-90 shadow-sm backdrop-blur transition md:opacity-0 md:group-hover/qv:opacity-100`}
         >
           <svg

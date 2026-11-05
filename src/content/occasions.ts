@@ -38,6 +38,11 @@ export const occasions: Occasion[] = [
         label: "Beaded potlis & envelopes",
       },
       {
+        image: "/diwali/gota-shagun-envelopes.jpg",
+        alt: "Hand-stitched gota shagun envelopes in pink, red, yellow, beige and green",
+        label: "Shagun envelopes",
+      },
+      {
         image: "/work/save-the-date-shraddha-shubham.webp",
         alt: "Layered arch save the date cards with lavender sprigs",
         label: "Save the dates",

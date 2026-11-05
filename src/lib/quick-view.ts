@@ -46,7 +46,10 @@ export function workView(w: WorkPiece): QuickViewItem {
     title: w.title,
     eyebrow: w.occasion,
     description: w.story,
-    images: [{ src: w.image, alt: w.alt }],
+    images: [
+      { src: w.image, alt: w.alt },
+      ...(w.gallery ?? []).map((g) => ({ src: g.image, alt: g.alt })),
+    ],
     items: w.inside,
     cta: {
       href: whatsappUrl(
