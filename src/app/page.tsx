@@ -149,9 +149,7 @@ function LaunchOffer({ offer }: { offer: boolean }) {
           <h2 className="mt-5 text-5xl leading-[1] md:text-7xl">
             Dulhe Raja, <em className="text-gold-soft">reporting for duty!</em>
           </h2>
-          <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/80">
-            {dulheRaja.tagline} {dulheRaja.blurb}
-          </p>
+          <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/80">{dulheRaja.blurb}</p>
           <div className="mt-8">
             <OfferPrice initial={offer} />
           </div>

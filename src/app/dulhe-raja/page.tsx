@@ -164,7 +164,7 @@ export default function DulheRajaPage() {
                 eyebrow="Inside the test"
                 title="Eight pages,"
                 accent="one very nervous dulha."
-                intro="He clicks an answer and the page reacts: wrong answers send him back to try again, and the right ones lead to your note at the end. This sample shows how it plays; yours is written around your story."
+                intro="A sample of how it plays. Yours is written around your story."
               />
             </div>
             <div className="mt-12 md:mt-16">
