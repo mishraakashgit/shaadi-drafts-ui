@@ -36,6 +36,14 @@ export function Footer() {
           <FooterCol title="Gifting">
             <li>
               <Link
+                href="/gifting"
+                className="hover:text-paper inline-block py-1.5 transition-colors"
+              >
+                Gifting guide
+              </Link>
+            </li>
+            <li>
+              <Link
                 href="/work?c=wedding"
                 className="hover:text-paper inline-block py-1.5 transition-colors"
               >
