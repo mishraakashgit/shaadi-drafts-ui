@@ -41,6 +41,19 @@ export const guideSections: GuideSection[] = [
     link: { href: "/work?c=wedding", label: "See proposal boxes" },
   },
   {
+    id: "gift-for-groom",
+    eyebrow: "Weddings",
+    title: "A surprise gift for the groom-to-be",
+    body: [
+      "Dulhe Raja, Reporting for Duty! is a personalised, clickable quiz from the bride to her groom: cheeky Hinglish questions about wedding planning, a “try again” for every wrong answer and a love note with your photos at the end. Written around your story and sent digitally, ready to forward on WhatsApp.",
+    ],
+    examples: [
+      { kind: "work", slug: "dulhe-raja" },
+      { kind: "work", slug: "bhai-box" },
+    ],
+    link: { href: "/dulhe-raja", label: "See the Dulhe Raja quiz" },
+  },
+  {
     id: "wedding-invitations",
     eyebrow: "Stationery",
     title: "Wedding invitations, save the dates & monograms",
@@ -97,6 +110,7 @@ export const guideSections: GuideSection[] = [
     title: "Personalised & custom gifts",
     body: [
       "Birthdays, anniversaries and best friends: custom card games with your photos on all 112 cards, name boxes for parents, polaroid memory bags, or a gift that doesn't have a name yet. Bring us a person and a memory, and we'll turn it into something they keep.",
+      "Refer a friend: when they buy anything worth more than ₹500, your custom card game is ₹649 instead of the ₹899 MRP.",
     ],
     examples: [
       { kind: "work", slug: "card-game-couples" },

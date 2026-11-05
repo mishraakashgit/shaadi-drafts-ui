@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { work, workCategories, type WorkCategory } from "@/content/work";
-import { workView } from "@/lib/quick-view";
+import { referralOffer, work, workCategories, type WorkCategory } from "@/content/work";
+import { formatRupees } from "@/lib/format";
+import { referralUrl, workView } from "@/lib/quick-view";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { textLink } from "./button";
 import { ArrowIcon } from "./icons";
@@ -81,6 +82,15 @@ export function GalleryView({ filter }: { filter: Filter }) {
             )}
             <p className="eyebrow mt-3 !text-[0.6rem] md:mt-6 md:!text-[0.7rem]">{w.occasion}</p>
             <h2 className="mt-1 text-xl leading-tight md:mt-2 md:text-[2rem]">{w.title}</h2>
+            {w.referral && (
+              <p className="mt-2 text-[0.8rem] leading-snug md:text-[0.9rem]">
+                <span className="font-semibold">{formatRupees(referralOffer.price)}</span>{" "}
+                <span className="text-ink-soft line-through">
+                  {formatRupees(referralOffer.mrp)}
+                </span>{" "}
+                <span className="text-ink-soft">with a referral</span>
+              </p>
+            )}
             <p className="text-ink-soft mt-2 hidden leading-relaxed md:block">{w.story}</p>
             <ul className="mt-4 hidden flex-wrap gap-1.5 md:flex">
               {w.inside.map((item) => (
@@ -93,14 +103,18 @@ export function GalleryView({ filter }: { filter: Filter }) {
               ))}
             </ul>
             <a
-              href={whatsappUrl(
-                `Hi Shaadi Drafts! I saw "${w.title}" (${w.occasion}) on your site and would love something like it.`,
-              )}
+              href={
+                w.referral
+                  ? referralUrl(w.title)
+                  : whatsappUrl(
+                      `Hi Shaadi Drafts! I saw "${w.title}" (${w.occasion}) on your site and would love something like it.`,
+                    )
+              }
               target="_blank"
               rel="noopener noreferrer"
               className={`${textLink} mt-5 !hidden md:!inline-flex`}
             >
-              Make me one like this
+              {w.referral ? "Claim the referral price" : "Make me one like this"}
               <ArrowIcon className="size-4 transition-transform group-hover:translate-x-1" />
             </a>
           </li>

@@ -1,33 +1,40 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ButtonLink, textLink } from "@/components/button";
+import { ButtonLink, buttonClass, textLink } from "@/components/button";
 import { DaysToDiwali, DaysUnit } from "@/components/days-to-diwali";
 import { DiwaliBar } from "@/components/diwali-bar";
 import { EnquireSection } from "@/components/enquire-section";
 import { Header } from "@/components/header";
-import { ArrowIcon, InstagramIcon } from "@/components/icons";
+import { ArrowIcon, InstagramIcon, WhatsAppIcon } from "@/components/icons";
 import { CardSlides } from "@/components/card-slides";
 import { Carousel } from "@/components/carousel";
 import { HeroShowcase } from "@/components/hero-showcase";
+import { LaunchBar, OfferPrice, OrderLink } from "@/components/launch-offer";
 import { QuickViewTrigger } from "@/components/quick-view";
 import { SectionHead } from "@/components/section-head";
 import { FestiveBackground } from "@/components/festive-background";
 import { DiwaliNight } from "@/components/diwali-night";
 import { DIWALI_DATE, gifts, hampers } from "@/content/diwali";
+import { dulheRaja, offerActive } from "@/content/dulhe-raja";
 import { founder } from "@/content/founder";
 import { occasions, services } from "@/content/occasions";
 import { site } from "@/content/site";
 import { testimonials } from "@/content/testimonials";
-import { work } from "@/content/work";
+import { referralOffer, work } from "@/content/work";
+import { formatRupees } from "@/lib/format";
 import { daysUntil } from "@/lib/dates";
-import { hamperView, workView } from "@/lib/quick-view";
+import { dulheRajaView, hamperView, referralUrl, workView } from "@/lib/quick-view";
+
+// Re-render hourly so date-based sections (Diwali countdown, launch offer) stay current.
+export const revalidate = 3600;
 
 export default function Home() {
   const days = daysUntil(DIWALI_DATE);
+  const offer = offerActive();
 
   return (
     <>
-      {days > 0 && <DiwaliBar days={days} />}
+      {offer ? <LaunchBar initial={offer} /> : days > 0 && <DiwaliBar days={days} />}
       <Header />
       <main id="main">
         {/* The festive scene stays pinned behind everything from the hero down to the founder */}
@@ -42,10 +49,12 @@ export default function Home() {
             </div>
           </div>
           <Hero />
+          <LaunchOffer offer={offer} />
           <Marquee />
           <Occasions />
           {days > 0 && <DiwaliFeature days={days} />}
           <RecentWork />
+          <ReferralOffer />
         </div>
         <Founder />
         {testimonials.length > 0 && <Testimonials />}
@@ -90,6 +99,71 @@ function Hero() {
           className="pt-4 pb-6 lg:pt-0"
         >
           <HeroShowcase />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LaunchOffer({ offer }: { offer: boolean }) {
+  const view = dulheRajaView();
+  const [cover, , , wrong] = dulheRaja.pages;
+  return (
+    <section
+      id="launch-offer"
+      className="bg-crimson relative isolate overflow-hidden py-20 text-white md:py-28"
+    >
+      <div
+        aria-hidden="true"
+        className="from-crimson-deep/60 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-br to-transparent"
+      />
+      <div className="wrap grid items-center gap-14 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+        <div data-reveal className="relative pb-14 sm:pb-16 lg:order-2">
+          <QuickViewTrigger
+            item={view}
+            className="overflow-hidden rounded-2xl shadow-2xl ring-4 ring-white/90"
+          >
+            <Image
+              src={cover.image}
+              alt={cover.alt}
+              width={1920}
+              height={1079}
+              sizes="(min-width: 1024px) 42vw, 92vw"
+              className="h-auto w-full"
+            />
+          </QuickViewTrigger>
+          <div className="absolute right-[-3%] bottom-0 w-[44%] rotate-[4deg] overflow-hidden rounded-xl shadow-2xl ring-4 ring-white/90">
+            <Image
+              src={wrong.image}
+              alt=""
+              width={1920}
+              height={1079}
+              sizes="(min-width: 1024px) 18vw, 40vw"
+              className="h-auto w-full"
+            />
+          </div>
+        </div>
+
+        <div data-reveal style={{ ["--reveal-delay" as string]: "120ms" }} className="lg:order-1">
+          <p className="eyebrow text-gold-soft">New launch · For the groom-to-be</p>
+          <h2 className="mt-5 text-5xl leading-[1] md:text-7xl">
+            Dulhe Raja, <em className="text-gold-soft">reporting for duty!</em>
+          </h2>
+          <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/80">
+            {dulheRaja.tagline} {dulheRaja.blurb}
+          </p>
+          <div className="mt-8">
+            <OfferPrice initial={offer} />
+          </div>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <OrderLink initial={offer} className={buttonClass("light")}>
+              <WhatsAppIcon className="size-4" /> Order on WhatsApp
+            </OrderLink>
+            <ButtonLink href={dulheRaja.href} variant="ghostLight" className="group">
+              See every page{" "}
+              <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+            </ButtonLink>
+          </div>
         </div>
       </div>
     </section>
@@ -317,6 +391,85 @@ function RecentWork() {
               </div>
             ))}
           </Carousel>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ReferralOffer() {
+  const decks = work.filter((w) => w.referral);
+  return (
+    <section id="refer-a-friend" className="pb-20 md:pb-32">
+      <div className="wrap">
+        <div
+          data-reveal
+          className="bg-card border-line grid items-center gap-10 overflow-hidden rounded-[2rem] border p-6 sm:p-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14 lg:p-14"
+        >
+          <ul className="grid grid-cols-2 gap-3 sm:gap-5">
+            {decks.map((w, i) => (
+              <li
+                key={w.slug}
+                className={`group ${i % 2 ? "translate-y-6" : "-translate-y-2"} transition-transform`}
+              >
+                <QuickViewTrigger
+                  item={workView(w)}
+                  className="bg-paper-deep aspect-[4/5] overflow-hidden rounded-2xl"
+                >
+                  <Image
+                    src={w.image}
+                    alt={w.alt}
+                    fill
+                    sizes="(min-width: 1024px) 22vw, 45vw"
+                    className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]"
+                  />
+                </QuickViewTrigger>
+                <p className="mt-3 font-serif text-lg leading-tight sm:text-xl">{w.title}</p>
+              </li>
+            ))}
+          </ul>
+
+          <div className="pt-4 lg:pt-0">
+            <p className="eyebrow">Refer a friend · Custom card games</p>
+            <h2 className="mt-5 text-[2.6rem] leading-[1.02] sm:text-5xl md:text-[3.4rem]">
+              Your 112-card deck,{" "}
+              <em className="text-olive">for {formatRupees(referralOffer.price)}.</em>
+            </h2>
+            <p className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span className="font-serif text-4xl">{formatRupees(referralOffer.price)}</span>
+              <span className="text-ink-soft line-through">
+                MRP {formatRupees(referralOffer.mrp)}
+              </span>
+              <span className="text-ink-soft text-sm">on both card games</span>
+            </p>
+            <ol className="mt-8 space-y-5">
+              {referralOffer.steps.map((s, i) => (
+                <li key={s.title} className="grid grid-cols-[auto_1fr] gap-4">
+                  <span className="bg-olive-deep text-paper flex size-8 items-center justify-center rounded-full text-sm font-semibold">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <p className="font-semibold">{s.title}</p>
+                    <p className="text-ink-soft mt-0.5 text-[0.95rem] leading-relaxed">{s.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <a
+                href={referralUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-magnetic
+                className={buttonClass("solid")}
+              >
+                <WhatsAppIcon className="size-4" /> Claim on WhatsApp
+              </a>
+              <ButtonLink href="/work?c=personal" variant="outline">
+                See both decks
+              </ButtonLink>
+            </div>
+          </div>
         </div>
       </div>
     </section>
