@@ -28,7 +28,3 @@ export function DaysToDiwali({ initial, unit = true }: { initial: number; unit?:
     </>
   );
 }
-
-export function DaysUnit({ initial }: { initial: number }) {
-  return <>{useDaysToDiwali(initial) === 1 ? "day" : "days"}</>;
-}

@@ -1,20 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink, buttonClass, textLink } from "@/components/button";
-import { DaysToDiwali, DaysUnit } from "@/components/days-to-diwali";
-import { DiwaliBar } from "@/components/diwali-bar";
 import { EnquireSection } from "@/components/enquire-section";
 import { Header } from "@/components/header";
 import { ArrowIcon, InstagramIcon, WhatsAppIcon } from "@/components/icons";
 import { CardSlides } from "@/components/card-slides";
 import { Carousel } from "@/components/carousel";
 import { HeroShowcase } from "@/components/hero-showcase";
-import { LaunchBar, OfferPrice, OrderLink } from "@/components/launch-offer";
+import { OfferBar, OfferPrice, OrderLink } from "@/components/launch-offer";
 import { QuickViewTrigger } from "@/components/quick-view";
 import { SectionHead } from "@/components/section-head";
 import { FestiveBackground } from "@/components/festive-background";
-import { DiwaliNight } from "@/components/diwali-night";
-import { DIWALI_DATE, gifts, hampers } from "@/content/diwali";
 import { dulheRaja, offerActive } from "@/content/dulhe-raja";
 import { founder } from "@/content/founder";
 import { occasions, services } from "@/content/occasions";
@@ -22,19 +18,17 @@ import { site } from "@/content/site";
 import { testimonials } from "@/content/testimonials";
 import { referralOffer, work } from "@/content/work";
 import { formatRupees } from "@/lib/format";
-import { daysUntil } from "@/lib/dates";
-import { dulheRajaView, hamperView, referralUrl, workView } from "@/lib/quick-view";
+import { dulheRajaView, referralUrl, workView } from "@/lib/quick-view";
 
-// Re-render hourly so date-based sections (Diwali countdown, launch offer) stay current.
+// Re-render hourly so the November launch offer drops off on time.
 export const revalidate = 3600;
 
 export default function Home() {
-  const days = daysUntil(DIWALI_DATE);
   const offer = offerActive();
 
   return (
     <>
-      {offer ? <LaunchBar initial={offer} /> : days > 0 && <DiwaliBar days={days} />}
+      <OfferBar initial={offer} />
       <Header />
       <main id="main">
         {/* The festive scene stays pinned behind everything from the hero down to the founder */}
@@ -52,9 +46,8 @@ export default function Home() {
           <LaunchOffer offer={offer} />
           <Marquee />
           <Occasions />
-          {days > 0 && <DiwaliFeature days={days} />}
-          <RecentWork />
           <ReferralOffer />
+          <RecentWork />
         </div>
         <Founder />
         {testimonials.length > 0 && <Testimonials />}
@@ -278,70 +271,6 @@ function OccasionCard({
   );
 }
 
-function DiwaliFeature({ days }: { days: number }) {
-  // Every hamper, then the little gifts
-  const picks = [
-    ...hampers.map((h) => ({ ...h, href: "/festive/diwali#collection" })),
-    ...gifts.map((g) => ({ ...g, href: "/festive/diwali#gifts" })),
-  ];
-  return (
-    <section className="bg-night text-paper relative isolate overflow-hidden py-20 md:py-32">
-      <DiwaliNight />
-      <div className="wrap relative">
-        <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
-          <div data-reveal>
-            <p className="eyebrow text-gold-soft">Diwali 2026 · 8 November</p>
-            <h2 className="mt-5 text-5xl leading-[1] md:text-7xl">
-              <span className="text-gold">
-                <DaysToDiwali initial={days} unit={false} />
-              </span>{" "}
-              <DaysUnit initial={days} /> to <em>Diwali.</em>
-            </h2>
-            <p className="text-paper/65 mt-5 max-w-md text-lg leading-relaxed">
-              Pichwai-inspired hampers, Shubh Labh hangings and potlis for family, friends and
-              teams.
-            </p>
-          </div>
-          <ButtonLink href="/festive/diwali" variant="gold" className="group shrink-0">
-            Shop the collection{" "}
-            <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
-          </ButtonLink>
-        </div>
-        <div className="mt-12 md:mt-14">
-          <Carousel label="Diwali hampers" grid="" tone="light" effect="cards" desktop="carousel">
-            {picks.map((h, i) => (
-              <div
-                key={h.slug}
-                data-reveal
-                style={{ ["--reveal-delay" as string]: `${Math.min(i, 3) * 100}ms` }}
-              >
-                <div className="group">
-                  <QuickViewTrigger
-                    item={hamperView(h)}
-                    className="aspect-[4/5] overflow-hidden rounded-2xl"
-                  >
-                    <Image
-                      src={h.image}
-                      alt={h.alt}
-                      fill
-                      sizes="(min-width: 768px) 30vw, 80vw"
-                      className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]"
-                    />
-                  </QuickViewTrigger>
-                  <Link href={h.href} className="mt-4 block font-serif text-2xl hover:underline">
-                    {h.name}
-                  </Link>
-                  <p className="text-paper/55 mt-1 text-sm">{h.tags.join(" · ")}</p>
-                </div>
-              </div>
-            ))}
-          </Carousel>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function RecentWork() {
   const picks = ["bhai-box", "arnav-nayan-invite", "card-game-couples", "rakhi-best-brother"]
     .map((slug) => work.find((w) => w.slug === slug))
@@ -396,77 +325,86 @@ function RecentWork() {
 }
 
 function ReferralOffer() {
-  const decks = work.filter((w) => w.referral);
+  const [couples, friends] = work.filter((w) => w.referral);
   return (
-    <section id="refer-a-friend" className="pb-20 md:pb-32">
-      <div className="wrap">
-        <div
-          data-reveal
-          className="bg-card border-line grid items-center gap-10 overflow-hidden rounded-[2rem] border p-6 sm:p-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14 lg:p-14"
-        >
-          <ul className="grid grid-cols-2 gap-3 sm:gap-5">
-            {decks.map((w, i) => (
-              <li
-                key={w.slug}
-                className={`group ${i % 2 ? "translate-y-6" : "-translate-y-2"} transition-transform`}
+    <section
+      id="refer-a-friend"
+      className="bg-violet relative isolate overflow-hidden py-20 text-white md:py-28"
+    >
+      <div
+        aria-hidden="true"
+        className="from-violet-deep/70 pointer-events-none absolute inset-0 -z-10 bg-gradient-to-bl to-transparent"
+      />
+      <div className="wrap grid items-center gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+        <div data-reveal className="relative mx-auto w-full max-w-md pb-12 lg:max-w-lg">
+          {couples && (
+            <div className="w-[64%] -rotate-[4deg]">
+              <QuickViewTrigger
+                item={workView(couples)}
+                className="aspect-[4/5] overflow-hidden rounded-2xl shadow-2xl ring-4 ring-white/90"
               >
-                <QuickViewTrigger
-                  item={workView(w)}
-                  className="bg-paper-deep aspect-[4/5] overflow-hidden rounded-2xl"
-                >
-                  <Image
-                    src={w.image}
-                    alt={w.alt}
-                    fill
-                    sizes="(min-width: 1024px) 22vw, 45vw"
-                    className="object-cover transition-transform duration-[1.2s] group-hover:scale-[1.04]"
-                  />
-                </QuickViewTrigger>
-                <p className="mt-3 font-serif text-lg leading-tight sm:text-xl">{w.title}</p>
-              </li>
-            ))}
-          </ul>
-
-          <div className="pt-4 lg:pt-0">
-            <p className="eyebrow">Refer a friend · Custom card games</p>
-            <h2 className="mt-5 text-[2.6rem] leading-[1.02] sm:text-5xl md:text-[3.4rem]">
-              Order with a friend,{" "}
-              <em className="text-olive">{formatRupees(referralOffer.price)} each.</em>
-            </h2>
-            <p className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <span className="font-serif text-4xl">{formatRupees(referralOffer.price)}</span>
-              <span className="text-ink-soft line-through">
-                MRP {formatRupees(referralOffer.mrp)}
-              </span>
-              <span className="text-ink-soft text-sm">each, for you and your friend</span>
-            </p>
-            <ol className="mt-8 space-y-5">
-              {referralOffer.steps.map((s, i) => (
-                <li key={s.title} className="grid grid-cols-[auto_1fr] gap-4">
-                  <span className="bg-olive-deep text-paper flex size-8 items-center justify-center rounded-full text-sm font-semibold">
-                    {i + 1}
-                  </span>
-                  <div>
-                    <p className="font-semibold">{s.title}</p>
-                    <p className="text-ink-soft mt-0.5 text-[0.95rem] leading-relaxed">{s.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <a
-                href={referralUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-magnetic
-                className={buttonClass("solid")}
-              >
-                <WhatsAppIcon className="size-4" /> Claim on WhatsApp
-              </a>
-              <ButtonLink href="/work?c=personal" variant="outline">
-                See both decks
-              </ButtonLink>
+                <Image
+                  src={couples.image}
+                  alt={couples.alt}
+                  fill
+                  sizes="(min-width: 1024px) 28vw, 60vw"
+                  className="object-cover"
+                />
+              </QuickViewTrigger>
             </div>
+          )}
+          {friends && (
+            <div className="absolute right-0 bottom-0 w-[50%] rotate-[5deg]">
+              <QuickViewTrigger
+                item={workView(friends)}
+                className="aspect-[4/5] overflow-hidden rounded-2xl shadow-2xl ring-4 ring-white/90"
+              >
+                <Image
+                  src={friends.image}
+                  alt={friends.alt}
+                  fill
+                  sizes="(min-width: 1024px) 22vw, 46vw"
+                  className="object-cover"
+                />
+              </QuickViewTrigger>
+            </div>
+          )}
+        </div>
+
+        <div data-reveal style={{ ["--reveal-delay" as string]: "120ms" }}>
+          <p className="eyebrow text-gold-soft">Refer a friend · Custom card games</p>
+          <h2 className="mt-5 text-5xl leading-[1] md:text-7xl">
+            Order with a friend,{" "}
+            <em className="text-gold-soft">{formatRupees(referralOffer.price)} each.</em>
+          </h2>
+          <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/80">
+            Your photos on all 112 cards. When you and a friend you refer each order one, you both
+            pay {formatRupees(referralOffer.price)}.
+          </p>
+          <div className="mt-8 flex flex-wrap items-end gap-x-4 gap-y-3">
+            <p className="font-serif text-5xl leading-none">{formatRupees(referralOffer.price)}</p>
+            <p className="pb-1 text-lg text-white/60 line-through">
+              <span className="sr-only">MRP </span>
+              {formatRupees(referralOffer.mrp)}
+            </p>
+            <p className="bg-gold text-night mb-1 rounded-full px-3 py-1 text-[0.75rem] font-bold tracking-wide uppercase">
+              Both editions
+            </p>
+          </div>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <a
+              href={referralUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-magnetic
+              className={buttonClass("light")}
+            >
+              <WhatsAppIcon className="size-4" /> Claim on WhatsApp
+            </a>
+            <ButtonLink href="/work?c=personal" variant="ghostLight" className="group">
+              See both decks{" "}
+              <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+            </ButtonLink>
           </div>
         </div>
       </div>

@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { type ReactNode, useSyncExternalStore } from "react";
+import { type ReactNode, useEffect, useState, useSyncExternalStore } from "react";
 import { dulheRaja, offerActive } from "@/content/dulhe-raja";
+import { referralOffer } from "@/content/work";
 import { formatRupees } from "@/lib/format";
 import { whatsappUrl } from "@/lib/whatsapp";
 import { ArrowIcon } from "./icons";
@@ -84,21 +85,91 @@ export function OrderLink({
   );
 }
 
-/** Slim bar above the header announcing the launch offer; hidden once it ends. */
-export function LaunchBar({ initial }: { initial: boolean }) {
-  const active = useOfferActive(initial);
-  if (!active) return null;
+type BarMessage = { key: string; href: string; bg: string; badge: string; body: ReactNode };
+
+const ROTATE_MS = 5000;
+
+/**
+ * Slim bar above the header that takes turns showing the current offers: the Dulhe Raja launch
+ * price (November only) and the card games refer-a-friend price. It pauses on hover or focus and
+ * stays on the first message for visitors who prefer reduced motion.
+ */
+export function OfferBar({ initial }: { initial: boolean }) {
+  const launch = useOfferActive(initial);
+  const messages: BarMessage[] = [
+    ...(launch
+      ? [
+          {
+            key: "dulhe-raja",
+            href: dulheRaja.href,
+            bg: "bg-crimson-deep",
+            badge: "New · 50% off",
+            body: (
+              <>
+                Dulhe Raja quiz<span className="hidden sm:inline"> for the groom-to-be</span>,{" "}
+                {formatRupees(dulheRaja.offerPrice)}
+                <span className="hidden sm:inline"> all November</span>
+              </>
+            ),
+          },
+        ]
+      : []),
+    {
+      key: "card-games",
+      href: "/#refer-a-friend",
+      bg: "bg-violet-deep",
+      badge: "Refer a friend",
+      body: (
+        <>
+          Card games<span className="hidden sm:inline"> with your photos</span>,{" "}
+          {formatRupees(referralOffer.price)} each
+          <span className="hidden sm:inline"> when you order together</span>
+        </>
+      ),
+    },
+  ];
+
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const count = messages.length;
+
+  useEffect(() => {
+    if (count < 2 || paused) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const id = window.setInterval(() => {
+      if (!document.hidden) setIndex((i) => (i + 1) % count);
+    }, ROTATE_MS);
+    return () => window.clearInterval(id);
+  }, [count, paused]);
+
+  const shown = index % count;
   return (
-    <Link
-      href={dulheRaja.href}
-      className="group bg-crimson-deep block px-4 py-2.5 text-center text-[0.8rem] text-white/85 transition-colors hover:text-white"
+    <div
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+      className={`grid text-[0.8rem] text-white/85 transition-colors duration-700 ${messages[shown]!.bg}`}
     >
-      <span className="text-gold-soft font-semibold">New · 50% off</span>
-      <span className="mx-2.5 text-white/35">|</span>
-      Dulhe Raja quiz<span className="hidden sm:inline"> for the groom-to-be</span>,{" "}
-      {formatRupees(dulheRaja.offerPrice)}
-      <span className="hidden sm:inline"> all November</span>
-      <ArrowIcon className="ml-2 inline size-3.5 transition-transform group-hover:translate-x-1" />
-    </Link>
+      {messages.map((m, i) => {
+        const active = i === shown;
+        return (
+          <Link
+            key={m.key}
+            href={m.href}
+            aria-hidden={!active}
+            tabIndex={active ? undefined : -1}
+            className={`group col-start-1 row-start-1 block px-4 py-2.5 text-center transition-[opacity,visibility] duration-500 hover:text-white ${
+              active ? "visible opacity-100" : "invisible opacity-0"
+            }`}
+          >
+            <span className="text-gold-soft font-semibold">{m.badge}</span>
+            <span className="mx-2.5 text-white/35">|</span>
+            {m.body}
+            <ArrowIcon className="ml-2 inline size-3.5 transition-transform group-hover:translate-x-1" />
+          </Link>
+        );
+      })}
+    </div>
   );
 }
