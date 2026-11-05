@@ -112,7 +112,7 @@ export function HeroShowcase() {
       </div>
 
       <div
-        className="absolute -right-2 bottom-4 flex flex-col gap-1.5 sm:-right-8"
+        className="absolute -right-5 bottom-2 flex flex-col sm:-right-11"
         role="tablist"
         aria-label="Showcase"
       >
@@ -124,8 +124,12 @@ export function HeroShowcase() {
             aria-selected={i === active}
             aria-label={s.title}
             onClick={() => setActive(i)}
-            className={`w-1.5 rounded-full transition-all duration-500 ${i === active ? "bg-gold h-6" : "bg-ink/20 h-1.5"}`}
-          />
+            className="-my-1 flex h-8 w-8 items-center justify-center"
+          >
+            <span
+              className={`w-1.5 rounded-full transition-all duration-500 ${i === active ? "bg-gold h-6" : "bg-ink/20 h-1.5"}`}
+            />
+          </button>
         ))}
       </div>
     </div>

@@ -24,7 +24,7 @@ export function EnquireSection({
           data-reveal
           className="bg-card border-line grid grid-cols-1 overflow-hidden rounded-[2rem] border shadow-[0_40px_80px_-50px_rgb(22_26_17/0.35)] lg:grid-cols-[0.9fr_1.1fr]"
         >
-          <div className="bg-olive-deep text-paper relative p-8 sm:p-12 lg:p-14">
+          <div className="bg-olive-deep text-paper relative p-6 sm:p-12 lg:p-14">
             <p className="eyebrow text-gold-soft">{eyebrow}</p>
             <h2 className="mt-5 text-5xl leading-[1.02] md:text-6xl">
               {title} <em className="text-gold-soft">{accent}</em>
@@ -57,7 +57,7 @@ export function EnquireSection({
               />
             </div>
           </div>
-          <div className="p-8 sm:p-12 lg:p-14">
+          <div className="p-6 sm:p-12 lg:p-14">
             <EnquiryPanel defaultOccasion={defaultOccasion} />
           </div>
         </div>
@@ -82,16 +82,16 @@ function ContactTile({
     <a
       href={href}
       {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className="group border-paper/15 hover:border-paper/40 hover:bg-paper/5 flex items-center gap-4 rounded-2xl border p-4 transition-colors"
+      className="group border-paper/15 hover:border-paper/40 hover:bg-paper/5 flex items-center gap-3 rounded-2xl border p-3.5 transition-colors sm:gap-4 sm:p-4"
     >
-      <span className="bg-paper/10 flex size-11 shrink-0 items-center justify-center rounded-full">
+      <span className="bg-paper/10 flex size-10 shrink-0 items-center justify-center rounded-full sm:size-11">
         {icon}
       </span>
       <span className="min-w-0">
         <span className="text-paper/55 block text-xs">{label}</span>
-        <span className="block truncate font-semibold">{value}</span>
+        <span className="block text-[0.92rem] font-semibold break-words sm:text-base">{value}</span>
       </span>
-      <ArrowIcon className="ml-auto size-4 shrink-0 opacity-50 transition-transform group-hover:translate-x-1 group-hover:opacity-100" />
+      <ArrowIcon className="ml-auto hidden size-4 shrink-0 opacity-50 transition-transform group-hover:translate-x-1 group-hover:opacity-100 sm:block" />
     </a>
   );
 }

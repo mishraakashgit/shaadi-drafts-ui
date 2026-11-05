@@ -167,14 +167,14 @@ export function QuickViewTrigger({
       type="button"
       onClick={() => open(item)}
       aria-label={`View ${item.title}`}
-      className={`group/qv relative block w-full cursor-zoom-in text-left ${className}`}
+      className={`group/qv @container relative block w-full cursor-zoom-in text-left ${className}`}
     >
       {children}
       {hint && (
         <span
           aria-hidden="true"
           data-qv-hint
-          className={`bg-card/90 text-ink pointer-events-none absolute ${badgeClass} flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[0.72rem] font-semibold opacity-90 shadow-sm backdrop-blur transition md:opacity-0 md:group-hover/qv:opacity-100`}
+          className={`bg-card/90 text-ink pointer-events-none absolute ${badgeClass} flex items-center gap-1.5 rounded-full p-2 text-[0.72rem] font-semibold opacity-90 shadow-sm backdrop-blur transition md:opacity-0 md:group-hover/qv:opacity-100 @[15rem]:px-3 @[15rem]:py-1.5`}
         >
           <svg
             viewBox="0 0 24 24"
@@ -188,7 +188,8 @@ export function QuickViewTrigger({
             <circle cx="11" cy="11" r="6.5" />
             <path d="M16 16l4 4M11 8.5v5M8.5 11h5" />
           </svg>
-          View details
+          {/* Just the icon on small photos (e.g. two-column grids on phones) */}
+          <span className="hidden @[15rem]:inline">View details</span>
         </span>
       )}
     </button>
