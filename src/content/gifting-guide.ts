@@ -110,7 +110,7 @@ export const guideSections: GuideSection[] = [
     title: "Personalised & custom gifts",
     body: [
       "Birthdays, anniversaries and best friends: custom card games with your photos on all 112 cards, name boxes for parents, polaroid memory bags, or a gift that doesn't have a name yet. Bring us a person and a memory, and we'll turn it into something they keep.",
-      "Refer a friend: when they buy anything worth more than ₹500, your custom card game is ₹649 instead of the ₹899 MRP.",
+      "Refer a friend: when you both order one of our custom card games, you each pay ₹649 instead of the ₹899 MRP.",
     ],
     examples: [
       { kind: "work", slug: "card-game-couples" },

@@ -58,7 +58,7 @@ export function workView(w: WorkPiece): QuickViewItem {
     contain: Boolean(w.size),
     ...(w.referral
       ? {
-          note: `MRP ${formatRupees(referralOffer.mrp)} · ${formatRupees(referralOffer.price)} when a friend you refer buys anything over ${formatRupees(referralOffer.minOrder)}`,
+          note: `MRP ${formatRupees(referralOffer.mrp)} · ${formatRupees(referralOffer.price)} each when you and a friend you refer both order one`,
           cta: { href: referralUrl(w.title), label: "Claim the referral price" },
         }
       : {
@@ -98,6 +98,6 @@ export function dulheRajaView(): QuickViewItem {
 /** WhatsApp link for claiming the refer-a-friend card game price. */
 export function referralUrl(title?: string) {
   return whatsappUrl(
-    `Hi Shaadi Drafts! I'd like ${title ? `"${title}"` : "a custom card game"} at the referral price of ${formatRupees(referralOffer.price)}. My friend's name is: `,
+    `Hi Shaadi Drafts! I'd like ${title ? `"${title}"` : "a custom card game"} at the refer-a-friend price of ${formatRupees(referralOffer.price)} each. My friend ordering one too is: `,
   );
 }
