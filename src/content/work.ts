@@ -28,23 +28,22 @@ export type WorkPiece = {
 };
 
 /**
- * Refer-a-friend offer on the custom card games: when a friend you refer buys anything worth
- * more than ₹500, you get your card game at the special price instead of the MRP.
+ * Refer-a-friend offer on the custom card games: when you and a friend you refer each order one
+ * of our card games (either edition), you both get it at the special price instead of the MRP.
  */
 export const referralOffer = {
   mrp: 899,
   price: 649,
-  minOrder: 500,
   title: "Refer a friend, play for less",
   steps: [
-    { title: "Refer a friend", body: "Send a friend our way for any gift, hamper or design." },
+    { title: "Order your card game", body: "The Couple's or the Best Friends edition." },
     {
-      title: "They order over ₹500",
-      body: "Any Shaadi Drafts product worth more than ₹500 counts.",
+      title: "Refer a friend who orders one too",
+      body: "They can pick either edition, made with their own photos.",
     },
     {
-      title: "Your deck is ₹649",
-      body: "Get your custom 112-card game for ₹649 instead of the ₹899 MRP.",
+      title: "You both pay ₹649",
+      body: "Each custom 112-card game is ₹649 instead of the ₹899 MRP.",
     },
   ],
 } as const;

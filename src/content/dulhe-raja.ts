@@ -13,15 +13,13 @@ export const dulheRaja = {
   price: 999,
   offerPrice: 499,
   offerLabel: "50% off all November",
-  blurb:
-    "A clickable surprise from the bride to her groom. He taps through a cheeky test of shaadi-planning dilemmas, gets a “Soo not allowed, please try again” for every wrong answer, and finds a love note from you on the last page.",
+  blurb: "A personalised, clickable quiz from the bride to her groom, ending with your love note.",
   inside: [
     "Personalised with your photos and names",
     "Cheeky Hinglish questions, written around your story",
     "Clickable answers, with a “try again” for the wrong ones",
     "A closing love note in your words",
     "Delivered as a clickable digital file, ready to forward",
-    "Revisions included",
   ],
   pages: [
     {
@@ -72,7 +70,7 @@ export const dulheRaja = {
     },
     {
       title: "We draft his test",
-      body: "We write the questions in your voice and design every page. You review it, and we revise until it's right.",
+      body: "We write the questions in your voice and design every page.",
     },
     {
       title: "Send it to him",

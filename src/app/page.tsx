@@ -149,9 +149,7 @@ function LaunchOffer({ offer }: { offer: boolean }) {
           <h2 className="mt-5 text-5xl leading-[1] md:text-7xl">
             Dulhe Raja, <em className="text-gold-soft">reporting for duty!</em>
           </h2>
-          <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/80">
-            {dulheRaja.tagline} {dulheRaja.blurb}
-          </p>
+          <p className="mt-5 max-w-lg text-lg leading-relaxed text-white/80">{dulheRaja.blurb}</p>
           <div className="mt-8">
             <OfferPrice initial={offer} />
           </div>
@@ -432,15 +430,15 @@ function ReferralOffer() {
           <div className="pt-4 lg:pt-0">
             <p className="eyebrow">Refer a friend · Custom card games</p>
             <h2 className="mt-5 text-[2.6rem] leading-[1.02] sm:text-5xl md:text-[3.4rem]">
-              Your 112-card deck,{" "}
-              <em className="text-olive">for {formatRupees(referralOffer.price)}.</em>
+              Order with a friend,{" "}
+              <em className="text-olive">{formatRupees(referralOffer.price)} each.</em>
             </h2>
             <p className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
               <span className="font-serif text-4xl">{formatRupees(referralOffer.price)}</span>
               <span className="text-ink-soft line-through">
                 MRP {formatRupees(referralOffer.mrp)}
               </span>
-              <span className="text-ink-soft text-sm">on both card games</span>
+              <span className="text-ink-soft text-sm">each, for you and your friend</span>
             </p>
             <ol className="mt-8 space-y-5">
               {referralOffer.steps.map((s, i) => (

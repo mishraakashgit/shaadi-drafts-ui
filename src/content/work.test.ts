@@ -9,7 +9,7 @@ describe("refer-a-friend offer", () => {
     ]);
   });
 
-  it("is ₹649 against an MRP of ₹899, for referrals over ₹500", () => {
-    expect(referralOffer).toMatchObject({ price: 649, mrp: 899, minOrder: 500 });
+  it("is ₹649 each against an MRP of ₹899", () => {
+    expect(referralOffer).toMatchObject({ price: 649, mrp: 899 });
   });
 });
